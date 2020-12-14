@@ -4,7 +4,7 @@ from django.utils.encoding import smart_str
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from voter.models import Contestant, Voter
-
+globals().update(locals())
 CHARS = "abcdefghjkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789"
 
 def csv_to_voter():

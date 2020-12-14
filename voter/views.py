@@ -31,7 +31,7 @@ def vote(request):
     #have to make the voting function ##### Alan451
     print(request.user.username)
     username = request.user.username
-    if Voter.objects.filter(username=username).exists:
+    if Voter.objects.filter(username=username).exists():
         return HttpResponse('u are a verified voter, proceed')
     else:
         return HttpResponse('get out of here')
