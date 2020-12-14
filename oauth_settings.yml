@@ -1,0 +1,6 @@
+app_id: "e3cd7128-6c54-4c05-bce6-1ad53bcb6709"
+app_secret: "r9GvDD94.-33kg4-W7Bz_49p71rLhVYoOu"
+redirect: "http://localhost:8000/outlook/callback/"
+scopes:
+  - user.read
+authority: "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
