@@ -1,0 +1,11 @@
+{% extends "base_copy.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% for i in contestantList %}
+           <!-- put all the required user data here -->
+        <button type="submit" name="choice" value={{i.pk}}>{{i.name}}</button>
+    {% endfor %}
+    <button type="submit" name="choice" value="NOTA">NOTA</button>
+</form>
+{% endblock %}

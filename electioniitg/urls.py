@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+	path('', include('geolocation.urls')),
 	path('voter/', include('voter.urls')),
 	path('admin/', admin.site.urls),
     path('oauth2/', include('django_auth_adfs.urls')),
