@@ -1,17 +1,15 @@
 import csv
 import random
 from django.utils.encoding import smart_str
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
 from voter.models import Contestant, Voter
-globals().update(locals())
+
 CHARS = "abcdefghjkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789"
 
 def csv_to_voter():
 	csvfile = open('voter.csv', 'r')
 	reader = csv.reader(csvfile, quoting=csv.QUOTE_ALL)
 	for i, row in enumerate(reader):
-		print(i)
+		print("voter", i)
 		username = smart_str(row[0])
 		category = smart_str(row[1])
 		hostel = smart_str(row[2])
@@ -27,14 +25,12 @@ def csv_to_contestants():
 	csvfile = open('contestant.csv', 'r')
 	reader = csv.reader(csvfile, quoting=csv.QUOTE_ALL)
 	for i, row in enumerate(reader):
-		print(i)
-		user = User.objects.create(username = row[2].split('@')[0], 
-			password="".join(random.choice(CHARS) for _ in range(8)), 
-			is_active = True, 
-			first_name = row[0].upper()
-		)
-		contestant = Contestant.objects.create(user = user, post = row[1], agenda1 = row[3], agenda2 = row[4], agenda3 = row[5], agenda4 = row[6], pic = "contestants/" + row[7] + ".jpg",  random_suppling = 0)
+		print("contestant ",i)
+		contestant=Contestant(name=row[0],email = row[2], post = row[1], agenda1 = row[3], agenda2 = row[4], agenda3 = row[5], agenda4 = row[6], pic = "contestants/" + row[7] + ".jpg",  random_suppling = 0)
+		contestant.save()
 
-
-csv_to_voter()
-csv_to_contestants()	
+def run():
+	Voter.objects.all().delete()
+	Contestant.objects.all().delete()
+	csv_to_voter()
+	csv_to_contestants()	
