@@ -1,46 +1,56 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-  <meta charset="utf-8">
-  <title>Get Visitor's Location Using HTML5 Geolocation</title>
-  <script>
-      function showPosition() {
-          if(navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(function(position) {
-                  var positionInfo = "Your current position is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
-                  document.getElementById("result").innerHTML = positionInfo;
-              });
-          } else {
-              alert("Sorry, your browser does not support HTML5 geolocation.");
-          }
-          // $(document).ready(function(){
-          //   $(#ajaxBtn).click(function(){
-          //     $.ajax('/geo',{
-          //       type: 'POST',
-          //       data:{
-          //         latitude: position.coords.latitude,
-          //         longitude: position.coords.longitude
-          //       },
-          //       success: function(data, satus, xhr){
-          //         alert('status: '+status+', data');
-          //       },
-          //       error: function(jqXhr, textStatus, errorMessage){
-          //         alert(errorMessage);
-          //       }
-          //     })
-          //   })
-          // })
-      }
-  </script>
-  </head>
-  <body>
-      <div id="result">
-          <!--Position information will be inserted here-->
-      </div>
-      <button type="button" onclick="showPosition();">Show Position</button>
-      <form action="/geo/" method="POST">
-        <input type="email" name="email" id="mail">
-        <button type="button" onclick="showPosition();" id="ajaxBtn">Send location</button>
-      </form>
-  </body>
-  </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Get Visitor's Location Using HTML5 Geolocation</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script>
+
+const getCoordinates=()=> {
+  return new Promise((resolve, reject)=> {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+}
+
+const getAddress=async() =>{
+
+try{
+    const position = await getCoordinates(); 
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+    let positionInfo = "Your current position is (" + "Latitude: " + position.coords.latitude + ", " + "Longitude: " + position.coords.longitude + ")";
+    document.getElementById("result").innerHTML = positionInfo;
+    data = {
+                lat: latitude,
+                long: longitude,
+            }
+    return data 
+}catch (err) {
+    console.error(err.message);
+}
+}
+
+const sendData=async()=>{
+        let loc = await getAddress()
+        // var csrf_token = "{% csrf_token %}"
+        var allCookies = document.cookie;
+        console.log(typeof(allCookies))
+        var csrf = allCookies.substring(10);
+        var postdata = {
+            data: JSON.stringify(loc),
+            'csrfmiddlewaretoken': csrf
+        };
+        $.post('', postdata);
+};
+
+
+</script>
+</head>
+<body>
+    <div id="result">
+        <!--Position information will be inserted here-->
+    </div>
+    
+    <button type="button" onclick="sendData();">Show Position</button>
+</body>
+</html>
