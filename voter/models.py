@@ -9,11 +9,10 @@ class Voter(models.Model):
                 ('3','PG-Girl'),)
     category = models.CharField(max_length=1,choices=CATEGORY)
     final_submit = models.BooleanField(default=False) #0 if false 1 if true
-    logout_time = models.DateTimeField(blank=True, null=True)
-    login_time = models.DateTimeField(blank=True, null=True)
     hostel = models.CharField(max_length=50, default='MANAS')
     dept = models.CharField(max_length=50, default='CSE')
-
+    vote_string = models.CharField(max_length=500, default='') 
+    vote_time = models.CharField(max_length=100, default='') 
     def __str__(self):
         return self.username
 

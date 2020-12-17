@@ -3,9 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .models import Voter,Contestant
 from .forms import CaptchaTestForm
 from functools import wraps
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 def captcha_required(function):
   @wraps(function)
@@ -31,7 +32,8 @@ def is_valid(function):
             return HttpResponse('get out of here')
 
     return wrap
-    
+
+@login_required    
 def verify(request):
     if request.method=="POST":
         form = CaptchaTestForm(request.POST)
@@ -43,56 +45,55 @@ def verify(request):
 
     return render(request, 'captchaVerify.html', {'form': form})
 
-def voteCountModifier(dicti):
-    if not dicti['vp'] == 'NOTA':
-        cont = Contestant.objects.get(pk=dicti['vp'])
-        cont.vote_count +=1
-        cont.save()
-    if not dicti['hab'] == 'NOTA':
-        cont = Contestant.objects.get(pk=dicti['hab'])
-        cont.vote_count +=1
-        cont.save()
-    if not dicti['tech'] == 'NOTA':
-        cont = Contestant.objects.get(pk=dicti['tech'])
-        cont.vote_count +=1
-        cont.save()
-    if not dicti['cult'] == 'NOTA':
-        cont = Contestant.objects.get(pk=dicti['cult'])
-        cont.vote_count +=1
-        cont.save()
-    if not dicti['sports'] == 'NOTA':
-        cont = Contestant.objects.get(pk=dicti['sports'])
-        cont.vote_count +=1
-        cont.save()    
-    if not dicti['welfare'] == 'NOTA':
-        cont = Contestant.objects.get(pk=dicti['welfare'])
-        cont.vote_count +=1
-        cont.save()    
-    if not dicti['sail'] == 'NOTA':
-        cont = Contestant.objects.get(pk=dicti['sail'])
-        cont.vote_count +=1
-        cont.save()    
-    if not dicti['swc'] == 'NOTA':
-        cont = Contestant.objects.get(pk=dicti['swc'])
-        cont.vote_count +=1
-        cont.save()    
-    if not dicti['bsen']['nota']:
+@login_required
+@captcha_required
+@is_valid
+def voteCountModifier(request):
+    dicti=request.session.get('option')
+    vote_string=''
+    vote_string += 'vp: '+str(dicti['vp'])+","
+    
+    vote_string += 'hab: '+str(dicti['hab'])+","
+    
+    vote_string += 'tech: ' +str(dicti['tech'])+","
+    
+    vote_string += 'cult: '+str(dicti['cult'])+","
+    
+    vote_string += 'sports: '+str(dicti['sports'])+","
+       
+    vote_string += 'welfare: '+str(dicti['welfare'])+","
+       
+    vote_string += 'sail: '+str(dicti['sail'])+","
+     
+    vote_string += 'swc: '+str(dicti['swc'])+","
+    
+    if dicti['bsen']['nota']:
+        vote_string += 'bsen: NOTA,'      
+    else:
+        vote_string+= 'bsen: {'
         for i in range(7):
             key = 'choice'+str(i+1)
             if dicti['bsen'][key] is not None:
-                cont = Contestant.objects.get(pk=dicti['bsen'][key])
-                cont.vote_count +=1
-                cont.save()
-                
-    if not dicti['gsen']['nota']:
+                vote_string += str(dicti['bsen'][key])+","
+        vote_string += '},'
+    if dicti['gsen']['nota']:
+        vote_string += 'gsen: NOTA,'             
+    else:
+        vote_string+= 'gsen: {'
         for i in range(3):
             key = 'choice'+str(i+1)
             if dicti['gsen'][key] is not None:
-                cont = Contestant.objects.get(pk=dicti['gsen'][key])
-                cont.vote_count +=1
-                cont.save()
+                vote_string += str(dicti['gsen'][key])+","
                 
-def getMeSelectedCandidates(dicti):
+        vote_string += '},'
+    print(vote_string)
+    return vote_string
+
+@login_required
+@captcha_required
+@is_valid             
+def getMeSelectedCandidates(request):
+    dicti=request.session.get('option')
     selectedCandidates = []
     if not dicti['vp'] == 'NOTA':
         selectedCandidates.append(('vp',Contestant.objects.get(pk=dicti['vp'])))
@@ -147,6 +148,7 @@ def getMeSelectedCandidates(dicti):
         
     return selectedCandidates
 
+@login_required
 @captcha_required
 @is_valid
 def vote(request):
@@ -207,12 +209,15 @@ def vote(request):
         post = 'gsen'
 
     if post is None:
-        selectedCandidates = getMeSelectedCandidates(dicti)
+        selectedCandidates = getMeSelectedCandidates(request)
         if request.method == "POST":
             if request.POST['choice'] == "done":
                 voter.final_submit = True
+                vote_string=voteCountModifier(request)
+                #encrypt the string using our function
+                voter.vote_string = vote_string
+                voter.vote_time = datetime.now()
                 voter.save()
-                voteCountModifier(dicti)
                 return HttpResponse("done")
             elif request.POST['choice'] == "bsen" or request.POST['choice'] == "gsen":
                 dicti[request.POST['choice']]['done']=False
@@ -226,11 +231,10 @@ def vote(request):
                 request.session['option']=dicti
                 return redirect('vote')
             else:
-                dicti[request.POST['choice']]=None   
+                dicti[request.POST['choice']]=None
                 request.session['option']=dicti
                 return redirect('vote')
         return render(request,'review.html',{'selectedCandidates':selectedCandidates})
-        #Havent completed the review function
     elif post == 'vp':
         contestantList = Contestant.objects.all().filter(post='VP').order_by('?')
         if request.method == "POST":

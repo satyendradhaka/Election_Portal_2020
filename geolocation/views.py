@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import UserGeoLocation
+import json
+from voter.models import Voter
+
 def save_user_geolocation(request):
     if request.method == 'POST':
-        print("jkdslfbjskds")
-        print(request.POST['latitude'])
+        coord = json.loads(request.POST['data'])
+        print(coord)
+        latitude = coord['lat']
+        longitude = coord['long']
         return render(request,'bla.html',{})
     return render(request,'bla.html',{})
     
