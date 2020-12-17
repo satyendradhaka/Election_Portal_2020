@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -48,9 +48,61 @@ const sendData=async()=>{
 </head>
 <body>
     <div id="result">
-        <!--Position information will be inserted here-->
+        
     </div>
     
     <button type="button" onclick="sendData();">Show Position</button>
 </body>
+</html> -->
+<html>
+    <head><script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+    </head>
+    <body>
+        <button id = "find-me" onclick=geoFindMe type="submit">Show my location</button><br/>
+        <p id = "status"></p>
+        <script>
+            function post_req(data){
+                var allCookies = document.cookie;
+                var csrf = allCookies.substring(10);
+                var postdata = {
+                    data: JSON.stringify(data),
+                    'csrfmiddlewaretoken': csrf
+                };
+                $.post('', postdata);
+            }   
+            function geoFindMe() {
+                const status = document.querySelector('#status');
+                function success(position) {
+                const latitude  = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                data = {
+                                lat: latitude,
+                                long: longitude,
+                                }
+                
+                post_req(data);              
+                status.textContent = 'lat : ' +latitude+', long : ' + longitude ;
+                
+                }
+
+                function error() {
+                status.textContent = 'Unable to retrieve your location';
+                    
+                }
+
+                if(!navigator.geolocation) {
+                status.textContent = 'Geolocation is not supported by your browser';
+                } else {
+                status.textContent = 'Locating…';
+                navigator.geolocation.getCurrentPosition(success, error);
+                }
+        
+            }
+
+
+            document.querySelector('#find-me').addEventListener('click', geoFindMe);
+            
+        </script>
+    </body>
 </html>

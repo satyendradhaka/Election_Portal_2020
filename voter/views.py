@@ -6,6 +6,7 @@ from functools import wraps
 from datetime import datetime
 import time
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 def captcha_required(function):
   @wraps(function)
@@ -31,7 +32,8 @@ def is_valid(function):
             return HttpResponse('get out of here')
 
     return wrap
-    
+
+@login_required    
 def verify(request):
     if request.method=="POST":
         form = CaptchaTestForm(request.POST)
@@ -43,26 +45,28 @@ def verify(request):
 
     return render(request, 'captchaVerify.html', {'form': form})
 
+@login_required
 @captcha_required
 @is_valid
-def voteCountModifier(dicti):
+def voteCountModifier(request):
+    dicti=request.session.get('option')
     vote_string=''
     vote_string += 'vp: '+str(dicti['vp'])+","
-    print(vote_string)
+    
     vote_string += 'hab: '+str(dicti['hab'])+","
-    print(vote_string)
+    
     vote_string += 'tech: ' +str(dicti['tech'])+","
-    print(vote_string)
+    
     vote_string += 'cult: '+str(dicti['cult'])+","
-    print(vote_string)
+    
     vote_string += 'sports: '+str(dicti['sports'])+","
-    print(vote_string)   
+       
     vote_string += 'welfare: '+str(dicti['welfare'])+","
-    print(vote_string)   
+       
     vote_string += 'sail: '+str(dicti['sail'])+","
-    print(vote_string) 
+     
     vote_string += 'swc: '+str(dicti['swc'])+","
-    print(vote_string)
+    
     if dicti['bsen']['nota']:
         vote_string += 'bsen: NOTA,'      
     else:
@@ -71,7 +75,6 @@ def voteCountModifier(dicti):
             key = 'choice'+str(i+1)
             if dicti['bsen'][key] is not None:
                 vote_string += str(dicti['bsen'][key])+","
-                print(vote_string)
         vote_string += '},'
     if dicti['gsen']['nota']:
         vote_string += 'gsen: NOTA,'             
@@ -81,13 +84,16 @@ def voteCountModifier(dicti):
             key = 'choice'+str(i+1)
             if dicti['gsen'][key] is not None:
                 vote_string += str(dicti['gsen'][key])+","
-                print(vote_string)
+                
         vote_string += '},'
+    print(vote_string)
     return vote_string
 
+@login_required
 @captcha_required
 @is_valid             
-def getMeSelectedCandidates(dicti):
+def getMeSelectedCandidates(request):
+    dicti=request.session.get('option')
     selectedCandidates = []
     if not dicti['vp'] == 'NOTA':
         selectedCandidates.append(('vp',Contestant.objects.get(pk=dicti['vp'])))
@@ -142,6 +148,7 @@ def getMeSelectedCandidates(dicti):
         
     return selectedCandidates
 
+@login_required
 @captcha_required
 @is_valid
 def vote(request):
@@ -202,11 +209,11 @@ def vote(request):
         post = 'gsen'
 
     if post is None:
-        selectedCandidates = getMeSelectedCandidates(dicti)
+        selectedCandidates = getMeSelectedCandidates(request)
         if request.method == "POST":
             if request.POST['choice'] == "done":
                 voter.final_submit = True
-                vote_string=voteCountModifier(dicti)
+                vote_string=voteCountModifier(request)
                 #encrypt the string using our function
                 voter.vote_string = vote_string
                 voter.vote_time = datetime.now()
