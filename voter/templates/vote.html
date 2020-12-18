@@ -2,10 +2,13 @@
 {% block content %}
 <form method="post">
     {% csrf_token %}
+    <select name="choice">
     {% for i in contestantList %}
-           <!-- put all the required user data here -->
-        <button type="submit" name="choice" value={{i.pk}}>{{i.name}}</button>
+    <option value="{{i.pk}}">{{i.name}}</option>
     {% endfor %}
-    <button type="submit" name="choice" value="NOTA">NOTA</button>
+    <option value="{{i.post}}">NOTA</option>
+    
+    </select> 
+    <button type="submit">Save</button>   
 </form>
 {% endblock %}

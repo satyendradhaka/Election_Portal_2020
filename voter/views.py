@@ -8,6 +8,11 @@ import time
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
+# if you click a vote before reloading time of another vote its showing a glitch 
+# which we think will be resolved when we cahnge the vote to choice fields intead
+# of buttons in templates
+
+
 def captcha_required(function):
   @wraps(function)
   def wrap(request, *args, **kwargs):
@@ -238,56 +243,96 @@ def vote(request):
     elif post == 'vp':
         contestantList = Contestant.objects.all().filter(post='VP').order_by('?')
         if request.method == "POST":
-            dicti['vp']=request.POST['choice']
+            if request.POST['choice'] == 'VP':
+                dicti['vp'] = 'NOTA'
+            else:
+                cont = Contestant.objects.get(pk=request.POST['choice'])
+                if cont.post == 'VP':
+                    dicti['vp']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
         return render(request,'vote.html',{'contestantList':contestantList})
     elif post == 'hab':
         contestantList = Contestant.objects.all().filter(post='HAB').order_by('?')
         if request.method == "POST":
-            dicti['hab']=request.POST['choice']
+            if request.POST['choice'] == 'HAB':
+                dicti['hab'] = 'NOTA'
+            else:
+                cont = Contestant.objects.get(pk=request.POST['choice'])
+                if cont.post == 'HAB':
+                    dicti['hab']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')            
         return render(request,'vote.html',{'contestantList':contestantList})
     elif post == 'tech':
         contestantList = Contestant.objects.all().filter(post='Tech').order_by('?')
         if request.method == "POST":
-            dicti['tech']=request.POST['choice']
+            if request.POST['choice'] == 'Tech':
+                dicti['tech'] = 'NOTA'
+            else:
+                cont = Contestant.objects.get(pk=request.POST['choice'])
+                if cont.post == 'Tech':
+                    dicti['tech']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
         return render(request,'vote.html',{'contestantList':contestantList})
     elif post == 'cult':
         contestantList = Contestant.objects.all().filter(post='Cult').order_by('?')
         if request.method == "POST":
-            dicti['cult']=request.POST['choice']
+            if request.POST['choice'] == 'Cult':
+                dicti['cult'] = 'NOTA'
+            else:
+                cont = Contestant.objects.get(pk=request.POST['choice'])
+                if cont.post == 'Cult':
+                    dicti['cult']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
         return render(request,'vote.html',{'contestantList':contestantList})
     elif post == 'welfare':
         contestantList = Contestant.objects.all().filter(post='Welfare').order_by('?')
         if request.method == "POST":
-            dicti['welfare']=request.POST['choice']
+            if request.POST['choice'] == 'Welfare':
+                dicti['welfare'] = 'NOTA'
+            else:
+                cont = Contestant.objects.get(pk=request.POST['choice'])
+                if cont.post == 'Welfare':
+                    dicti['welfare']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
         return render(request,'vote.html',{'contestantList':contestantList})
     elif post == 'sports':
         contestantList = Contestant.objects.all().filter(post='Sports').order_by('?')
         if request.method == "POST":
-            dicti['sports']=request.POST['choice']
+            if request.POST['choice'] == 'Sports':
+                dicti['sports'] = 'NOTA'
+            else:
+                cont = Contestant.objects.get(pk=request.POST['choice'])
+                if cont.post == 'Sports':
+                    dicti['sports']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
         return render(request,'vote.html',{'contestantList':contestantList})
     elif post == 'sail':
         contestantList = Contestant.objects.all().filter(post='SAIL').order_by('?')
         if request.method == "POST":
-            dicti['sail']=request.POST['choice']
+            if request.POST['choice'] == 'SAIL':
+                dicti['sail'] = 'NOTA'
+            else:
+                cont = Contestant.objects.get(pk=request.POST['choice'])
+                if cont.post == 'SAIL':
+                    dicti['sail']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
         return render(request,'vote.html',{'contestantList':contestantList})
     elif post == 'swc':
         contestantList = Contestant.objects.all().filter(post='SWC').order_by('?')
         if request.method == "POST":
-            dicti['swc']=request.POST['choice']
+            if request.POST['choice'] == 'SWC':
+                dicti['swc'] = 'NOTA'
+            else:
+                cont = Contestant.objects.get(pk=request.POST['choice'])
+                if cont.post == 'SWC':
+                    dicti['swc']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
         return render(request,'vote.html',{'contestantList':contestantList})
@@ -298,6 +343,7 @@ def vote(request):
         else:
             contestantList = Contestant.objects.all().filter(post='PGS').order_by('?')
         if request.method == "POST":
+            
             if request.POST.getlist('choice'):
                 list_selected=request.POST.getlist('choice')
                 for i in range(min(len(list_selected),7)):
