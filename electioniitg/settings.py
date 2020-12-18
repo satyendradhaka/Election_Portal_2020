@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'geolocation',
     'django.contrib.gis',
+    'pyuploadcare.dj',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +83,12 @@ TEMPLATES = [
         },
     },
 ]
+
+UPLOADCARE = {
+    'pub_key': '482e33abff342396fce4',
+    'secret': '50d4fd051c4a5b0db877',
+}
+
 AUTHENTICATION_BACKENDS = (
     'django_auth_adfs.backend.AdfsAuthCodeBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -98,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'postgresql451',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432'
     }
