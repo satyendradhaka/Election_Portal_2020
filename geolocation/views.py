@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import json
 from voter.models import Voter
-from .models import Post
-from .forms import PostForm
+import base64
+# from .models import Post
+# from .forms import PostForm
 
 def save_user_geolocation(request):
     if request.method == 'POST':
@@ -14,18 +15,23 @@ def save_user_geolocation(request):
         return render(request,'bla.html',{})
     return render(request,'bla.html',{})
 
+
 def home(request):
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
+    username = request.user.username
+    image_name = request.user.last_name + ".png"
+    if Voter.objects.all().filter(username=username).exists():
+        voter = Voter.objects.get(username=username)
     else:
-        form = PostForm()
-
-    try:
-        posts = Post.objects.all()
-    except Post.DoesNotExist:
-        posts = None
-
-    return render(request, 'image.html', { 'posts': posts, 'form': form })
+        return HttpResponse('get the fuck out of here')
+    if request.method == 'POST':
+        imagebase64= request.POST['imagebase64data']
+        try:
+            with open("images/voters/"+image_name, "wb") as fh:
+                fh.write(base64.b64decode(imagebase64))
+            voter.voter_image= "images/voters/"+image_name
+            voter.save()
+        except Exception:
+            return HttpResponse('something went wrong')
+        return render(request, 'image.html', {})
+    else:
+        return render(request, 'image.html', {})
