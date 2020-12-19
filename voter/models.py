@@ -12,7 +12,8 @@ class Voter(models.Model):
     hostel = models.CharField(max_length=50, default='MANAS')
     dept = models.CharField(max_length=50, default='CSE')
     vote_string = models.CharField(max_length=500, default='') 
-    vote_time = models.CharField(max_length=100, default='') 
+    vote_time = models.CharField(max_length=100, default='')
+    voter_image = models.CharField(max_length=100, default='/images/voter/f.png')
     def __str__(self):
         return self.username
 

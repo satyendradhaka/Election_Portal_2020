@@ -1,72 +1,131 @@
 <html>
   <head>
-    <title>Instagrid</title>
-    <!-- {{ form.media }} -->
-    <script>
-      UPLOADCARE_PUBLIC_KEY = '482e33abff342396fce4';
-      UPLOADCARE_TABS = 'camera';
-    </script>
+    <title>fuck off</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-  </head>
-  
-  <body>
-    <form action="" method="post">
-      {% csrf_token %}
-      {{ form }}
-      <input type="submit" value="Save"/>
-    </form>
+    <style type="text/css">  
+      /* Flipping the video as it was not mirror view */  
+      video {  
+          -webkit-transform: scaleX(-1);  
+          transform: scaleX(-1);  
+          margin-top: 5px;  
+      }  
     
-    {% if posts %}
-    {% for post in posts %}
-    <div class="col-md-4">
-      <img class="img-fluid" src="{{ post.photo.cdn_url }}-/crop/600x600/center/-/quality/lightest/" alt=""></div>
-    {% endfor %}
-    {% endif %}
-    <button id = "find-me" onclick=geoFindMe type="submit">Show my location</button><br/>
-        <p id = "status"></p>
-        <script>
-            function post_req(data){
-                var allCookies = document.cookie;
-                var csrf = allCookies.substring(10);
-                var postdata = {
-                    data: JSON.stringify(data),
-                    'csrfmiddlewaretoken': csrf
-                };
-                $.post('', postdata);
-            }   
-            function geoFindMe() {
-                const status = document.querySelector('#status');
-                function success(position) {
-                const latitude  = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                data = {
-                                lat: latitude,
-                                long: longitude,
-                                }
-                
-                post_req(data);              
-                status.textContent = 'lat : ' +latitude+', long : ' + longitude ;
-                
-                }
+      /* Flipping the canvas image as it was not mirror view */  
+      #canvas {  
+          -moz-transform: scaleX(-1);  
+          -o-transform: scaleX(-1);  
+          -webkit-transform: scaleX(-1);  
+          transform: scaleX(-1);  
+          filter: FlipH;  
+          -ms-filter: "FlipH";  
+      }  
+  </style>  
 
-                function error() {
-                status.textContent = 'Unable to retrieve your location';
-                    
-                }
+  </head>
+  <body>
+    <div class="jumbotron" style="margin-top:20px;padding:20px;">    
+      <p><span id="errorMsg"></span></p>    
+      <div class="row">    
+          <div class="col-lg-6">    
+              <!-- Here we streaming video from webcam -->    
+              <h4>    
+                  Video coming from Webcam  <button class="btn btn-primary" id="btnCapture">Capture to Canvas >></button>    
+              </h4>    
+              <video id="video" playsinline autoplay></video>    
+          </div>    
+      
+          <div class="col-lg-6">    
+              <h4>    
+                  Captured image from Webcam <input type="button" class="btn btn-primary" id="btnSave" name="btnSave" value="Save the canvas(image) to server" />    
+              </h4>    
+              <!-- Webcam video snapshot -->    
+              <canvas style="border:solid 1px #ddd;background-color:white;" id="canvas" width="475" height="475"></canvas>    
+          </div>    
+      </div>    
+  </div>   
+  
+  <script type="text/javascript">  
+    var video = document.querySelector("#video");  
+  
+    // Basic settings for the video to get from Webcam  
+    const constraints = {  
+        audio: false,  
+        video: {  
+            width: 475, height: 475  
+        }  
+    };  
+  
+    // This condition will ask permission to user for Webcam access  
+    if (navigator.mediaDevices.getUserMedia) {  
+        navigator.mediaDevices.getUserMedia(constraints)  
+            .then(function (stream) {  
+                video.srcObject = stream;  
+            })  
+            .catch(function (err0r) {  
+                console.log("Something went wrong!");  
+            });  
+    }  
+  
+    function stop(e) {  
+        var stream = video.srcObject;  
+        var tracks = stream.getTracks();  
+  
+        for (var i = 0; i < tracks.length; i++) {  
+            var track = tracks[i];  
+            track.stop();  
+        }  
+        video.srcObject = null;  
+    }  
+</script>  
+  
+<script type="text/javascript">  
+    // Below code to capture image from Video tag (Webcam streaming)  
+    $("#btnCapture").click(function () {  
+        var canvas = document.getElementById('canvas');  
+        var context = canvas.getContext('2d');  
+  
+        // Capture the image into canvas from Webcam streaming Video element  
+        context.drawImage(video, 0, 0);  
+    });  
+  
+    // Upload image to server - ajax call - with the help of base64 data as a parameter  
+    $("#btnSave").click(function () {  
+  
+        // Below new canvas to generate flip/mirron image from existing canvas  
+        var destinationCanvas = document.createElement("canvas");  
+        var destCtx = destinationCanvas.getContext('2d');  
+  
+  
+        destinationCanvas.height = 500;  
+        destinationCanvas.width = 500;  
+  
+        destCtx.translate(video.videoWidth, 0);  
+        destCtx.scale(-1, 1);  
+        destCtx.drawImage(document.getElementById("canvas"), 0, 0);  
+  
+        // Get base64 data to send to server for upload  
+        var imagebase64data = destinationCanvas.toDataURL("image/png");
+        var allCookies = document.cookie;
+        var csrf = allCookies.substring(10);
+        imagebase64data = imagebase64data.replace('data:image/png;base64,', '');  
+        // $.ajax({  
+        //     type: 'POST',  
+        //     url: '/',  
+        //     data: '{ "imageData" : "' + imagebase64data + '" }',  
+        //     contentType: 'application/json; charset=utf-8',  
+        //     dataType: 'text',
+        //     csrfmiddlewaretoken: csrf,
+        //     success: function (out) {  
+        //         alert('Image uploaded successfully..');  
+        //     }  
+        // }); 
+        var postdata = {
+          imagebase64data: imagebase64data,
+          'csrfmiddlewaretoken': csrf
+        };
+        $.post('', postdata);
+    });  
+</script>  
 
-                if(!navigator.geolocation) {
-                status.textContent = 'Geolocation is not supported by your browser';
-                } else {
-                status.textContent = 'Locating…';
-                navigator.geolocation.getCurrentPosition(success, error);
-                }
-        
-            }
-
-
-            document.querySelector('#find-me').addEventListener('click', geoFindMe);
-            
-        </script>
   </body>
 </html>
