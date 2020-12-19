@@ -370,5 +370,3 @@ def vote(request):
             request.session['option']=dicti
             return redirect('vote')
         return render(request,'svote.html',{'contestantList':contestantList,'max_len':max_len})
-    
-    
