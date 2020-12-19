@@ -99,7 +99,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'postgresql451',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -145,11 +145,16 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATIC_ROOT = ''
 
+<<<<<<< HEAD
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_URL = '/images/'
+=======
 # MEDIA_ROOT = '/home/dhaka/projects/swc/Election_Portal_2020/media'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 MEDIA_URL = '/images/'
 
+>>>>>>> 8d97fd083180b7a39b59f4640ff2c5d7742105e1
 AUTH_ADFS = {
     "TENANT_ID": "850aa78d-94e1-4bc6-9cf3-8c11b530701c",
     "CLIENT_ID": "28024e5d-ba48-4a7a-bf64-b026271cce73",

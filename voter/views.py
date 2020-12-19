@@ -100,35 +100,35 @@ def voteCountModifier(request):
 def getMeSelectedCandidates(request):
     dicti=request.session.get('option')
     selectedCandidates = []
-    if not dicti['vp'] == 'NOTA':
+    if not dicti['vp'] == 'VP':
         selectedCandidates.append(('vp',Contestant.objects.get(pk=dicti['vp'])))
     else:
         selectedCandidates.append(('vp','NOTA')) 
-    if not dicti['hab'] == 'NOTA':
+    if not dicti['hab'] == 'HAB':
         selectedCandidates.append(('hab',Contestant.objects.get(pk=dicti['hab'])))
     else:
         selectedCandidates.append(('hab','NOTA'))    
-    if not dicti['tech'] == 'NOTA':
+    if not dicti['tech'] == 'Tech':
         selectedCandidates.append(('tech',Contestant.objects.get(pk=dicti['tech'])))
     else:
         selectedCandidates.append(('tech','NOTA'))
-    if not dicti['cult'] == 'NOTA':
+    if not dicti['cult'] == 'Cult':
         selectedCandidates.append(('cult',Contestant.objects.get(pk=dicti['cult'])))
     else:
         selectedCandidates.append(('cult','NOTA'))
-    if not dicti['sports'] == 'NOTA':
+    if not dicti['sports'] == 'Sports':
         selectedCandidates.append(('sports',Contestant.objects.get(pk=dicti['sports'])))
     else:
         selectedCandidates.append(('sports','NOTA'))    
-    if not dicti['welfare'] == 'NOTA':
+    if not dicti['welfare'] == 'Welfare':
         selectedCandidates.append(('welfare',Contestant.objects.get(pk=dicti['welfare'])))
     else:
         selectedCandidates.append(('welfare','NOTA'))    
-    if not dicti['sail'] == 'NOTA':
+    if not dicti['sail'] == 'SAIL':
         selectedCandidates.append(('sail',Contestant.objects.get(pk=dicti['sail'])))
     else:
         selectedCandidates.append(('sail','NOTA'))    
-    if not dicti['swc'] == 'NOTA':
+    if not dicti['swc'] == 'SWC':
         selectedCandidates.append(('swc',Contestant.objects.get(pk=dicti['swc'])))
     else:
         selectedCandidates.append(('swc','NOTA'))    
@@ -328,7 +328,7 @@ def vote(request):
         contestantList = Contestant.objects.all().filter(post='SWC').order_by('?')
         if request.method == "POST":
             if request.POST['choice'] == 'SWC':
-                dicti['swc'] = 'NOTA'
+                dicti['swc'] = 'NOTA'           
             else:
                 cont = Contestant.objects.get(pk=request.POST['choice'])
                 if cont.post == 'SWC':
