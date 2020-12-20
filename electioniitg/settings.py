@@ -11,7 +11,16 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-
+if os.name == 'nt':
+    import platform
+    OSGEO4W = r"C:\OSGeo4W"
+    if '64' in platform.architecture()[0]:
+        OSGEO4W += "64"
+    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
+    os.environ['OSGEO4W_ROOT'] = OSGEO4W
+    os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
+    os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
+    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -40,6 +49,9 @@ INSTALLED_APPS = [
     'voter',
     'django_auth_adfs',
     'captcha',
+    'django_extensions',
+    'geolocation',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +82,7 @@ TEMPLATES = [
         },
     },
 ]
+
 AUTHENTICATION_BACKENDS = (
     'django_auth_adfs.backend.AdfsAuthCodeBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -77,14 +90,18 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = 'electioniitg.wsgi.application'
 
-
+GOOGLE_RECAPTCHA_SECRET_KEY = '6LdK8QwaAAAAAC7HhHk0lJri0sFN4ADnNAgpoq-Y'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+   'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgresql451',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
@@ -128,8 +145,11 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATIC_ROOT = ''
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
-# MEDIA_URL = '/images/'
+# MEDIA_ROOT = '/home/dhaka/projects/swc/Election_Portal_2020/media'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+MEDIA_URL = '/images/'
+
 AUTH_ADFS = {
     "TENANT_ID": "850aa78d-94e1-4bc6-9cf3-8c11b530701c",
     "CLIENT_ID": "28024e5d-ba48-4a7a-bf64-b026271cce73",
@@ -141,5 +161,4 @@ AUTH_ADFS = {
 # Configure django to redirect users to the right URL for login
 LOGIN_URL = "django_auth_adfs:login"
 LOGIN_REDIRECT_URL = "/voter/verify"
-
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

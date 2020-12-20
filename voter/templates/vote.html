@@ -1,0 +1,20 @@
+{% extends "base_copy.html" %}
+{% block content %}
+{{contestantList.0}}      
+<form method="post">
+    {% csrf_token %}
+    <select name="choice">
+    {% for i in contestantList %}
+    
+    <option value="{{i.pk}}">{{i.name}}</option>
+    {% endfor %}
+    <option value="{{post}}">NOTA</option>
+    
+    </select> 
+    <button type="submit">Save</button>   
+</form>
+{% endblock %}
+<!-- request.POST['choice'] -->
+<!-- value == pk -->
+<!-- value for nota == post -->
+<!-- only one should be selected -->

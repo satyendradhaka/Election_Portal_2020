@@ -1,0 +1,61 @@
+{% extends "base_copy.html" %}
+{% block content %}
+<head>
+ 
+    <script type="text/javascript">
+        function checkboxlimit(checkgroup, nota, submit, limit){
+            var checkgroup=checkgroup
+            var limit=limit
+            var nota=nota
+            var checked=0
+            var submit=0
+            for (var i=0; i<checkgroup.length; i++){
+                checkgroup[i].onclick=function(){
+                var checkedcount=0
+                for (var i=0; i<checkgroup.length; i++){
+                    checkedcount+=(checkgroup[i].checked)? 1 : 0
+                    checked=checkedcount
+                    if (nota.checked && checkedcount>0){
+                        alert('fuck off')
+                        this.checked=false
+                    }
+                }
+                if (checkedcount>limit){
+                    alert("You can only select a maximum of "+limit+" checkboxes")
+                    this.checked=false
+                    }
+                }
+            }
+            nota.onclick=function(){
+                if (checked>0 && nota.checked){
+                    alert('u can only select nota or senate, fuck off')
+                    this.checked=false
+                }
+            }
+
+        }
+        
+        </script>
+    </head> 
+<form id="senate" name='senate' method="post">
+    {% csrf_token %}
+    {% for i in contestantList %}
+           <!-- put all the required user data here -->
+        
+        <input type="checkbox" name="choice" value={{i.pk}}>{{i.name}}<br>
+    {% endfor %}    
+    <input type="checkbox" name="nota" id="NOTA" value="NOTA">NOTA<br>
+    <button type="submit" name="submit">submit</button>
+    
+</form>
+<script type="text/javascript">
+    var len = "{{max_len}}"
+    console.log(len)
+    var l = parseInt(len)
+    //Syntax: checkboxlimit(checkbox_reference, limit)
+    checkboxlimit(document.forms.senate.choice, document.forms.senate.nota, document.forms.senate.submit, l)
+    
+    </script>
+{% endblock %}
+
+<!-- atleast one for any  -->

@@ -1,0 +1,17 @@
+{% extends "base_copy.html" %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+{% for candidate in selectedCandidates %}
+    {% if candidate.0 == "bsen" or candidate.0 == "gsen" %}
+        {{candidate.1}}
+    {% else %}
+        {{candidate.1}}
+    {%endif%}
+    <button type="submit" name="choice" value={{candidate.0}}>Review</button>
+    <br>
+{% endfor %}
+    <button type="submit" name="choice" value="done">Save and Submit</button>
+</form>
+{% endblock %}
+<!-- candidate.0 is the post and candidate.1 is the candidate object or NOTA can access any of the properties -->
