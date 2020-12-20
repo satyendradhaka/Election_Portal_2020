@@ -1,27 +1,31 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Voter,Contestant
-from .forms import CaptchaTestForm
+# from .forms import CaptchaTestForm
 from functools import wraps
 from datetime import datetime
 import time
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.gis.geos import Point
 # if you click a vote before reloading time of another vote its showing a glitch 
 # which we think will be resolved when we cahnge the vote to choice fields intead
 # of buttons in templates
-
 
 def captcha_required(function):
   @wraps(function)
   def wrap(request, *args, **kwargs):
     captcha = request.session.get('human',False)
-    if not captcha:
+    location = request.session.get('location',False)
+    image = request.session.get('image',False)
+    b = captcha and location and image
+    print(captcha,location,image)
+    if not b:
         return redirect('captcha')
     else:
         return function(request, *args, **kwargs)    
   return wrap
+
 
 def is_valid(function):
     @wraps(function)
@@ -38,17 +42,17 @@ def is_valid(function):
 
     return wrap
 
-@login_required    
-def verify(request):
-    if request.method=="POST":
-        form = CaptchaTestForm(request.POST)
-        if form.is_valid():
-            request.session['human'] = True
-            return redirect('vote')
-    else:
-        form = CaptchaTestForm()
+# @login_required    
+# def verify(request):
+#     if request.method=="POST":
+#         form = CaptchaTestForm(request.POST)
+#         if form.is_valid():
+#             request.session['human'] = True
+#             return redirect('vote')
+#     else:
+#         form = CaptchaTestForm()
 
-    return render(request, 'captchaVerify.html', {'form': form})
+#     return render(request, 'captchaVerify.html', {'form': form})
 
 @login_required
 @captcha_required
@@ -227,6 +231,7 @@ def vote(request):
                 #encrypt the string using our function
                 voter.vote_string = vote_string
                 voter.vote_time = datetime.now()
+                voter.voter_location = Point(request.session['longitude'], request.session['latitude'])
                 voter.save()
                 return HttpResponse("done")
             elif request.POST['choice'] == "bsen" or request.POST['choice'] == "gsen":

@@ -9,7 +9,6 @@ urlpatterns = [
 	path('voter/', include('voter.urls')),
 	path('admin/', admin.site.urls),
     path('oauth2/', include('django_auth_adfs.urls')),
-    path('captcha/', include('captcha.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

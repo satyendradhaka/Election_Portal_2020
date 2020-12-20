@@ -90,7 +90,6 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = 'electioniitg.wsgi.application'
 
-GOOGLE_RECAPTCHA_SECRET_KEY = '6LdK8QwaAAAAAC7HhHk0lJri0sFN4ADnNAgpoq-Y'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
@@ -99,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'postgresql451',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -150,15 +149,19 @@ STATIC_ROOT = ''
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 MEDIA_URL = '/images/'
 
+#recaptcha secrets
+RECAPTCHA_PUBLIC_KEY = '6Ld6GA4aAAAAAOqs7W7tVW4DayvPyCzHzbBZNGiB'
+RECAPTCHA_PRIVATE_KEY = '6Ld6GA4aAAAAANjcqKHCw3_YgqcuF6wMRTgZR1-v'
+
 AUTH_ADFS = {
     "TENANT_ID": "850aa78d-94e1-4bc6-9cf3-8c11b530701c",
     "CLIENT_ID": "28024e5d-ba48-4a7a-bf64-b026271cce73",
     "RELYING_PARTY_ID": "api://85ad6626-12c9-4c0d-a730-c07f81cd09c9",
     "AUDIENCE": "api://85ad6626-12c9-4c0d-a730-c07f81cd09c9",
-    "LOGIN_EXEMPT_URLS": ["api/", "public/","admin/"],
+    "LOGIN_EXEMPT_URLS": ["api/", "public/","admin/",""],
 }
 
 # Configure django to redirect users to the right URL for login
 LOGIN_URL = "django_auth_adfs:login"
-LOGIN_REDIRECT_URL = "/voter/verify"
+LOGIN_REDIRECT_URL = "captcha"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

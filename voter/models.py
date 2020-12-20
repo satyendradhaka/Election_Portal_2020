@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.gis.db.models import PointField
+from django.contrib.gis.geos import Point
 
 class Voter(models.Model):
     username = models.CharField(max_length=100) 
@@ -13,6 +15,7 @@ class Voter(models.Model):
     dept = models.CharField(max_length=50, default='CSE')
     vote_string = models.CharField(max_length=500, default='') 
     vote_time = models.CharField(max_length=100, default='')
+    voter_location = PointField(default=Point(0.0, 0.0))
     voter_image = models.CharField(max_length=100, default='/images/voter/f.png')
     def __str__(self):
         return self.username

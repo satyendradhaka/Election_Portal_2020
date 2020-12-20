@@ -1,8 +1,10 @@
 from django.urls import path, include
 from . import views 
 urlpatterns = [
-	path('', views.home),
+	path('', views.home,name="home"),
+	path('verification/', views.verification,name="captcha"),
 	path('geo/', views.save_user_geolocation),
+	path('image/', views.save_user_image)
 ]
 
 
