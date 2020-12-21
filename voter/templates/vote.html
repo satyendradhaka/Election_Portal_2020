@@ -8,17 +8,12 @@
 {% endblock designation_info %}
 
 {% block next_text %}
-  HAB
+<li class="next-text"> HAB</li>
 {% endblock next_text %}
-    {% block save_and_next %}
-    <button type="submit" class="buton waves-effect waves-light" onclick="" type="button"><a href="#"><span id="button_text">Save and Next</span></a></button>
-    {% endblock save_and_next %}
 
-{% block content %}
-<!-- {{contestantList.0}}       -->
-<form method="post">
-    {% csrf_token %}
-    <div class="row bottom-info" style="margin-top: 305px; margin-bottom:0;">
+{% block content %}        
+      
+   <div class="row bottom-info" style="margin-top: 305px; margin-bottom:0;">
     {% for i in contestantList %}
       <div class="center col  s3 ">
         <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
@@ -50,14 +45,12 @@
           </div>
         </div>
     </div>
-
-    <button type="submit">Save</button>   
-</form>
-  <script>
     
-  </script>
-{% endblock %}
-<!-- request.POST['choice'] -->
-<!-- value == pk -->
-<!-- value for nota == post -->
-<!-- only one should be selected -->
+  </div>
+{% endblock content %}
+
+{% block save_and_next %}
+  <li class="content_button">
+    <button type="submit" class="buton waves-effect waves-light" onclick="" type="button"><a href="#"><span id="button_text">Save and Next</span></a></button>
+  </li>
+{% endblock save_and_next %} 
