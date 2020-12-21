@@ -1,8 +1,51 @@
-<p>
+<!-- <p>
     if logged in than ask user to give permission for camera and geolocation on next page
     else show login with outlook
 </p>
 
 <a href="/oauth2/login">login with outlook</a>
 
-<a href="/verification/">verify yourself</a>
+<a href="/verification/">verify yourself</a> -->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <!-- <title>Document</title> -->
+</head>
+<body>
+    <div class="partition"></div>
+    
+    <div class="row">
+        <div class="col s6">
+            <a href="#"><img class="logo-vote" src="https://www.dropbox.com/s/vm51cw4ldqru3t7/vote_2.png?raw=1"></a>
+            <a href="#"><img class="logo-iitg" src="https://www.dropbox.com/s/o5i6tn2jwb34vjh/iitg.png?raw=1" alt=""></a>
+            <h1 class="election-titile">Gymkhana Elections 2021</h1>
+        </div>
+        <div class="center right-col col s6">
+            <h3 class="rules-heading">Terms and Conditions</h3>
+            <p>1. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis ipsum at convallis integer nibh arcu praesent tellus. Dictum lacus quisque habitant convallis non scelerisque tortor a.</p>
+            <p>2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis ipsum at convallis integer nibh arcu praesent tellus. Dictum lacus quisque habitant convallis non scelerisque tortor a.</p>
+            <p>3. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis ipsum at convallis integer nibh arcu praesent tellus. Dictum lacus quisque habitant convallis non scelerisque tortor a.</p>
+            <p>4. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis ipsum at convallis integer nibh arcu praesent tellus. Dictum lacus quisque habitant convallis non scelerisque tortor a.</p>
+            <p>5. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis ipsum at convallis integer nibh arcu praesent tellus. Dictum lacus quisque habitant convallis non scelerisque tortor a.</p>
+            <p>6. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis ipsum at convallis integer nibh arcu praesent tellus. Dictum lacus quisque habitant convallis non scelerisque tortor a.</p>
+            <div class="tandc">
+                <img src="https://www.dropbox.com/s/xe9vn04wqp9xvhw/check-square.png?raw=1" alt="">
+                I agree with the above terms and conditions
+            </div>
+            <div class="conclusion">
+                <!-- <a class="privacy-policy" href="#">Read Privacy Policy</a> -->
+                <button class="center buton" type="button"><a href="/oauth2/login"><span id="button_text">Login with outlook</span></a></button>
+            </div>
+        </div>
+    </div>
+</body>

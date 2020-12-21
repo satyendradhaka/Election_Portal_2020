@@ -1,18 +1,61 @@
 {% extends "base_copy.html" %}
+{% block designation %}
+    {{post}}
+{% endblock designation %}
+
+{% block designation_info %}
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+{% endblock designation_info %}
+
+{% block next_text %}
+  HAB
+{% endblock next_text %}
+    {% block save_and_next %}
+    <button type="submit" class="buton waves-effect waves-light" onclick="" type="button"><a href="#"><span id="button_text">Save and Next</span></a></button>
+    {% endblock save_and_next %}
+
 {% block content %}
-{{contestantList.0}}      
+<!-- {{contestantList.0}}       -->
 <form method="post">
     {% csrf_token %}
-    <select name="choice">
+    <div class="row bottom-info" style="margin-top: 305px; margin-bottom:0;">
     {% for i in contestantList %}
-    
-    <option value="{{i.pk}}">{{i.name}}</option>
+      <div class="center col  s3 ">
+        <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
+        <h5>{{i.name}}</h5>
+        <h4>Final Year Masters in Computer Science</h4>
+        <h5>Agenda</h5>
+        <ul class="browser-default">
+          <li style="font-size: 1.3em;">{{i.agenda1}}</li>
+          <li style="font-size: 1.3em;">{{i.agenda2}}</li>
+          <li style="font-size: 1.3em;">{{i.agenda3}}</li>
+          <li style="font-size: 1.3em;">{{i.agenda4}}</li>
+        </ul>
+        <hr>
+        <div class="vote-box">
+          <div class='vote-button'><button class="ripple waves-effect"  value="{{i.pk}}" name="choice"></button></div>
+        </div>
+      </div>
+        {% if forloop.counter|divisibleby:4 and not 0 %}
+            </div>
+            <div class="row bottom-info">
+        {% endif %}
     {% endfor %}
-    <option value="{{post}}">NOTA</option>
-    
-    </select> 
+        <div class="center col s3">
+          <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
+          <h5>NOTA</h5>
+          <hr>
+          <div class="vote-box">
+            <div class='vote-button'><button class="ripple waves-effect"  value="{{post}}" name="choice"></button></div>
+          </div>
+        </div>
+    </div>
+
     <button type="submit">Save</button>   
 </form>
+  <script>
+    
+  </script>
 {% endblock %}
 <!-- request.POST['choice'] -->
 <!-- value == pk -->
