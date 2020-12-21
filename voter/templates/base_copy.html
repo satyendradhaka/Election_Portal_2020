@@ -1,6 +1,51 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+        <link rel="stylesheet" href="{% static 'css/base_copy.css' %}">
+
+</head>
 <body>
-        {% block content %}{% endblock %}
+        <div class="row">
+        <div class="col s6 top-info">
+                <h1 style="font-family: Atkinson Hyperlegible;">{% block designation %}{% endblock designation %}</h1>
+                <p class="info-para">{% block designation_info %} {% endblock designation_info %}</p>
+        </div>
+        <div class="top-info-right">
+                <div class="timer-1">
+                        <div class="center">
+                                20
+                        </div>
+                </div>
+                <div class="circle-1"> </div>
+                <div class="circle-2"> </div>
+                <div class="timer-2">
+                        <div class="center">
+                                00
+                        </div>
+                </div>
+                <ul>
+                        <li class="content_button">
+                                {% block save_and_next %}
+                                {% endblock save_and_next %}
+                        </li>
+                        <li class="next-text">
+                                {% block next_text %}
+                                  
+                                {% endblock next_text %}
+                        </li>
+                </ul>
+        </div>
+       {% block content %}
+         
+       {% endblock content %}  
 </body>
 </html>

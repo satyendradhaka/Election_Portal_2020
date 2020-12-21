@@ -2,6 +2,7 @@ import csv
 import random
 from django.utils.encoding import smart_str
 from voter.models import Contestant, Voter
+from django.contrib.gis.geos import Point
 
 CHARS = "abcdefghjkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789"
 
@@ -16,12 +17,14 @@ def csv_to_voter():
 		dept = smart_str(row[3])
 		vote_string=""
 		vote_time = ""
+		voter_loc = Point(0.0,0.0)
 		voter = Voter(username=username,
 			category=category,
 			hostel=hostel,
 			dept=dept,
 			vote_string = vote_string,
-			vote_time= vote_time
+			vote_time= vote_time,
+			voter_location = voter_loc
 		)
 
 		voter.save()
