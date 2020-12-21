@@ -13,7 +13,11 @@
 
 {% block save_and_next %}
   <li class="content_button">
-    <button type="submit" onclick="call_post_req()" class="buton waves-effect waves-light" onclick="" type="button"><a href="#"><span id="button_text">Save and Next</span></a></button>
+    <form method="post"><!-- onsubmit="call_post_req()" -->
+      {% csrf_token %}
+      <input type="hidden" name="choice" id="res">
+      <button class="buton waves-effect waves-light" type="submit"><span id="button_text">Save and Next</span></button>
+    </form>  
   </li>
 {% endblock save_and_next %} 
 {% block content %}        
@@ -54,31 +58,27 @@
     
   </div>
   <script>
-    var vote_chosen=null;
+    // var vote_chosen=null;
     function voteClick(the_chosen_one) {
-      vote_chosen = the_chosen_one;
-      console.log(vote_chosen)
+      document.getElementById("res").value = the_chosen_one;
+      // vote_chosen = the_chosen_one;
+      // console.log(vote_chosen);
     }
 
-    // async function call_post_req(){
-    //   await post_req(vote_chosen);
-    //   window.location.replace('http://localhost:8000/voter/vote/');
+    // function call_post_req(){
+    //   post_req(vote_chosen);
     // }
-    const call_post_req = async()=>{
-      console.log(vote_chosen)
-      let d = await post_req(vote_chosen);
-      window.location.replace('http://localhost:8000/voter/vote/');
-    }
+  
 
-    function post_req(data) {
-        var allCookies = document.cookie;
-        var csrf = allCookies.substring(10);
-        var postdata = {
-            choice: data,
-            'csrfmiddlewaretoken': csrf
-        };
-        $.post('/voter/vote/', postdata);
-    }
+    // function post_req(data) {
+    //     var allCookies = document.cookie;
+    //     var csrf = allCookies.substring(10);
+    //     var postdata = {
+    //         choice: data,
+    //         'csrfmiddlewaretoken': csrf
+    //     };
+    //     $.post('/voter/vote/', postdata);
+    // }
   </script>
 {% endblock content %}
 
