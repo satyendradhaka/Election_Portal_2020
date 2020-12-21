@@ -11,8 +11,13 @@
 <li class="next-text"> HAB</li>
 {% endblock next_text %}
 
+{% block save_and_next %}
+  <li class="content_button">
+    <button type="submit" onclick="call_post_req()" class="buton waves-effect waves-light" onclick="" type="button"><a href="#"><span id="button_text">Save and Next</span></a></button>
+  </li>
+{% endblock save_and_next %} 
 {% block content %}        
-      
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>  
    <div class="row bottom-info" style="margin-top: 305px; margin-bottom:0;">
     {% for i in contestantList %}
       <div class="center col  s3 ">
@@ -28,7 +33,8 @@
         </ul>
         <hr>
         <div class="vote-box">
-          <div class='vote-button'><button class="ripple waves-effect"  value="{{i.pk}}" name="choice"></button></div>
+          <div class='vote-button' data-default-text="Vote"
+          data-alt-text="Voted"><button class="ripple waves-effect" onclick="voteClick(this.value)" value="{{i.pk}}" name="choice"></button></div>
         </div>
       </div>
         {% if forloop.counter|divisibleby:4 and not 0 %}
@@ -41,16 +47,38 @@
           <h5>NOTA</h5>
           <hr>
           <div class="vote-box">
-            <div class='vote-button'><button class="ripple waves-effect"  value="{{post}}" name="choice"></button></div>
+            <div class='vote-button'><button class="ripple waves-effect" onclick="voteClick(this.value)" value="{{post}}" name="choice"></button></div>
           </div>
         </div>
     </div>
     
   </div>
+  <script>
+    var vote_chosen=null;
+    function voteClick(the_chosen_one) {
+      vote_chosen = the_chosen_one;
+      console.log(vote_chosen)
+    }
+
+    // async function call_post_req(){
+    //   await post_req(vote_chosen);
+    //   window.location.replace('http://localhost:8000/voter/vote/');
+    // }
+    const call_post_req = async()=>{
+      console.log(vote_chosen)
+      let d = await post_req(vote_chosen);
+      window.location.replace('http://localhost:8000/voter/vote/');
+    }
+
+    function post_req(data) {
+        var allCookies = document.cookie;
+        var csrf = allCookies.substring(10);
+        var postdata = {
+            choice: data,
+            'csrfmiddlewaretoken': csrf
+        };
+        $.post('/voter/vote/', postdata);
+    }
+  </script>
 {% endblock content %}
 
-{% block save_and_next %}
-  <li class="content_button">
-    <button type="submit" class="buton waves-effect waves-light" onclick="" type="button"><a href="#"><span id="button_text">Save and Next</span></a></button>
-  </li>
-{% endblock save_and_next %} 

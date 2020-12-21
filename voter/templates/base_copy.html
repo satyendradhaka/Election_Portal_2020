@@ -13,9 +13,7 @@
         <link rel="stylesheet" href="{% static 'css/base_copy.css' %}">
 
 </head>
-<body>
-        <form method = "post">
-                {% csrf_token %}    
+<body>   
         <div class="row">
         <div class="col s6 top-info">
                 <h1 style="font-family: Atkinson Hyperlegible;">{% block designation %}{% endblock designation %}</h1>
@@ -49,6 +47,5 @@
         </div>
        {% block content %}          
        {% endblock content %}  
-        </form>
 </body>
 </html>
