@@ -229,7 +229,7 @@ html {
   z-index: 0;
   margin: auto;
   margin-bottom: 20px;
-  background: #FEFEFE;
+  /* background: #FEFEFE; */
   border-radius: 100%;
   /* border: none; */
   /* outline: none; */

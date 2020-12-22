@@ -1,61 +1,132 @@
 {% extends "base_copy.html" %}
-{% block content %}
-<head>
- 
-    <script type="text/javascript">
-        function checkboxlimit(checkgroup, nota, submit, limit){
-            var checkgroup=checkgroup
-            var limit=limit
-            var nota=nota
-            var checked=0
-            var submit=0
-            for (var i=0; i<checkgroup.length; i++){
-                checkgroup[i].onclick=function(){
-                var checkedcount=0
-                for (var i=0; i<checkgroup.length; i++){
-                    checkedcount+=(checkgroup[i].checked)? 1 : 0
-                    checked=checkedcount
-                    if (nota.checked && checkedcount>0){
-                        alert('fuck off')
-                        this.checked=false
-                    }
-                }
-                if (checkedcount>limit){
-                    alert("You can only select a maximum of "+limit+" checkboxes")
-                    this.checked=false
-                    }
-                }
-            }
-            nota.onclick=function(){
-                if (checked>0 && nota.checked){
-                    alert('u can only select nota or senate, fuck off')
-                    this.checked=false
-                }
-            }
 
-        }
-        
-        </script>
-    </head> 
-<form id="senate" name='senate' method="post">
+{% block designation %}
+    {{post}}
+{% endblock designation %}
+
+{% block designation_info %}
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+{% endblock designation_info %}
+
+{% block next_text %}
+<li class="next-text"> HAB</li>
+{% endblock next_text %}
+
+{% block save_and_next %}
+  <li class="content_button">
+    <form method="post"><!-- onsubmit="call_post_req()" -->
+      {% csrf_token %}
+      {% for i in contestantList %}
+        <input type="checkbox" style="opacity: 0; height: 0; width: 0;" name="choice" id="hidden{{i.pk}}" value="{{i.pk}}">  
+        <!-- <input type="hidden" name="choice" class="{{i.pk}}"> -->
+      {% endfor %}
+      <input type="checkbox" style="opacity: 0; height: 0; width: 0;" class="hidden_inputs" name="nota" id="hiddenNOTA" value="NOTA">
+      <button name="submit" class="buton waves-effect waves-light" type="submit"><span id="button_text">Save and Next</span></button>
+    </form>  
+  </li>
+{% endblock save_and_next %} 
+
+{% block content %}
+<!-- <head> -->
+<!-- </head>  -->
+<!-- <form id="senate" name='senate' method="post">
     {% csrf_token %}
+
     {% for i in contestantList %}
-           <!-- put all the required user data here -->
+           put all the required user data here
         
         <input type="checkbox" name="choice" value={{i.pk}}>{{i.name}}<br>
     {% endfor %}    
     <input type="checkbox" name="nota" id="NOTA" value="NOTA">NOTA<br>
     <button type="submit" name="submit">submit</button>
     
-</form>
-<script type="text/javascript">
-    var len = "{{max_len}}"
-    console.log(len)
-    var l = parseInt(len)
-    //Syntax: checkboxlimit(checkbox_reference, limit)
-    checkboxlimit(document.forms.senate.choice, document.forms.senate.nota, document.forms.senate.submit, l)
+</form> -->
+
+<div class="row bottom-info" style="margin-top: 305px; margin-bottom:0;">
+    {% for i in contestantList %}
+      <div class="center col  s3 ">
+        <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
+        <h5>{{i.name}}</h5>
+        <h4>Final Year Masters in Computer Science</h4>
+        <h5>Agenda</h5>
+        <ul class="browser-default">
+          <li style="font-size: 1.3em;">{{i.agenda1}}</li>
+          <li style="font-size: 1.3em;">{{i.agenda2}}</li>
+          <li style="font-size: 1.3em;">{{i.agenda3}}</li>
+          <li style="font-size: 1.3em;">{{i.agenda4}}</li>
+        </ul>
+        <hr>
+        <div class="vote-box">
+          <div class='vote-button' data-default-text="Vote"
+          data-alt-text="Voted"><button style="background-color: white;" name="choice" class="ripple waves-effect" id="{{i.pk}}" onclick="voteClick(this.value)" value="{{i.pk}}"></button></div>
+        </div>
+      </div>
+        {% if forloop.counter|divisibleby:4 and not 0 %}
+            </div>
+            <div class="row bottom-info">
+        {% endif %}
+    {% endfor %}
+        <div class="center col s3">
+          <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
+          <h5>NOTA</h5>
+          <hr>
+          <div class="vote-box">
+            <div class='vote-button'><button style="background-color: white;" name="nota" class="ripple waves-effect" id="NOTA" onclick="voteClick(this.value)" value="NOTA"></button></div>
+          </div>
+        </div>
+    </div>
     
-    </script>
+  </div>
+
+<script type="text/javascript">
+    var len = "{{max_len}}";
+    console.log("Hi{{max_len}}")
+    // // console.log(len)
+    var l = parseInt(len)
+    // //Syntax: checkboxlimit(checkbox_reference, limit)
+    // //checkboxlimit(document.forms.senate.choice, document.forms.senate.nota, document.forms.senate.submit, l)
+    // checkboxlimit(document.choice,document.nota,document.submit,l);
+    var choices = new Set(); 
+    function voteClick(the_chosen_one) {
+      console.log(the_chosen_one)
+      var element = document.getElementById(the_chosen_one);
+      if (element.style.backgroundColor == "white") {
+          if(the_chosen_one=="NOTA"){
+            console.log('inside selected nota')
+            choices.forEach(function (value1, value2, set) {
+                document.getElementById(value2).style.backgroundColor = "white";
+                document.getElementById("hidden"+value2).checked = false;
+            })
+            element.style.backgroundColor = "#2B00FF";
+            document.getElementById("hidden"+the_chosen_one).checked = true;
+            choices.clear();
+            choices.add(the_chosen_one);
+          }  
+          else if(choices.size>=l){
+            alert("you can select maximum of "+l);
+          }
+          
+          else if(choices.has("NOTA")){
+            document.getElementById("NOTA").style.backgroundColor = "white";
+            document.getElementById("hiddenNOTA").checked=false;
+            choices.clear();
+            choices.add(the_chosen_one);
+            element.style.backgroundColor = "#2B00FF";
+            document.getElementById("hidden"+the_chosen_one).checked=true;
+          }
+          else{
+            element.style.backgroundColor = "#2B00FF";
+            choices.add(the_chosen_one);
+            document.getElementById("hidden"+the_chosen_one).checked=true;
+          }
+        } 
+        else {
+            element.style.backgroundColor = "white";
+        }
+      // vote_chosen = the_chosen_one;
+      // console.log(vote_chosen);
+    }
+</script>
 {% endblock %}
 
 <!-- atleast one for any  -->
