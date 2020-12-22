@@ -227,7 +227,7 @@ def vote(request):
             
             if request.POST['choice'] == "done":
                 voter.final_submit = True
-                vote_string=voteCountModifier(request)
+                vote_string=voteCountModifier(request)  
                 #encrypt the string using our function
                 voter.vote_string = vote_string
                 voter.vote_time = datetime.now()
