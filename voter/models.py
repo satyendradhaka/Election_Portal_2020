@@ -13,7 +13,8 @@ class Voter(models.Model):
     final_submit = models.BooleanField(default=False) #0 if false 1 if true
     hostel = models.CharField(max_length=50, default='MANAS')
     dept = models.CharField(max_length=50, default='CSE')
-    vote_string = models.CharField(max_length=500, default='') 
+    vote_string1 = models.CharField(max_length=5000, default='')
+    vote_string2 = models.CharField(max_length=5000, default='') 
     vote_time = models.CharField(max_length=100, default='')
     voter_location = PointField(default=Point(0.0, 0.0))
     voter_image = models.CharField(max_length=100, default='/images/voter/f.png')
