@@ -22,12 +22,12 @@
 {% endblock save_and_next %} 
 {% block content %}        
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>  
-   <div class="row bottom-info" style="margin-top: 305px; margin-bottom:0;">
+   <div class="row bottom-info" style="margin-top: 310.13px; margin-bottom:0;">
     {% for i in contestantList %}
-      <div class="center col  s3 ">
+      <div class="center col s12 m3">
         <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
         <h5>{{i.name}}</h5>
-        <h4>Final Year Masters in Computer Science</h4>
+        <h6>Final Year Masters in Computer Science</h6>
         <h5>Agenda</h5>
         <ul class="browser-default">
           <li style="font-size: 1.3em;">{{i.agenda1}}</li>
@@ -46,7 +46,7 @@
             <div class="row bottom-info">
         {% endif %}
     {% endfor %}
-        <div class="center col s3">
+        <div class="center col s12 m3">
           <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
           <h5>NOTA</h5>
           <hr>
