@@ -5,10 +5,12 @@ from voter.models import Voter
 import base64
 from .forms import FormWithCaptcha
 from django.contrib.auth.decorators import login_required
+from voter.views import is_valid
 # from .models import Post
 # from .forms import PostForm
 
 @login_required
+@is_valid
 def save_user_geolocation(request):
     if request.method == 'POST':
         coord = json.loads(request.POST['data'])
@@ -20,7 +22,8 @@ def save_user_geolocation(request):
         print(coord)
     return redirect('captcha')
 
-@login_required    
+@login_required
+@is_valid    
 def save_user_image(request):
     username = request.user.username
     image_name = request.user.last_name + ".png"
@@ -48,6 +51,7 @@ def home(request):
 
 
 @login_required
+@is_valid
 def verification(request):
     if not request.method=='POST':
         form = FormWithCaptcha()

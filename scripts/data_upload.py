@@ -15,14 +15,16 @@ def csv_to_voter():
 		category = smart_str(row[1])
 		hostel = smart_str(row[2])
 		dept = smart_str(row[3])
-		vote_string=""
+		vote_string1=""
+		vote_string2=""
 		vote_time = ""
 		voter_loc = Point(0.0,0.0)
 		voter = Voter(username=username,
 			category=category,
 			hostel=hostel,
 			dept=dept,
-			vote_string = vote_string,
+			vote_string1 = vote_string1,
+			vote_string2 = vote_string2,
 			vote_time= vote_time,
 			voter_location = voter_loc
 		)
