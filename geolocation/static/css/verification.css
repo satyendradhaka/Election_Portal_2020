@@ -1,0 +1,14 @@
+#video {
+    position: absolute;
+    left: 35%;
+    top: 19.5%;
+    z-index: 1;
+}
+
+#canvas {
+    position: absolute;
+    /* top: 100%; */
+    top: 20%;
+    left: 35%;
+    z-index: 0;
+}

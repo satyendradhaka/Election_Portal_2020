@@ -9,6 +9,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import Point
 from .encrypt import encryptMessage
+import json as js
 # if you click a vote before reloading time of another vote its showing a glitch 
 # which we think will be resolved when we cahnge the vote to choice fields intead
 # of buttons in templates
@@ -189,7 +190,7 @@ def vote(request):
             'done':False,
             'nota':False,
         },
-        
+
     })
     print(dicti)
     voter = Voter.objects.get(username=request.user.username)
@@ -231,10 +232,11 @@ def vote(request):
                 vote_string=voteCountModifier(request)  
                 #encrypt the string using our function
                 # 103 and 147
-
+                # vote_string = js.dumps(request.session['option'])
+                # print(vote_string)    
                 voter.vote_time = time.time()
                 voter.vote_string1 = encryptMessage(
-                    vote_string[:100], int(voter.vote_time))
+                    vote_string, int(voter.vote_time))
                 voter.vote_string2 = encryptMessage(
                     vote_string[100:], int(voter.vote_time))
                 voter.voter_location = Point(request.session['longitude'], request.session['latitude'])
