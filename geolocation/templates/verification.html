@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +21,8 @@
             filter: FlipH;  
             -ms-filter: "FlipH";  
         }  
-    </style>  
+    </style>
+    <link rel="stylesheet" href="{% static 'css/verification.css' %}">
 </head>
 <body>
     <h1>location verification</h1>
@@ -35,7 +37,7 @@
             <div class="col-lg-6">    
                 <!-- Here we streaming video from webcam -->    
                 <h4>    
-                    Video coming from Webcam  <button class="btn btn-primary" id="btnCapture">Capture to Canvas >></button>    
+                    Video coming from Webcam  <button class="btn btn-primary" id="btnCapture">Click</button>    
                 </h4>    
                 <video id="video" playsinline autoplay></video>    
             </div>    
@@ -91,13 +93,26 @@
   </script>  
     
   <script type="text/javascript">  
+      var pic = false;
       // Below code to capture image from Video tag (Webcam streaming)  
       $("#btnCapture").click(function () {  
+            
           var canvas = document.getElementById('canvas');  
           var context = canvas.getContext('2d');  
     
           // Capture the image into canvas from Webcam streaming Video element  
           context.drawImage(video, 0, 0);  
+          document.getElementById("canvas").style.zIndex = 1;
+          if( pic){
+            document.getElementById("canvas").style.zIndex = 0;
+            document.getElementById("btnCapture").innerHTML = "Click";
+            pic=false;
+          }
+          else{
+            document.getElementById("canvas").style.zIndex = 1;
+            document.getElementById("btnCapture").innerHTML = "Reclick";
+            pic = true;
+          }
       });  
       // Upload image to server - ajax call - with the help of base64 data as a parameter  
       $("#btnSave").click(function () {  
