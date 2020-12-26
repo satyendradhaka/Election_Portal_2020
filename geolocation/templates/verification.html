@@ -183,33 +183,27 @@
         }
       // Below code to capture image from Video tag (Webcam streaming)  
       $("#btnCapture").click(async function () {  
-          faceDetected=false;
-          await sleep(100);
-          if (faceDetected==false){
-              alert('No face in video')
-          }  
-          else{
-
-          
           var canvas = document.getElementById('canvas');  
           var context = canvas.getContext('2d');  
     
           // Capture the image into canvas from Webcam streaming Video element  
           context.drawImage(video, 0, 0);  
-          document.getElementById("canvas").style.zIndex = 1;
-          document.getElementById("video").style.zIndex = 0;
-          if( pic){
-            document.getElementById("canvas").style.zIndex = 0;
-          document.getElementById("video").style.zIndex = 1;
+          if(pic){
+            $('#video').get(0).play();
             document.getElementById("btnCapture").innerHTML = "Click";
             pic=false;
           }
           else{
-            document.getElementById("canvas").style.zIndex = 1;
-          document.getElementById("video").style.zIndex = 0;
-            document.getElementById("btnCapture").innerHTML = "Reclick";
-            pic = true;
-          }}
+            faceDetected=false;
+            await sleep(100);
+            if (faceDetected==false){
+              alert('No face in video')
+            }  
+            else{$('#video').get(0).pause();
+                document.getElementById("btnCapture").innerHTML = "Reclick";
+                pic = true;
+            }
+          }
       }); 
   
       // Upload image to server - ajax call - with the help of base64 data as a parameter  
