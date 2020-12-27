@@ -129,9 +129,9 @@
 					{
 						var r, c, s;
 						faceDetected = true;
-						ctx.beginPath();
+						// ctx.beginPath();
 						ctx.strokeRect(dets[i][1]-0.45*dets[i][2], dets[i][0]-0.45*dets[i][2], dets[i][2],dets[i][2]);
-						ctx.lineWidth = 3;
+						ctx.lineWidth = 2;
 						ctx.strokeStyle = 'red';
 						ctx.stroke();
 						//
@@ -195,11 +195,13 @@
           }
           else{
             faceDetected=false;
-            await sleep(100);
+            await sleep(100);//if the last face detected is before 100 ms dont allow to click
             if (faceDetected==false){
               alert('No face in video')
             }  
-            else{$('#video').get(0).pause();
+            else{
+                
+                $('#video').get(0).pause();
                 document.getElementById("btnCapture").innerHTML = "Reclick";
                 pic = true;
             }
