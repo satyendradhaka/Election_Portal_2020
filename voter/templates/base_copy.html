@@ -4,50 +4,33 @@
 <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    
-        <!-- Compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
+
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
         <link rel="stylesheet" href="{% static 'css/base_copy.css' %}">
 
-        {% block svote_head %} {% endblock svote_head %}
+        {% block vote_js %} {% endblock vote_js %}
+        <script src="{% static 'js/base_copy.js' %}"></script>
 
+        {% block svote_head %} {% endblock svote_head %}
+        <title>Gymkhana Elections</title>
 </head>
-<body>   
-        <div class="row">
-        <div class="col s12 m6 top-info">
-                <h1 style="font-family: Atkinson Hyperlegible Bold;">{% block designation %}{% endblock designation %}</h1>
-                <p class="info-para">{% block designation_info %} {% endblock designation_info %}</p>
-        </div>
-        
-        <div class="top-info-right">
-                <!-- <div class="timer-1">
-                        <div class="center">
-                                20
-                        </div>
-                </div>
-                <div class="circle-1"> </div>
-                <div class="circle-2"> </div>
-                <div class="timer-2">
-                        <div class="center">
-                                00
-                        </div>
-                </div> -->
-                <ul>
-                        
-                                {% block save_and_next %}
-                                {% endblock save_and_next %}
-                        
-                        
-                                {% block next_text %}
-                                  
-                                {% endblock next_text %}
-                        
-                </ul>
-        </div>
-       {% block content %}          
-       {% endblock content %}  
+<body>
+	<div class="relative w-full h-32 sm:h-36 lg:h-40 bg-black gradient-black">
+    <p class="relative top-16 sm:top-20 text-white pl-10 sm:pl-16 lg:pl-20 text-4xl sm:text-5xl" id="title">{% block designation %} {% endblock designation %}</p>
+    <button id="info-btn" class="relative top-8 sm:top-12 mt-1.5 sm:mt-1 ml-5 left-64 sm:left-96"><img src="icons/Group 298.png" alt=""></button>
+    <!-- <p id="info-txt" class="relative text-sm lg:text-base text-white w-80 md:w-96 bottom-16 md:bottom-12 lg:bottom-16 ml-96 pl-20">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti vitae asperiores rerum, aspernatur aut facilis ad ducimus nihil magnam aliquid fugit molestias blanditiis quod cumque quidem quo aliquam eaque. Rem.</p> -->
+  </div>
+
+  <div class="mt-10 pr-7 2xl:pr-80 sm:pr-auto pl-7 sm:pl-7 space-y-4 voter_list">
+    {% block content %}
+    {% endblock content %}
+    
+    {% block save_and_next %}
+    {% endblock save_and_next %}
+  </div>
+  
 </body>
 </html>

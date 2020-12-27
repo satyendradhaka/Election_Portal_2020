@@ -1,4 +1,6 @@
 {% extends "base_copy.html" %}
+{% load static %}
+{% load tags %}
 {% block designation %}
     {{post}}
 {% endblock designation %}
@@ -7,67 +9,60 @@
     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 {% endblock designation_info %}
 
-{% block next_text %}
-<li class="next-text"> HAB</li>
-{% endblock next_text %}
-
 {% block save_and_next %}
-  <li class="content_button">
-    <form method="post"><!-- onsubmit="call_post_req()" -->
-      {% csrf_token %}
-      <input type="hidden" name="choice" id="res">
-      <button class="buton waves-effect waves-light" type="submit"><span id="button_text">Save and Next</span></button>
-    </form>  
-  </li>
-{% endblock save_and_next %} 
-{% block content %}        
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>  
-   <div class="row bottom-info" style="margin-top: 310.13px; margin-bottom:0;">
-    {% for i in contestantList %}
-      <div class="center col s12 m3">
-        <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
-        <h5>{{i.name}}</h5>
-        <h6>Final Year Masters in Computer Science</h6>
-        <h5>Agenda</h5>
-        <ul class="browser-default">
-          <li style="font-size: 1.3em;">{{i.agenda1}}</li>
-          <li style="font-size: 1.3em;">{{i.agenda2}}</li>
-          <li style="font-size: 1.3em;">{{i.agenda3}}</li>
-          <li style="font-size: 1.3em;">{{i.agenda4}}</li>
-        </ul>
-        <hr>
-        <div class="vote-box">
-          <div class='vote-button' data-default-text="Vote"
-          data-alt-text="Voted"><button class="ripple waves-effect" id="{{i.pk}}" onclick="voteClick(this.value)" value="{{i.pk}}" name="choice"></button></div>
-        </div>
-      </div>
-        {% if forloop.counter|divisibleby:4 and not 0 %}
-            </div>
-            <div class="row bottom-info">
-        {% endif %}
-    {% endfor %}
-        <div class="center col s12 m3">
-          <img src="https://www.dropbox.com/s/5s93r0zh4jnuxx6/random_img.png?raw=1">
-          <h5>NOTA</h5>
-          <hr>
-          <div class="vote-box">
-            <div class='vote-button'><button class="ripple waves-effect" onclick="voteClick(this.value)" id="{{post}}" value="{{post}}" name="choice"></button></div>
-          </div>
-        </div>
+  <form method="post"><!-- onsubmit="call_post_req()" -->
+    {% csrf_token %}
+    <div class="inline mt-10 pr-7 2xl:pr-80 sm:pr-auto pl-7 sm:pl-7 space-y-4 voter-list-btn">
+      <button type="submit" class="float-right bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn">Next</button>
+      <button type="button" onclick="voteClick('{{post}}')" class="sm:float-right relative bottom-4 mr-5 bg-custom text-custom h-14 w-48 text-lg text-center font-bold rounded-sm next-btn" id="nota">NOTA</button>
     </div>
-    
-  </div>
+    <input type="hidden" name="choice" id="res">
+  </form>
+{% endblock save_and_next %} 
+
+{% block content %}
+{{ pks|json_script:"pks-data" }}
+  <ul class="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
+      {% for i in contestantList %}
+        <li id="{{i.pk}}"
+          class="custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black pl-4 rounded-md flex space-x-4"
+        >
+          <span  class="py-4 flex flex-wrap content-center ">
+            <span id = "action_box_container_{{i.pk}}"
+              class=" transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
+              <span id="text_{{i.pk}}" class="hidden" >Vote for</span><span id="index_{{i.pk}}">{{forloop.counter|to_char}}
+              </span>
+            </span>
+          </span>
+          <span class="py-6">
+            <span><img
+                class="rounded-sm"
+                width="130"
+                src="https://picsum.photos/130/170" />
+            </span>
+          </span>
+          <span class="py-6"
+            ><p class="text-xl font-bold text-gray-800">{{i.name}}</p>
+            <ul
+              class="font-medium max-w-md space-y-1 text-1xl pt-2 text-gray-600"
+            >
+              <li>{{i.agenda1}}</li>
+              <li>{{i.agenda2}}</li>
+              <li>{{i.agenda3}}</li>
+              <li>{{i.agenda4}}</li>
+            </ul>
+          </span>
+        </li>
+        {% if forloop.counter|divisibleby:2 %}
+          </ul>
+          <ul class="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
+        {% endif %}
+      {% endfor %}
+  </ul>
   <script>
-    // var vote_chosen=null;
     function voteClick(the_chosen_one) {
       document.getElementById("res").value = the_chosen_one;
-      var all_vote_buttons = document.getElementsByClassName("ripple");
-      for (let index = 0; index < all_vote_buttons.length; index++) {
-        all_vote_buttons[index].style.backgroundColor = "white";
-      }
-      document.getElementById(the_chosen_one).style.backgroundColor = "#2B00FF";
-      // vote_chosen = the_chosen_one;
-      // console.log(vote_chosen);
+      console.log("the_chosen_one saved");
     }
 
     // function call_post_req(){
@@ -86,4 +81,13 @@
     // }
   </script>
 {% endblock content %}
+
+{% block vote_js %}
+  <script>
+    $(document).ready(function () {
+      var ids = JSON.parse(document.getElementById('pks-data').textContent);
+      getIds(ids);
+    });
+  </script>
+{% endblock vote_js %}
 
