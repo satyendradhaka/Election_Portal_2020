@@ -75,8 +75,7 @@ $(document).ready(function () {
     document.getElementById("hiddenNOTA").checked = true;
     selected_ids.clear();
     // selected_ids.add("NOTA");    
-   
-    }
+    
     $(".nota-effect").css("opacity", 0.5);
     $(".bg-custom").css("background", "#E7690F");
     $(".text-custom").css("color", "rgb(236, 232, 229)");
