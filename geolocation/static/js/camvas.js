@@ -6,6 +6,7 @@ function camvas(ctx, callback) {
   // We can't `new Video()` yet, so we'll resort to the vintage
   // "hidden div" hack for dynamic loading.
   var streamContainer = document.createElement('div')
+  // streamContainer.className = "w-5/6 h-full left-30"
   this.video = document.createElement('video')
   this.video.id = 'video'
 
@@ -20,6 +21,8 @@ function camvas(ctx, callback) {
   this.video.setAttribute('height', 1)
 
   streamContainer.appendChild(this.video)
+  // document.getElementById('video-resize').appendChild(streamContainer)
+  
   document.body.appendChild(streamContainer)
 
   // The callback happens when we are starting to stream the video.

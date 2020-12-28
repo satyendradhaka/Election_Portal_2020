@@ -33,7 +33,7 @@ def save_user_image(request):
     else:
         return HttpResponse('get the fuck out of here')
     if request.method == 'POST':
-        imagebase64= request.POS2T['imagebase64data']
+        imagebase64= request.POST['imagebase64data']
         try:
             with open("images/voters/"+image_name, "wb") as fh:
                 fh.write(base64.b64decode(imagebase64))
