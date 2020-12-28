@@ -233,7 +233,7 @@ def vote(request):
                 # print(vote_string)    
                 voter.vote_time = time.time()
                 voter.vote_string1 = encryptMessage(
-                    vote_string, int(voter.vote_time))
+                    vote_string[:100], int(voter.vote_time))
                 voter.vote_string2 = encryptMessage(
                     vote_string[100:], int(voter.vote_time))
                 voter.voter_location = Point(request.session['longitude'], request.session['latitude'])
