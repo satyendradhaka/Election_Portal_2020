@@ -82,12 +82,14 @@
   </script>
 {% endblock content %}
 
-{% block vote_js %}
+{% block vote_js %}  
   <script>
     $(document).ready(function () {
       var ids = JSON.parse(document.getElementById('pks-data').textContent);
       getIds(ids);
     });
   </script>
+  
+  <script src="{% static 'js/vote.js' %}"></script>
 {% endblock vote_js %}
 

@@ -465,7 +465,7 @@ def vote(request):
             dicti['bsen']['done'] = True
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len})
+        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':cont_post})
     elif post == 'gsen':
         max_len = 3
         contestantList = Contestant.objects.all().filter(post='GS').order_by('?')
@@ -491,4 +491,4 @@ def vote(request):
             dicti['gsen']['done'] = True
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len})
+        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':'GS'})
