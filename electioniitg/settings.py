@@ -36,7 +36,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+USE_X_FORWARDED_HOST = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -98,7 +98,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'postgresql451',
+        'PASSWORD': '1saket@postgres',
         'HOST': 'localhost',
         'PORT': '5432'
     }

@@ -1,14 +1,22 @@
 #video {
-    position: absolute;
-    left: 35%;
-    top: 19.5%;
+    /* position: absolute; */
+    /* left: 35%; */
+    /* top: 19.5%; */
     z-index: 1;
 }
 
 #canvas {
-    position: absolute;
+    /* position: absolute; */
     /* top: 100%; */
-    top: 20%;
-    left: 35%;
+    /* top: 20%; */
+    /* left: 35%; */
     z-index: 0;
 }
+
+.custom-font {
+    font-family: Atkinson Hyperlegible;
+    color: rgba(46, 47, 47, 0.57);
+}
+
+/* width="475" height="475" */
+/* w-5/6 h-full */
