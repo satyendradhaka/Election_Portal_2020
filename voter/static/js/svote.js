@@ -26,7 +26,7 @@ $(document).ready(function () {
     );
     $("#" + ids[index]).click(function () {
       document.getElementById("hiddenNOTA").checked = false;
-      // $(".voter_list").css("opacity", 1);
+//       $(".voter_list").css("opacity", 1);
       $(".nota-effect").css("opacity", 1);
       $(".bg-custom").css("background", "rgb(255, 210, 177)");
       $(".text-custom").css("color", "#E7690F");
