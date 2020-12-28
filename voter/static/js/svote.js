@@ -26,7 +26,8 @@ $(document).ready(function () {
     );
     $("#" + ids[index]).click(function () {
       document.getElementById("hiddenNOTA").checked = false;
-      $(".voter_list").css("opacity", 1);
+      // $(".voter_list").css("opacity", 1);
+      $(".nota-effect").css("opacity", 1);
       $(".bg-custom").css("background", "rgb(255, 210, 177)");
       $(".text-custom").css("color", "#E7690F");
       var selected_id = ids[index];
@@ -74,7 +75,8 @@ $(document).ready(function () {
     document.getElementById("hiddenNOTA").checked = true;
     selected_ids.clear();
     // selected_ids.add("NOTA");    
-    $(".voter_list").css("opacity", 0.5);
+    
+    $(".nota-effect").css("opacity", 0.5);
     $(".bg-custom").css("background", "#E7690F");
     $(".text-custom").css("color", "rgb(236, 232, 229)");
   });
