@@ -5,7 +5,7 @@
     <title>Voter verification</title>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{% static 'js/camvas.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/ipoc.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Ipoc.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/pico.js' %}"></script>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <style type="text/css">  
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{% static 'css/verification.css' %}">
     
 </head>
-<body onload="button_callback()">
+<body onload="geoFindMe();button_callback();">
 
 
     <div class="grid  grid-rows-6 grid-cols-10">
@@ -48,9 +48,9 @@
                 <img class="w-14 h-7 ml-1" src="{% static 'icons/camera.svg' %}" alt="">
                 <!-- <img class="w-14 h-7 ml-1" src="{% static 'icons/video.svg' %}" alt=""> -->
             </button>
-            <button id="find-me" onclick=geoFindMe type="button" class="rounded-full bg-gray-50 w-16 h-16 ml-10">
+            <!-- <button id="find-me" onclick=geoFindMe type="button" class="rounded-full bg-gray-50 w-16 h-16 ml-10">
                 <img class="w-14 h-7 ml-1" src="{% static 'icons/location.svg' %}" alt="">
-            </button>
+            </button> -->
         </div>
         <div class="col-start-8 row-start-6">
             <form action="" method="post"> 
@@ -75,12 +75,6 @@
     <script>
         var initialized = false;
         var faceDetected = false;
-
-                // latest change to resize
-        // var videoElement = document.getElementById('video');
-        // var canvas = document.getElementById("canvas");
-        // videoElement.width = canvas.width;
-        // videoElement.height = canvas.height;
         function button_callback() {
 			/*
 				(0) chseck whether we're already running face detection
@@ -164,7 +158,7 @@
 						// ctx.beginPath();
 						ctx.strokeRect(dets[i][1]-0.45*dets[i][2], dets[i][0]-0.45*dets[i][2], dets[i][2],dets[i][2]);
 						ctx.lineWidth = 1;
-						ctx.strokeStyle = 'black';
+						ctx.strokeStyle = 'orange';
 						ctx.stroke();
 						//
 						// find the eye pupils for each detected face
@@ -177,11 +171,11 @@
 						[r, c] = do_puploc(r, c, s, 63, image)
 						if(r>=0 && c>=0)
 						{
-							ctx.beginPath();
-							ctx.arc(c, r, 1, 0, 2*Math.PI, false);
-							ctx.lineWidth = 3;
-							ctx.strokeStyle = 'red';
-							ctx.stroke();
+							// ctx.beginPath();
+							// ctx.arc(c, r, 1, 0, 2*Math.PI, false);
+							// ctx.lineWidth = 3;
+							// ctx.strokeStyle = 'red';
+							// ctx.stroke();
 						}
 						// second eye
 						r = dets[i][0] - 0.075*dets[i][2];
@@ -190,11 +184,11 @@
 						[r, c] = do_puploc(r, c, s, 63, image)
 						if(r>=0 && c>=0)
 						{
-							ctx.beginPath();
-							ctx.arc(c, r, 1, 0, 2*Math.PI, false);
-							ctx.lineWidth = 3;
-							ctx.strokeStyle = 'red';
-							ctx.stroke();
+							// ctx.beginPath();
+							// ctx.arc(c, r, 1, 0, 2*Math.PI, false);
+							// ctx.lineWidth = 3;
+							// ctx.strokeStyle = 'red';
+							// ctx.stroke();
 						}
 					}
 			}
@@ -286,6 +280,7 @@
     }   
     function geoFindMe() {
         const status = document.querySelector('#status');
+        
         function success(position) {
         const latitude  = position.coords.latitude;
         const longitude = position.coords.longitude;
@@ -307,7 +302,7 @@
         if(!navigator.geolocation) {
         status.textContent = 'Geolocation is not supported by your browser';
         } else {
-        status.textContent = 'Locating…';
+            status.textContent = 'GeoLocation : Locating ... ';
         navigator.geolocation.getCurrentPosition(success, error);
         }
 
