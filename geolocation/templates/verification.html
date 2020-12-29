@@ -47,17 +47,17 @@
             }
         }
         
-        @media (min-width: 1600px) {
+        /* @media (min-width: 1600px) { */
             /* #btnCapture {
                 position: relative;
                 left: 50px; */
-            }
+            /* } */
 
             /* .form-class {
                 position: relative;
                 left: 55px;
             } */
-        }
+        /* } */
 
         @media (min-width: 1700px) {
             #canvas {
@@ -68,7 +68,7 @@
     <link rel="stylesheet" href="{% static 'css/verification.css' %}">
     
 </head>
-<body onload="button_callback()">
+<body onload="geoFindMe();button_callback();">
 
 
     <div class="grid grid-rows-6 grid-cols-none lg:grid-rows-5 lg:grid-cols-10">
@@ -120,12 +120,6 @@
     <script>
         var initialized = false;
         var faceDetected = false;
-
-                // latest change to resize
-        // var videoElement = document.getElementById('video');
-        // var canvas = document.getElementById("canvas");
-        // videoElement.width = canvas.width;
-        // videoElement.height = canvas.height;
         function button_callback() {
 			/*
 				(0) chseck whether we're already running face detection
@@ -209,7 +203,7 @@
 						// ctx.beginPath();
 						ctx.strokeRect(dets[i][1]-0.45*dets[i][2], dets[i][0]-0.45*dets[i][2], dets[i][2],dets[i][2]);
 						ctx.lineWidth = 1;
-						ctx.strokeStyle = 'red';
+						ctx.strokeStyle = 'orange';
 						ctx.stroke();
 						//
 						// find the eye pupils for each detected face
@@ -222,11 +216,11 @@
 						[r, c] = do_puploc(r, c, s, 63, image)
 						if(r>=0 && c>=0)
 						{
-							ctx.beginPath();
-							ctx.arc(c, r, 1, 0, 2*Math.PI, false);
-							ctx.lineWidth = 3;
-							ctx.strokeStyle = 'red';
-							ctx.stroke();
+							// ctx.beginPath();
+							// ctx.arc(c, r, 1, 0, 2*Math.PI, false);
+							// ctx.lineWidth = 3;
+							// ctx.strokeStyle = 'red';
+							// ctx.stroke();
 						}
 						// second eye
 						r = dets[i][0] - 0.075*dets[i][2];
@@ -235,11 +229,11 @@
 						[r, c] = do_puploc(r, c, s, 63, image)
 						if(r>=0 && c>=0)
 						{
-							ctx.beginPath();
-							ctx.arc(c, r, 1, 0, 2*Math.PI, false);
-							ctx.lineWidth = 3;
-							ctx.strokeStyle = 'red';
-							ctx.stroke();
+							// ctx.beginPath();
+							// ctx.arc(c, r, 1, 0, 2*Math.PI, false);
+							// ctx.lineWidth = 3;
+							// ctx.strokeStyle = 'red';
+							// ctx.stroke();
 						}
 					}
 			}
@@ -336,6 +330,7 @@
     }   
     function geoFindMe() {
         const status = document.querySelector('#status');
+        
         function success(position) {
         const latitude  = position.coords.latitude;
         const longitude = position.coords.longitude;
@@ -357,7 +352,7 @@
         if(!navigator.geolocation) {
         status.textContent = 'Geolocation is not supported by your browser';
         } else {
-        status.textContent = 'Locating…';
+            status.textContent = 'GeoLocation : Locating ... ';
         navigator.geolocation.getCurrentPosition(success, error);
         }
 
