@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <title>Voter verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{% static 'js/camvas.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/Ipoc.js' %}"></script>
@@ -13,15 +14,56 @@
         video {  
             -webkit-transform: scaleX(-1);  
             transform: scaleX(-1);  
-            /* margin-top: 5px;   */
         }
       
         /* Flipping the canvas image as it was not mirror view */  
         #canvas {  
             filter: FlipH;  
-            -ms-filter: "FlipH";  
-            transform: scale(0.75,0.75);
-        }  
+            -ms-filter: "FlipH";
+            transform: scale(0.75, 0.7);
+        }
+        
+        @media (min-width: 640px) { 
+            #canvas {
+                transform: scale(0.75, 0.7);
+            }
+        }
+        
+        @media (min-width: 1500px) {
+            /* #btnCapture {
+                position: relative;
+                left: 25px;
+            } */
+
+            /* .form-class {
+                position: relative;
+                left: 70px;
+            } */
+
+            #canvas {
+                position: relative;
+                right: 30px;
+                transform: scale(0.8, 0.95);
+            }
+        }
+        
+        /* @media (min-width: 1600px) { */
+            /* #btnCapture {
+                position: relative;
+                left: 50px; */
+            /* } */
+
+            /* .form-class {
+                position: relative;
+                left: 55px;
+            } */
+        /* } */
+
+        @media (min-width: 1700px) {
+            #canvas {
+                transform: scale(1, 1);
+            }
+        }
     </style>
     <link rel="stylesheet" href="{% static 'css/verification.css' %}">
     
@@ -29,49 +71,52 @@
 <body onload="geoFindMe();button_callback();">
 
 
-    <div class="grid  grid-rows-6 grid-cols-10">
-        <div id="video-resize" class="col-start-2 col-span-3 row-start-2 row-span-3">
-            <p class="text-2xl custom-font">Please allow camera and location access on your device :)</p>
+    <div class="grid grid-rows-6 grid-cols-none lg:grid-rows-5 lg:grid-cols-10">
+        <div id="video-resize" class="place-self-center lg:place-self-auto relative lg:left-8 top-12 lg:top-32 lg:col-start-2 lg:col-span-3 row-start-1 row-span-3">
+            <p class="relative top-10 lg:top-0 px-12 lg:px-0 text-left text-3xl lg:text-2xl">Please allow camera and location access on your device :)</p>
             <br>
-            <!-- <canvas class="w-5/6 h-full left-30" style="border:solid 1px #ddd; background-color:white;" id="canvas"></canvas> -->
+            <div class="relative lg:right-10">
+                <canvas style="background-color:white;" id="canvas" width="640" height="480"></canvas>
+            </div>
         </div>
-        <div class="col-start-5 col-span-3 row-start-3 row-span-2">
-            <p class="text-5xl custom-font">{{request.user.first_name}}</p>
-            <p class="text-2xl custom-font">{{year}}  {{hostel}} hostel</p>
+        <div class="place-self-center lg:place-self-auto -mt-72 lg:mt-0 col-start-1 lg:col-start-6 lg:col-span-4 row-start-5 row-span-3 lg:row-start-2 lg:row-span-3">
+            <p class="px-10 lg:px-0 text-5xl">{{request.user.first_name}}</p>
+            <p class="px-10 lg:px-0 text-2xl">{{year}}  {{hostel}} hostel</p>
             <br>
-            <p class="text-lg custom-font" id="status"></p>
-            <p class="text-lg custom-font">IP address: {{request.session.ip}}</p>
-            <p class="text-lg custom-font">Voter Token ID: {{voter_id}}</p>
+            <p class="px-10 lg:px-0 text-xl lg:text-lg" id="status"></p>
+            <p class="px-10 lg:px-0 text-xl lg:text-lg">IP address: {{request.session.ip}}</p>
+            <p class="px-10 lg:px-0 text-xl lg:text-lg">Voter Token ID: {{voter_id}}</p>
+            <br>
         </div>
-        <div class="col-start-8 sol-span-2 row-start-5">
-            <button id="btnCapture" type="button" class="rounded-full bg-gray-50 w-16 h-16">
-                <img class="w-14 h-7 ml-1" src="{% static 'icons/camera.svg' %}" alt="">
-                <!-- <img class="w-14 h-7 ml-1" src="{% static 'icons/video.svg' %}" alt=""> -->
-            </button>
-            <!-- <button id="find-me" onclick=geoFindMe type="button" class="rounded-full bg-gray-50 w-16 h-16 ml-10">
-                <img class="w-14 h-7 ml-1" src="{% static 'icons/location.svg' %}" alt="">
-            </button> -->
-        </div>
-        <div class="col-start-8 row-start-6">
+        <div class="form-class place-self-center lg:place-self-auto col-start-1 lg:col-start-6 row-start-6 row-span-3 lg:row-start-3 lg:row-span-3">
             <form action="" method="post"> 
                 {% csrf_token %}
-                {{ form }}
-                <input type="submit" value="submit">
+                <div class="lg:relative lg:top-24">
+                    {{ form }}
+                    <br>
+                    <input class="
+                    transition login_button relative text-black lg:top-5 bg-white border-2 border-black py-4 px-12 focus:outline-none hover:bg-blue-600 hover:text-white rounded text-lg z-60" type="submit" value="Continue">
+                </div>
             </form>
         </div>
+        <div class="lg:col-start-2 lg:col-span-3 place-self-center row-start-4 row-span-1 lg:row-span-3">
+            <button id="btnCapture" type="button" class="relative bottom-10 lg:bottom-3 rounded-full shadow-lg bg-gray-100 w-24 h-24 lg:w-16 lg:h-16 hover:bg-blue-500">
+                <img class="w-14 h-12 lg:h-7 ml-4 lg:ml-1" id="camera" src="{% static 'icons/camera.svg' %}" alt="">
+                <img class="w-14 h-12 lg:h-7 ml-4 lg:ml-1 hidden" id="video_camera" src="{% static 'icons/video.svg' %}" alt="">
+            </button>
+        </div>
     </div>
-            
     <!-- earlier code -->
     <!-- <h1>location verification</h1>-->
         
     <!-- <button class="btn btn-primary" id="btnCapture">Click</button>     -->
              
-            <div class="col-lg-6">    
+            <!-- <div class="col-lg-6">    
                 <h4>    
                     Captured image from Webcam <input type="button" class="btn btn-primary" id="btnSave" name="btnSave" value="Save the canvas(image) to server"/>     
                 </h4>       
                <canvas style="border:solid 1px #ddd;background-color:white;" id="canvas" width="640" height="480"></canvas>
-            </div>    
+            </div> -->
     <script>
         var initialized = false;
         var faceDetected = false;
@@ -218,7 +263,9 @@
           if(pic){
             $('#video').get(0).play();
             // document.getElementById("btnCapture").innerHTML = "Click";
-            
+            $("#camera").toggleClass("hidden");
+            $("#video_camera").toggleClass("hidden");
+            console.log("camera clicked!");
             pic=false;
           }
           else{
@@ -231,6 +278,9 @@
                 
                 $('#video').get(0).pause();
                 // document.getElementById("btnCapture").innerHTML = "Reclick";
+                $("#camera").toggleClass("hidden");
+                $("#video_camera").toggleClass("hidden");
+                // document.getElementById("camera").src = "{% static 'icons/camera.svg' %}";
                 pic = true;
             }
           }
