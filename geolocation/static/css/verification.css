@@ -6,10 +6,10 @@
 }
 
 #canvas {
-    position: absolute;
+    /* position: absolute;
     top: 100%;
     top: 20%;
-    left: 35%;
+    left: 35%; */
     z-index: 0;
 }
 
@@ -18,5 +18,20 @@
     color: rgba(46, 47, 47, 0.57);
 }
 
-/* width="475" height="475" */
-/* w-5/6 h-full */
+
+/* @media (width <= 640px) {
+    .grid {
+        display: grid;
+        grid-template-rows: repeat(6, minmax(0, 1fr));
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .col-start-1 {
+        grid-column-start: 1;
+    }
+
+    .text-base {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+} */
