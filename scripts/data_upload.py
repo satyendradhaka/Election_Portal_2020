@@ -36,7 +36,7 @@ def csv_to_contestants():
 	reader = csv.reader(csvfile, quoting=csv.QUOTE_ALL)
 	for i, row in enumerate(reader):
 		print("contestant ",i+1)
-		contestant=Contestant(name=row[0],email = row[2], post = row[1], agenda1 = row[3], agenda2 = row[4], agenda3 = row[5], agenda4 = row[6], pic = "contestants/" + row[7] + ".jpg",  random_suppling = 0)
+		contestant=Contestant(name=row[0],email = row[2], post = row[1], agenda1 = row[3], agenda2 = row[4], agenda3 = row[5], agenda4 = row[6], pic = "contestants/" + row[7],  random_suppling = 0)
 		contestant.save()
 
 def run():

@@ -51,6 +51,7 @@ $(document).ready(function () {
         );
         selected = false;
         selected_id = null;
+        voteClick(selected_id);
       } else {
         var cha = String.fromCharCode(65+ids.indexOf(selected_id));
         $("#" + selected_id).removeClass(" bg-gray-200");
