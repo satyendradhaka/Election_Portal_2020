@@ -38,7 +38,7 @@
             <span><img
                 class="rounded-sm"
                 width="130"
-                src="https://picsum.photos/130/170" />
+                src="{% static i.pic %}" />
             </span>
           </span>
           <span class="py-6"
@@ -55,7 +55,7 @@
         </li>
         {% if forloop.counter|divisibleby:2 %}
           </ul>
-          <ul class="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
+          <ul class="nota-effect space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
         {% endif %}
       {% endfor %}
   </ul>
