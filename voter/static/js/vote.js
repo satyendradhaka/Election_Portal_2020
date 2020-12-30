@@ -25,8 +25,8 @@ $(document).ready(function () {
       }
     );
     $("#" + ids[index]).click(function () {
-      $(".voter_list").css("opacity", 1);
-      $(".bg-custom").css("background", "rgb(255, 210, 177)");
+      $(".nota-effect").css("opacity", 1);
+      $(".bg-custom").css("background", "rgba(231, 105, 15, 0.1)");
       $(".text-custom").css("color", "#E7690F");
 
       if (
@@ -73,7 +73,6 @@ $(document).ready(function () {
   });
 
   $("#nota").click(function () {
-    console.log("Nota ran!");
     if (selected_id) {
       var cha = String.fromCharCode(65+ids.indexOf(selected_id));
       $("#" + selected_id).removeClass(" bg-gray-200");
@@ -86,7 +85,7 @@ $(document).ready(function () {
       selected = false;
       selected_id = null;
     }
-    $(".voter_list").css("opacity", 0.5);
+    $(".nota-effect").css("opacity", 0.5);
     $(".bg-custom").css("background", "#E7690F");
     $(".text-custom").css("color", "rgb(236, 232, 229)");
   });
