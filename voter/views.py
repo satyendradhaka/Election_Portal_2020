@@ -82,7 +82,7 @@ def voteCountModifier(request):
         for i in range(7):
             key = 'choice'+str(i+1)
             if dicti['bsen'][key] is not None:
-                vote_string += str(dicti['bsen'][key])+","
+                vote_string += str(dicti['bsen'][key])+" "
         vote_string += '},'
     if dicti['gsen']['nota']:
         vote_string += 'gsen: NOTA,'             
@@ -91,7 +91,7 @@ def voteCountModifier(request):
         for i in range(3):
             key = 'choice'+str(i+1)
             if dicti['gsen'][key] is not None:
-                vote_string += str(dicti['gsen'][key])+","
+                vote_string += str(dicti['gsen'][key])+" "
                 
         vote_string += '},'
     print(vote_string)
