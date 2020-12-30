@@ -90,6 +90,15 @@ $(document).ready(function () {
     $(".bg-custom").css("background", "#E7690F");
     $(".text-custom").css("color", "rgb(236, 232, 229)");
   });
+
+  $("#info-btn").hover(
+    function () {
+      $("#info-txt").toggleClass("hidden");
+    },
+    function () {
+      $("#info-txt").toggleClass("hidden");
+    }
+  );
 });
 
 let input_id = null;
