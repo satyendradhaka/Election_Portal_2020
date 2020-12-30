@@ -24,11 +24,11 @@ $(document).ready(function () {
         $("#text_" + ids[index]).addClass("hidden");
       }
     );
+
     $("#" + ids[index]).click(function () {
       document.getElementById("hiddenNOTA").checked = false;
-//       $(".voter_list").css("opacity", 1);
       $(".nota-effect").css("opacity", 1);
-      $(".bg-custom").css("background", "rgb(255, 210, 177)");
+      $(".bg-custom").css("background", "rgba(231, 105, 15, 0.1)");
       $(".text-custom").css("color", "#E7690F");
       var selected_id = ids[index];
       if(selected_ids.has(ids[index])){

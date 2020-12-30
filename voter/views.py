@@ -82,7 +82,7 @@ def voteCountModifier(request):
         for i in range(7):
             key = 'choice'+str(i+1)
             if dicti['bsen'][key] is not None:
-                vote_string += str(dicti['bsen'][key])+","
+                vote_string += str(dicti['bsen'][key])+" "
         vote_string += '},'
     if dicti['gsen']['nota']:
         vote_string += 'gsen: NOTA,'             
@@ -91,7 +91,7 @@ def voteCountModifier(request):
         for i in range(3):
             key = 'choice'+str(i+1)
             if dicti['gsen'][key] is not None:
-                vote_string += str(dicti['gsen'][key])+","
+                vote_string += str(dicti['gsen'][key])+" "
                 
         vote_string += '},'
     print(vote_string)
@@ -101,58 +101,61 @@ def voteCountModifier(request):
 @captcha_required
 @is_valid             
 def getMeSelectedCandidates(request):
+    voter = Voter.objects.get(username = request.user.username)
+    prog = voter.get_category_display()
     dicti=request.session.get('option')
     selectedCandidates = []
     if not dicti['vp'] == 'NOTA':
-        selectedCandidates.append(('vp',Contestant.objects.get(pk=dicti['vp'])))
+        selectedCandidates.append(('VP',Contestant.objects.get(pk=dicti['vp']),'vp'))
     else:
-        selectedCandidates.append(('vp','NOTA')) 
+        selectedCandidates.append(('VP','NOTA','vp')) 
     if not dicti['hab'] == 'NOTA':
-        selectedCandidates.append(('hab',Contestant.objects.get(pk=dicti['hab'])))
+        selectedCandidates.append(('HAB',Contestant.objects.get(pk=dicti['hab']),'hab'))
     else:
-        selectedCandidates.append(('hab','NOTA'))    
+        selectedCandidates.append(('HAB','NOTA','hab'))    
     if not dicti['tech'] == 'NOTA':
-        selectedCandidates.append(('tech',Contestant.objects.get(pk=dicti['tech'])))
+        selectedCandidates.append(('Technical',Contestant.objects.get(pk=dicti['tech']),'tech'))
     else:
-        selectedCandidates.append(('tech','NOTA'))
+        selectedCandidates.append(('Technical','NOTA','tech'))
     if not dicti['cult'] == 'NOTA':
-        selectedCandidates.append(('cult',Contestant.objects.get(pk=dicti['cult'])))
+        selectedCandidates.append(('Cultural',Contestant.objects.get(pk=dicti['cult']),'cult'))
     else:
-        selectedCandidates.append(('cult','NOTA'))
+        selectedCandidates.append(('Cultural','NOTA','cult'))
     if not dicti['sports'] == 'NOTA':
-        selectedCandidates.append(('sports',Contestant.objects.get(pk=dicti['sports'])))
+        selectedCandidates.append(('Sports',Contestant.objects.get(pk=dicti['sports']),'sports'))
     else:
-        selectedCandidates.append(('sports','NOTA'))    
+        selectedCandidates.append(('Sports','NOTA','sports'))    
     if not dicti['welfare'] == 'NOTA':
-        selectedCandidates.append(('welfare',Contestant.objects.get(pk=dicti['welfare'])))
+        selectedCandidates.append(('Welfare',Contestant.objects.get(pk=dicti['welfare']),'welfare'))
     else:
-        selectedCandidates.append(('welfare','NOTA'))    
+        selectedCandidates.append(('Welfare','NOTA','welfare'))    
     if not dicti['sail'] == 'NOTA':
-        selectedCandidates.append(('sail',Contestant.objects.get(pk=dicti['sail'])))
+        selectedCandidates.append(('SAIL',Contestant.objects.get(pk=dicti['sail']),'sail'))
     else:
-        selectedCandidates.append(('sail','NOTA'))    
+        selectedCandidates.append(('SAIL','NOTA','sail'))    
     if not dicti['swc'] == 'NOTA':
-        selectedCandidates.append(('swc',Contestant.objects.get(pk=dicti['swc'])))
+        selectedCandidates.append(('SWC',Contestant.objects.get(pk=dicti['swc']),'swc'))
     else:
-        selectedCandidates.append(('swc','NOTA'))    
+        selectedCandidates.append(('SWC','NOTA','swc'))    
+    
     if dicti['bsen']['nota']:
-        selectedCandidates.append(('bsen','NOTA'))
+        selectedCandidates.append((prog[:2],'NOTA','bsen'))
     else:
         choice = []
         for i in range(7):
             key = 'choice'+str(i+1)
             if dicti['bsen'][key] is not None:
                 choice.append((key,Contestant.objects.get(pk=dicti['bsen'][key])))
-        selectedCandidates.append(('bsen',choice))
+        selectedCandidates.append((prog[:2],choice,'bsen'))
     if dicti['gsen']['nota']:
-        selectedCandidates.append(('gsen','NOTA'))
+        selectedCandidates.append(('GS','NOTA','gsen'))
     else:
         choice = []
         for i in range(3):
             key = 'choice'+str(i+1)
             if dicti['gsen'][key] is not None:
                 choice.append((key,Contestant.objects.get(pk=dicti['gsen'][key])))
-        selectedCandidates.append(('gsen',choice))
+        selectedCandidates.append(('GS',choice,'gsen'))
         
     return selectedCandidates
 
@@ -278,7 +281,7 @@ def vote(request):
                     dicti['vp']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':'VP'})
+        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
     elif post == 'hab':
         contestantList = Contestant.objects.all().filter(post='HAB').order_by('?')
         pks = []
@@ -300,7 +303,7 @@ def vote(request):
                     dicti['hab']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')            
-        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':'HAB'})
+        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
     elif post == 'tech':
         contestantList = Contestant.objects.all().filter(post='Tech').order_by('?')
         pks = []
@@ -322,7 +325,7 @@ def vote(request):
                     dicti['tech']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':'Tech'})
+        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
     elif post == 'cult':
         contestantList = Contestant.objects.all().filter(post='Cult').order_by('?')
         pks = []
@@ -344,7 +347,7 @@ def vote(request):
                     dicti['cult']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':'Cult'})
+        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
     elif post == 'welfare':
         contestantList = Contestant.objects.all().filter(post='Welfare').order_by('?')
         pks = []
@@ -366,7 +369,7 @@ def vote(request):
                     dicti['welfare']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':'Welfare'})
+        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
     elif post == 'sports':
         contestantList = Contestant.objects.all().filter(post='Sports').order_by('?')
         pks = []
@@ -388,7 +391,7 @@ def vote(request):
                     dicti['sports']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':'Sports'})
+        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
     elif post == 'sail':
         contestantList = Contestant.objects.all().filter(post='SAIL').order_by('?')
         pks = []
@@ -410,7 +413,7 @@ def vote(request):
                     dicti['sail']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':'SAIL'})
+        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
     elif post == 'swc':
         contestantList = Contestant.objects.all().filter(post='SWC').order_by('?')
         pks = []
@@ -433,7 +436,7 @@ def vote(request):
                     dicti['swc']=request.POST['choice']
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':'SWC'})
+        return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
     
     elif post == 'bsen':
         max_len = 7
@@ -465,7 +468,7 @@ def vote(request):
             dicti['bsen']['done'] = True
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':cont_post})
+        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display()})
     elif post == 'gsen':
         max_len = 3
         contestantList = Contestant.objects.all().filter(post='GS').order_by('?')
@@ -491,4 +494,4 @@ def vote(request):
             dicti['gsen']['done'] = True
             request.session['option']=dicti
             return redirect('vote')
-        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':'GS'})
+        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display()})

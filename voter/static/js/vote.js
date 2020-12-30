@@ -25,8 +25,8 @@ $(document).ready(function () {
       }
     );
     $("#" + ids[index]).click(function () {
-      $(".voter_list").css("opacity", 1);
-      $(".bg-custom").css("background", "rgb(255, 210, 177)");
+      $(".nota-effect").css("opacity", 1);
+      $(".bg-custom").css("background", "rgba(231, 105, 15, 0.1)");
       $(".text-custom").css("color", "#E7690F");
 
       if (
@@ -73,7 +73,6 @@ $(document).ready(function () {
   });
 
   $("#nota").click(function () {
-    console.log("Nota ran!");
     if (selected_id) {
       var cha = String.fromCharCode(65+ids.indexOf(selected_id));
       $("#" + selected_id).removeClass(" bg-gray-200");
@@ -86,10 +85,45 @@ $(document).ready(function () {
       selected = false;
       selected_id = null;
     }
-    $(".voter_list").css("opacity", 0.5);
+    $(".nota-effect").css("opacity", 0.5);
     $(".bg-custom").css("background", "#E7690F");
     $(".text-custom").css("color", "rgb(236, 232, 229)");
   });
+
+  $("#info-btn").hover(
+    function () {
+      $("#info-txt").toggleClass("hidden");
+    },
+    function () {
+      $("#info-txt").toggleClass("hidden");
+    }
+  );
+
+  if ($(window).width() <= 560 ) {
+    $("#next-btn").insertAfter("#nota");
+    $("#nota").attr('class', 'float-left bg-custom text-custom h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
+    $("#nota").css('margin-left', $(window).width() * 2 / 7);
+    $("#next-btn").attr('class', 'float-left bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
+    $("#next-btn").css('margin-left', $(window).width() * 2 / 7);
+  }
+
+  $(window).resize(
+    function () {
+      if ($(window).width() <= 560 ) {
+        $("#next-btn").insertAfter("#nota");
+        $("#nota").attr('class', 'float-left bg-custom text-custom h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
+        $("#nota").css('margin-left', $(window).width() * 2 / 7);
+        $("#next-btn").attr('class', 'float-left bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
+        $("#next-btn").css('margin-left', $(window).width() * 2 / 7);
+      } else {
+        $("#nota").insertAfter("#next-btn");
+        $("#nota").css('margin-left', 0);
+        $("#next-btn").css('margin-left', 0);
+        $("#nota").attr('class', 'lg:float-right relative bottom-4 mr-5 bg-custom text-custom h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
+        $("#next-btn").attr('class', 'relative mr-10 sm:mr-auto float-right bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
+      }
+    }
+  );
 });
 
 let input_id = null;
