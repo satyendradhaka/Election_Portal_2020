@@ -70,7 +70,7 @@ li { cursor: pointer; }
 }
 
 .bg-custom {
-  background: rgb(255, 210, 177);
+  background: rgba(231, 105, 15, 0.1);
   border: 2px solid #E7690F;
   box-sizing: border-box;
   border-radius: 2px;

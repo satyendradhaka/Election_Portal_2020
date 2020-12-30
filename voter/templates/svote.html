@@ -26,7 +26,7 @@
 
 {% block content %}
 {{ pks|json_script:"pks-data" }}
-  <ul class="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
+  <ul class="nota-effect space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
       {% for i in contestantList %}
         <li id="{{i.pk}}"
           class="custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black pl-4 rounded-md flex space-x-4"
@@ -59,7 +59,7 @@
         </li>
         {% if forloop.counter|divisibleby:2 %}
           </ul>
-          <ul class="space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
+          <ul class="nota-effect space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
         {% endif %}
       {% endfor %}
   </ul>
