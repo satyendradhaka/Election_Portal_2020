@@ -92,10 +92,6 @@ li { cursor: pointer; }
   color: rgb(236, 232, 229);
 }
 
-#info-txt {
-  opacity: 0;
-}
-
 .custom-li {
   min-width: 50%;
 }
