@@ -17,11 +17,18 @@
         <title>Gymkhana Elections</title>
 </head>
 <body>
-	<div class="relative w-full h-32 sm:h-36 lg:h-40 bg-black gradient-black">
-    <p class="relative top-16 sm:top-20 text-white pl-10 sm:pl-16 lg:pl-20 text-4xl sm:text-5xl" id="title">{% block designation %} {% endblock designation %}</p>
+	<!-- <div class="relative w-full h-32 sm:h-36 lg:h-40 bg-black gradient-black">
+    <p class="relative top-16 sm:top-20 text-white pl-10 sm:pl-16 lg:pl-20 text-4xl sm:text-5xl" id="title"></p>
     <button id="info-btn" class="relative top-8 sm:top-12 mt-1.5 sm:mt-1 ml-5 sm:ml-14 lg:ml-5 left-64 sm:left-80 lg:left-96"><img src="{% static 'info.png' %}" alt=""></button>
     <p id="info-txt" class="hidden relative text-xs md:text-sm lg:text-base text-white w-80 md:w-96 bottom-12 sm:bottom-6 md:bottom-12 lg:bottom-16 ml-60 sm:ml-96 pl-20 sm:pl-10 lg:pl-20">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti vitae asperiores rerum, aspernatur aut facilis ad ducimus nihil magnam aliquid fugit molestias blanditiis quod cumque quidem quo aliquam eaque. Rem.</p>
+  </div> -->
+
+  <div class="relative flex flex-row w-full h-40 sm:h-40 lg:h-40 bg-black gradient-black">
+    <p class="relative top-10 sm:top-20 text-white pl-5 sm:pl-20 text-xl sm:text-3xl md:text-4xl 2xl:text-5xl" id="title">{% block designation %} {% endblock designation %}</p>
+    <button id="info-btn" class="relative top-5 sm:top-9 ml-5"><img src="{% static 'info.png' %}" alt=""></button>
+    <p id="info-txt" class="hidden relative top-8 sm:top-12 md:top-16 lg:top-5 ml-5 text-xs lg:text-base text-white w-80 md:w-96">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti vitae asperiores rerum, aspernatur aut facilis ad ducimus nihil magnam aliquid fugit molestias blanditiis quod cumque quidem quo aliquam eaque. Rem.</p>
   </div>
+  
 
   <div class="mt-10 pr-7 2xl:pr-80 sm:pr-auto pl-7 sm:pl-7 space-y-4 voter_list">
     {% block content %}

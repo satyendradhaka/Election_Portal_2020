@@ -4,11 +4,9 @@
 <div class="relative w-full text-center h-20 sm:h-28 lg:h-32 bg-black gradient-black">
     <p class="relative top-16 sm:top-10 text-white pl-10 sm:pl-16 lg:pl-20 text-4xl sm:text-5xl" id="title">Review Your Ballot</p>
 </div>
-
 <form class="ml-16" method="post">
     {% csrf_token %}
     {% for candidate in selectedCandidates %}
-        
         {% if candidate.0 == "VP" %}
             <p class="text-3xl">Vice President</p>
             <br>
@@ -23,16 +21,24 @@
                             </span>
                         </span>
                     </span>
+                   
+                    {% if candidate.1 == "NOTA" %}
                     <span class="py-6">
                         <span><img
                             class="rounded-sm"
                             width="130"
-                            src="{% static 'contestants/aman.jpg' %}" />
+                            src="{% static 'contestants/Nota.jpeg' %}" />
                         </span>
                     </span>
-                    {% if candidate.1 == "NOTA" %}
                         <p class="ml-0 text-center text-xl font-bold text-gray-800">NOTA</p>
                     {% else %}
+                    <span class="py-6">
+                        <span><img
+                            class="rounded-sm"
+                            width="130"
+                            src="{% static candidate.1.pic %}" />
+                        </span>
+                    </span>
                         <p class="ml-0 text-center text-xl font-bold text-gray-800">{{candidate.1.name}}</p>
                     {% endif %}
                 </li>
@@ -60,17 +66,25 @@
                             </span>
                         </span>
                     </span>
+                   
+                    
+                    {% if candidate.1 == "NOTA" %}
                     <span class="py-6">
                         <span><img
                             class="rounded-sm"
                             width="130"
-                            src="https://picsum.photos/130/170" />
+                            src="{% static 'contestants/Nota.jpeg' %}" />
                         </span>
                     </span>
-                    
-                    {% if candidate.1 == "NOTA" %}
                         <p class="ml-0 text-center text-xl font-bold text-gray-800">NOTA</p>
                     {% else %}
+                    <span class="py-6">
+                        <span><img
+                            class="rounded-sm"
+                            width="130"
+                            src="{% static candidate.1.pic %}" />
+                        </span>
+                    </span>
                         <p class="ml-0 text-center text-xl font-bold text-gray-800">{{candidate.1.name}}</p>
                     {% endif %}
                 </li>
@@ -102,7 +116,7 @@
                                 <span><img
                                     class="rounded-sm"
                                     width="130"
-                                    src="https://picsum.photos/130/170" />
+                                    src="{% static 'contestants/Nota.jpeg' %}" />
                                 </span>
                             </span>
                             <p class="ml-0 text-center text-xl font-bold text-gray-800">NOTA</p>
@@ -125,7 +139,7 @@
                                         <span><img
                                             class="rounded-sm"
                                             width="130"
-                                            src="https://picsum.photos/130/170" />
+                                            src="{% static cand.1.pic %}" />
                                         </span>
                                     </span>
                                     <p class="ml-0 text-center text-xl font-bold text-gray-800">{{cand.1.name}}</p>

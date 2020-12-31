@@ -241,7 +241,7 @@ def vote(request):
                     vote_string[100:], int(voter.vote_time))
                 voter.voter_location = Point(request.session['longitude'], request.session['latitude'])
                 voter.save()
-                return HttpResponse("done")
+                return render(request,'thankyou.html',{})
             elif request.POST['choice'] == "bsen" or request.POST['choice'] == "gsen":
                 dicti[request.POST['choice']]['done']=False
                 dicti[request.POST['choice']]['nota']=False
