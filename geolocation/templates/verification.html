@@ -202,7 +202,7 @@
 						faceDetected = true;
 						// ctx.beginPath();
 						ctx.strokeRect(dets[i][1]-0.45*dets[i][2], dets[i][0]-0.45*dets[i][2], dets[i][2],dets[i][2]);
-						ctx.lineWidth = 1;
+						ctx.lineWidth = 0.5;
 						ctx.strokeStyle = 'orange';
 						ctx.stroke();
 						//
@@ -313,7 +313,8 @@
             imagebase64data: imagebase64data,
             'csrfmiddlewaretoken': csrf
           };
-          $.post('/image/', postdata);
+          var url = "{% url 'image' %}";
+          $.post(url, postdata);
         // return true;
       };
   </script>   
@@ -328,7 +329,8 @@
             data: JSON.stringify(data),
             'csrfmiddlewaretoken': csrf
         };
-        $.post('/geo/', postdata);
+        var url = "{% url 'geo' %}";
+        $.post(url, postdata);
     }   
     function geoFindMe() {
         const status = document.querySelector('#status');
