@@ -141,13 +141,13 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'election_portal/static/'
 STATIC_ROOT = ''
 
 # MEDIA_ROOT = '/home/dhaka/projects/swc/Election_Portal_2020/media'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
-MEDIA_URL = '/images/'
+MEDIA_URL = 'election_portal/images/'
 
 #recaptcha secrets
 RECAPTCHA_PUBLIC_KEY = '6Ld6GA4aAAAAAOqs7W7tVW4DayvPyCzHzbBZNGiB'
