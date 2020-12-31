@@ -3,8 +3,8 @@ from . import views
 urlpatterns = [
 	path('', views.home,name="home"),
 	path('verification/', views.verification,name="captcha"),
-	path('geo/', views.save_user_geolocation),
-	path('image/', views.save_user_image)
+	path('geo/', views.save_user_geolocation,name="geo"),
+	path('image/', views.save_user_image,name="image")
 ]
 
 
