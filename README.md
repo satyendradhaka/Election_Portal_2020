@@ -25,8 +25,7 @@ python3 manage.py runserver
 
 ###routes
 ```
-"/" will be used for asking login with outlook
-"/verification" is being used for getting location, image of user and captcha verification
-"/voter/" will be used to show voter details
-"/voter/vote" will be used for voting
+"/election_portal" will be used for asking login with outlook
+"/election_portal/verification" is being used for getting location, image of user and captcha verification
+"/election_portal/vote" will be used for voting
 ```
