@@ -2,65 +2,65 @@
 {% load static %}
 {% block content %}
 <div class="relative w-full text-center h-20 sm:h-28 lg:h-32 bg-black gradient-black">
-    <p class="relative top-16 sm:top-10 text-white pl-10 sm:pl-16 lg:pl-20 text-4xl sm:text-5xl" id="title">Review Your Ballot</p>
+    <p class="relative font-bold top-5 sm:top-10 text-white text-3xl sm:text-4xl md:text-5xl" id="title">Review Your Ballot</p>
 </div>
-<form class="ml-16" method="post">
+<form method="post">
     {% csrf_token %}
     {% for candidate in selectedCandidates %}
         {% if candidate.0 == "VP" %}
-            <p class="text-3xl">Vice President</p>
-            <br>
-            <ul class="space-y-4 sm:space-y-0 sm:flex sm:flex-wrap sm:space-x-10"></ul>
-            <button type="submit" name="choice" value={{candidate.2}}>
-                <li id="{{candidate.1.pk}}"
-                class="w-40 custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
-                    <span  class="py-4 content-center ">
-                        <span id = "action_box_container_{{candidate.1.pk}}"
-                            class="relative right-14 top-3 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
-                            <span id="text_{{candidate.1.pk}}" class="hidden" >Review</span><span id="index_{{candidate.1.pk}}">{{candidate.0}}
+            <p class="ml-5 sm:ml-10 text-2xl sm:text-3xl">Vice President</p>
+            <ul class="sm:flex sm:flex-wrap space-x-7 sm:space-x-10">
+                <button class="mt-3 mb-3 ml-5 sm:mt-5 sm:mb-5 sm:ml-10" type="submit" name="choice" value={{candidate.2}}>
+                    <li class="w-40 custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
+                        <span  class="py-4 content-center ">
+                            <span id = "action_box_container_{{candidate.1.pk}}"
+                                class="relative right-14 ml-5 top-3 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
+                                <span id="text_{{candidate.1.pk}}" class="hidden" >Review</span><span id="index_{{candidate.1.pk}}">{{candidate.0}}
+                                </span>
                             </span>
                         </span>
-                    </span>
-                   
-                    {% if candidate.1 == "NOTA" %}
-                    <span class="py-6">
-                        <span><img
-                            class="rounded-sm"
-                            width="130"
-                            src="{% static 'contestants/Nota.jpeg' %}" />
-                        </span>
-                    </span>
-                        <p class="ml-0 text-center text-xl font-bold text-gray-800">NOTA</p>
-                    {% else %}
-                    <span class="py-6">
-                        <span><img
-                            class="rounded-sm"
-                            width="130"
-                            src="{% static candidate.1.pic %}" />
-                        </span>
-                    </span>
-                        <p class="ml-0 text-center text-xl font-bold text-gray-800">{{candidate.1.name}}</p>
-                    {% endif %}
-                </li>
-            </button>
+                    
+                        {% if candidate.1 == "NOTA" %}
+                            <span class="py-6">
+                                <span><img
+                                    class="rounded-sm"
+                                    width="130"
+                                    src="{% static 'contestants/Nota.jpeg' %}" />
+                                </span>
+                            </span>
+                            <p class="ml-0 text-center text-xl font-bold text-gray-800">NOTA</p>
+                        {% else %}
+                            <span class="py-6">
+                                <span><img
+                                    class="rounded-sm"
+                                    width="130"
+                                    src="{% static candidate.1.pic %}" />
+                                </span>
+                            </span>
+                            <p class="ml-0 text-center text-xl font-bold text-gray-800">{{candidate.1.name}}</p>
+                        {% endif %}
+                    </li>
+                </button>
             </ul>
-            <br>
         {% endif %}
 
         {% if forloop.counter == 2 %}
             <br>
-            <p class="text-3xl">Boards</p>
-            <br>
-            <ul class="space-y-4 sm:space-y-0 sm:flex sm:flex-wrap sm:space-x-10">
+            <p class="ml-5 sm:ml-10 text-2xl sm:text-3xl">Boards</p>
+            <ul class="sm:flex sm:flex-wrap space-x-7 sm:space-x-10">
+                <button class="mt-3 mb-3 ml-5 sm:mt-5 sm:mb-5 sm:ml-10" type="submit" name="choice" value={{candidate.2}}>
         {% endif %}
 
         {% if forloop.counter >= 2 and 8 >= forloop.counter %}
-            <button type="submit" name="choice" value={{candidate.2}}>
-                <li id="{{candidate.1.pk}}"
+            
+            {% if not forloop.counter == 2 %}
+                <button class="mt-3 mb-3 sm:mt-5 sm:mb-5" type="submit" name="choice" value={{candidate.2}}>
+            {% endif %}
+                    <li id="{{candidate.1.pk}}"
                 class="w-40 custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
                     <span  class="py-4 content-center ">
                         <span id = "action_box_container_{{candidate.1.pk}}"
-                            class="relative right-10 top-3 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
+                            class="relative right-10 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
                             <span id="text_{{candidate.1.pk}}" class="hidden" >Review</span><span id="index_{{candidate.1.pk}}">
                                 {{candidate.0}}
                             </span>
@@ -69,22 +69,22 @@
                    
                     
                     {% if candidate.1 == "NOTA" %}
-                    <span class="py-6">
-                        <span><img
-                            class="rounded-sm"
-                            width="130"
-                            src="{% static 'contestants/Nota.jpeg' %}" />
+                        <span class="py-6">
+                            <span><img
+                                class="rounded-sm"
+                                width="130"
+                                src="{% static 'contestants/Nota.jpeg' %}" />
+                            </span>
                         </span>
-                    </span>
                         <p class="ml-0 text-center text-xl font-bold text-gray-800">NOTA</p>
                     {% else %}
-                    <span class="py-6">
-                        <span><img
-                            class="rounded-sm"
-                            width="130"
-                            src="{% static candidate.1.pic %}" />
+                        <span class="py-6">
+                            <span><img
+                                class="rounded-sm"
+                                width="130"
+                                src="{% static candidate.1.pic %}" />
+                            </span>
                         </span>
-                    </span>
                         <p class="ml-0 text-center text-xl font-bold text-gray-800">{{candidate.1.name}}</p>
                     {% endif %}
                 </li>
@@ -94,37 +94,40 @@
         {% if forloop.counter == 8 %}
             </ul>
             <br>
-            <p class="text-3xl">Senate</p>
-            <br>
+            <p class="ml-5 sm:ml-10 text-2xl sm:text-3xl">Senate</p>
         {% endif %}
         
         {% if forloop.counter >= 9 %}
-            <ul class="space-y-4 sm:space-y-0 sm:flex sm:flex-wrap space-x-10">
+            <ul class="sm:flex sm:flex-wrap space-x-7 sm:space-x-10">
                 {% if candidate.1 == "NOTA" %}
-                <button type="submit" name="choice" value={{candidate.2}}>
-                    <li id="{{candidate.1.pk}}"
-                        class="w-40 custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
-                            <span  class="py-4 content-center ">
-                                <span id = "action_box_container_{{candidate.1.pk}}"
-                                    class="relative right-12 top-3 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
-                                    <span id="text_{{candidate.1.pk}}" class="hidden" >Review</span><span id="index_{{candidate.1.pk}}">
-                                        {{candidate.0}}
+                    <button class="mt-3 mb-3 ml-5 sm:mt-5 sm:mb-5 sm:ml-10" type="submit" name="choice" value={{candidate.2}}>
+                        <li id="{{candidate.1.pk}}"
+                            class="w-40 custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
+                                <span  class="py-4 content-center ">
+                                    <span id = "action_box_container_{{candidate.1.pk}}"
+                                        class="relative right-12 top-3 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
+                                        <span id="text_{{candidate.1.pk}}" class="hidden" >Review</span><span id="index_{{candidate.1.pk}}">
+                                            {{candidate.0}}
+                                        </span>
                                     </span>
                                 </span>
-                            </span>
-                            <span class="py-6">
-                                <span><img
-                                    class="rounded-sm"
-                                    width="130"
-                                    src="{% static 'contestants/Nota.jpeg' %}" />
+                                <span class="py-6">
+                                    <span><img
+                                        class="rounded-sm"
+                                        width="130"
+                                        src="{% static 'contestants/Nota.jpeg' %}" />
+                                    </span>
                                 </span>
-                            </span>
-                            <p class="ml-0 text-center text-xl font-bold text-gray-800">NOTA</p>
-                        </li>
-                </button>
+                                <p class="ml-0 text-center text-xl font-bold text-gray-800">NOTA</p>
+                            </li>
+                    </button>
                 {% else %}
                     {% for cand in candidate.1 %}
-                        <button type="submit" name="choice" value={{candidate.2}}>
+                        {% if forloop.counter == 1 %}
+                            <button class="mt-3 mb-3 ml-5 sm:mt-5 sm:mb-5 sm:ml-10" type="submit" name="choice" value={{candidate.2}}>
+                        {% else %}
+                            <button class="mt-3 mb-3 sm:mt-5 sm:mb-5" type="submit" name="choice" value={{candidate.2}}>
+                        {% endif %}
                             <li id="{{cand.1.pk}}"
                                 class="w-40 custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
                                     <span  class="py-4 content-center ">
@@ -146,15 +149,14 @@
                             </li>
                         </button>
                     {% endfor %}
-                    {% endif %}
+                {% endif %}
             </ul>
             <br>
         {% endif %}
     {% endfor %}
-    <div class="place-self-center">
-        <button type="submit" name="choice" value="done" class="place-self-center bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn">I Am Done</button>
+    <div class="w-full text-center mb-10">
+        <button type="submit" name="choice" value="done" class="bg-black text-white h-20 w-60 text-3xl text-center font-bold rounded-sm next-btn">I Am Done</button>
     </div>
-    <!-- <button type="submit" >I Am Done</button> -->
 </form>
 {% endblock %}
 <!-- candidate.0 is the post and candidate.1 is the candidate object or NOTA can access any of the properties -->

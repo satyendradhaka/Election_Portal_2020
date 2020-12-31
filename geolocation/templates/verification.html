@@ -100,7 +100,7 @@
             </form>
         </div>
         <div class="lg:col-start-2 lg:col-span-3 place-self-center row-start-4 row-span-1 lg:row-span-3">
-            <button id="btnCapture" type="button" class="focus:bg-blue-500 relative bottom-10 lg:bottom-3 rounded-full shadow-lg bg-gray-100 w-24 h-24 lg:w-16 lg:h-16 hover:bg-blue-500">
+            <button id="btnCapture" type="button" class="focus:bg-blue-500 relative bottom-10 lg:bottom-28 left-7 rounded-full shadow-lg bg-gray-100 w-24 h-24 lg:w-16 lg:h-16 hover:bg-blue-500">
                 <img class="w-14 h-12 lg:h-7 ml-4 lg:ml-1" id="camera" src="{% static 'icons/camera.svg' %}" alt="">
                 <img class="w-14 h-12 lg:h-7 ml-4 lg:ml-1 hidden" id="video_camera" src="{% static 'icons/video.svg' %}" alt="">
             </button>
@@ -270,7 +270,7 @@
           }
           else{
             faceDetected=false;
-            await sleep(100);//if the last face detected is before 100 ms dont allow to click
+            await sleep(200);//if the last face detected is before 200 ms dont allow to click
             if (faceDetected==false){
               alert('No face in video')
             }  

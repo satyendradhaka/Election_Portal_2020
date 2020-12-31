@@ -11,7 +11,6 @@ function getIds(contList) {
 }
 
 $(document).ready(function () {
-  console.log("ready!");
   $.each(ids, function(index, value) {
     $("#" + ids[index]).hover(
       function () {
