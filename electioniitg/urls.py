@@ -5,10 +5,10 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-	path('', include('geolocation.urls')),
-	path('voter/', include('voter.urls')),
-	path('admin/', admin.site.urls),
-    path('oauth2/', include('django_auth_adfs.urls')),
+	path('election_portal/', include('geolocation.urls')),
+	path('election_portal/', include('voter.urls')),
+	path('election_portal/admin/', admin.site.urls),
+    path('election_portal/oauth2/', include('django_auth_adfs.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # if settings.DEBUG:
