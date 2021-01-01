@@ -1,22 +1,55 @@
 let selected = false;
 let selected_id = null;
 let ids = [];
+let designations = {
+  'Vice President': 1,
+  'General Secretary of Hostel Affairs Board': 2,
+  'General Secretary of Technical Board': 3,
+  'General Secretary of Cultural Board': 4,
+  'General Secretary of Students&#x27; Welfare Board': 5,
+  'General Secretary of Sports Board': 6,
+  'General Seceratry of SAIL': 7,
+  'General Seceratry of SWC': 8,
+  'Under Graduate Senator': 9,
+  'Post Graduate Senator': 9,
+  'Girl Senator': 10
+}
 
 function getIds(contList) {
   for (let index = 0; index < contList.length; index++) {
     let element = contList[index];
     ids.push(element);
-    console.log(element);
+  }
+}
+
+function setProgress(designation, total) {
+  let x = designations[designation] / total * 100;
+  console.log(designation);
+  console.log(x);
+  let init = 0;
+  let inc = 0.15;
+  let elem = $(".progress");
+  let id = setInterval(frame, 0.5);
+  function frame () {
+    if(init > x) {
+      clearInterval(id);
+    } else {
+      init += inc;
+      if(inc <= 0.6) {
+        inc += 0.002;
+      }
+      elem.width(init + '%');
+    }
   }
 }
 
 $(document).ready(function () {
+  console.log();
   $.each(ids, function(index, value) {
     $("#" + ids[index]).hover(
       function () {
         $("#index_" + ids[index]).addClass("hidden");
         $("#text_" + ids[index]).removeClass("hidden");
-        console.log(index);
       },
       function () {
         $("#index_" + ids[index]).removeClass("hidden");
