@@ -194,6 +194,10 @@ def vote(request):
     })
     print(dicti)
     voter = Voter.objects.get(username=request.user.username)
+    if voter.category == '0' or voter.category == '2':
+        request.session['total_no'] = 9
+    else:
+        request.session['total_no'] = 10
     post= None
     if dicti['vp'] is None:
         post = 'vp'
