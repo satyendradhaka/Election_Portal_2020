@@ -9,7 +9,9 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import Point
 from .encrypt import encryptMessage
+from results.models import keys
 import json as js
+from django.contrib.auth.models import User
 
 def captcha_required(function):
   @wraps(function)
@@ -57,6 +59,7 @@ def is_valid(function):
 @captcha_required
 @is_valid
 def voteCountModifier(request):
+  
     dicti=request.session.get('option')
     vote_string=''
     vote_string += 'vp: '+str(dicti['vp'])+","
@@ -163,6 +166,19 @@ def getMeSelectedCandidates(request):
 @captcha_required
 @is_valid
 def vote(request):
+    key = []
+
+    try:
+        # print(users[0])
+        key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))
+        key.append(keys.objects.get(user=User.objects.get(username='alan@iitg.ac.in')))
+        key.append(keys.objects.get(user=User.objects.get(username='saketkumar@iitg.ac.in')))
+        request.session['ready'] = True
+    except:
+        print(users[0])
+        request.session['ready'] = False
+        print("damn")
+        return redirect('captcha')
     dicti=request.session.get('option',{
         'vp': None,
         'hab':None,
@@ -194,6 +210,10 @@ def vote(request):
     })
     print(dicti)
     voter = Voter.objects.get(username=request.user.username)
+    if voter.category == '0' or voter.category == '2':
+        request.session['total_no'] = 9
+    else:
+        request.session['total_no'] = 10
     post= None
     if dicti['vp'] is None:
         post = 'vp'
@@ -235,9 +255,9 @@ def vote(request):
                 # vote_string = js.dumps(request.session['option'])
                 # print(vote_string)    
                 voter.vote_time = time.time()
-                voter.vote_string1 = encryptMessage(
+                voter.vote_string1 = encryptMessage(key,
                     vote_string[:100], int(voter.vote_time))
-                voter.vote_string2 = encryptMessage(
+                voter.vote_string2 = encryptMessage(key,
                     vote_string[100:], int(voter.vote_time))
                 voter.voter_location = Point(request.session['longitude'], request.session['latitude'])
                 voter.save()

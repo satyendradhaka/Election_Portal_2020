@@ -37,7 +37,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 USE_X_FORWARDED_HOST = True
-# Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -51,7 +51,12 @@ INSTALLED_APPS = [
     'captcha',
     'django_extensions',
     'geolocation',
+    'results',
     'django.contrib.gis',
+    'django_cleanup',
+    'background_task',
+    'django_celery_results',
+    'celery_progress',
 ]
 
 MIDDLEWARE = [
@@ -165,3 +170,12 @@ AUTH_ADFS = {
 LOGIN_URL = "django_auth_adfs:login"
 LOGIN_REDIRECT_URL = "captcha"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_STORE_ERRORS_EVEN_IF_IGNORED = True
+CELERY_RESULT_BACKEND = 'django-db'

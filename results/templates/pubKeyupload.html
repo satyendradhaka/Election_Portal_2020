@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{pubKey}}/3
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <label for="myfile">Select a file:</label>
+    <input type="file" id="myfile" name="myfile">   
+    <button type="submit">Submit</button>
+</form>
+  
+{% endblock content %}

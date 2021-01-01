@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    
+    {% if done %}
+    <div class='progress-wrapper'>
+        <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
+      </div>
+      <div id="progress-bar-message">Waiting for progress to start...</div>
+        <!-- print the results -->
+    {% else %} 
+        {% if key == None %}
+            <p>You Havent uploaded the public and private keys.</p>
+            <a href="{% url 'publicKey' %}" class="bg-yellow-100">Click Here to upload Public Key</a>
+            <br>
+            <a class="bg-yellow-100" href="#">Click Here to upload Private Key</a>
+        {% else %}
+            {% if key.pubkey %}
+                <p>You Have already uploaded the public key.</p>
+                <a class="bg-yellow-100" href="{% url 'publicKey' %}">Click Here to Re-upload Public Key</a>
+            {% else %}
+                <p>You Havent uploaded the public key.</p>
+                <a href="{% url 'publicKey' %}" class="bg-yellow-100">Click Here to upload Public Key</a>
+            {% endif %}
+            <br>
+            
+            {% if key.prikey %}
+                <p>You Have already uploaded the private key.</p>
+                <a href="#" class="bg-yellow-100">Click Here to Re-upload Private Key</a>
+            {% else %}
+                <p>You Havent uploaded the private key.</p>
+                <a href="#" class="bg-yellow-100">Click Here to upload Private Key</a>    
+            {% endif %}
+        {% endif %}
+   
+    {% endif %}
+        
+    
+    <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+        CeleryProgressBar.initProgressBar(progressUrl);
+      });
+    </script>
+{% endblock content %}
