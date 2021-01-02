@@ -127,7 +127,13 @@
  [],
  False,
  False,
+<<<<<<< HEAD
+ 1609493385,
+ [('run.exe',
+   'c:\\users\\alant\\appdata\\local\\programs\\python\\python39\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
+=======
  1609493172,
  [('run',
    '/home/sking/Documents/venv/election-portal-2020/lib/python3.8/site-packages/PyInstaller/bootloader/Linux-64bit/run',
+>>>>>>> 58d22a3a7ca92101adc360fb6eca7be87e884c67
    'EXECUTABLE')])

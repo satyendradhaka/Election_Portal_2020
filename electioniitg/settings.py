@@ -37,7 +37,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 USE_X_FORWARDED_HOST = True
-# Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -51,7 +51,12 @@ INSTALLED_APPS = [
     'captcha',
     'django_extensions',
     'geolocation',
+    'results',
     'django.contrib.gis',
+    'django_cleanup',
+    'background_task',
+    'django_celery_results',
+    'celery_progress',
 ]
 
 MIDDLEWARE = [
@@ -98,7 +103,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': '1saket@postgres',
+        'PASSWORD': 'postgresql451',
         'HOST': 'localhost',
         'PORT': '5432'
     }
@@ -141,13 +146,13 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'election_portal/static/'
 STATIC_ROOT = ''
 
 # MEDIA_ROOT = '/home/dhaka/projects/swc/Election_Portal_2020/media'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
-MEDIA_URL = '/images/'
+MEDIA_URL = 'election_portal/images/'
 
 #recaptcha secrets
 RECAPTCHA_PUBLIC_KEY = '6Ld6GA4aAAAAAOqs7W7tVW4DayvPyCzHzbBZNGiB'
@@ -165,3 +170,12 @@ AUTH_ADFS = {
 LOGIN_URL = "django_auth_adfs:login"
 LOGIN_REDIRECT_URL = "captcha"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_STORE_ERRORS_EVEN_IF_IGNORED = True
+CELERY_RESULT_BACKEND = 'django-db'
