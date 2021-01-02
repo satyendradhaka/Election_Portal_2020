@@ -250,7 +250,7 @@ def vote(request):
         # print(users[0])
         request.session['ready'] = False
         print("damn")
-        # return redirect('captcha')
+        return redirect('captcha')
     dicti=request.session.get('option',{
         'vp': None,
         'hab':None,
