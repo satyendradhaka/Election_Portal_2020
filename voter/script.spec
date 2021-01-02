@@ -4,7 +4,11 @@ block_cipher = None
 
 
 a = Analysis(['script.py'],
+<<<<<<< HEAD
              pathex=['C:\\Users\\alant\\Documents\\VScode\\Election_Portal_2020\\voter'],
+=======
+             pathex=['/home/sking/Documents/Projects/Election_Portal_2020/voter'],
+>>>>>>> 58d22a3a7ca92101adc360fb6eca7be87e884c67
              binaries=[],
              datas=[],
              hiddenimports=[],
