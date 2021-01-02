@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     'results',
     'django.contrib.gis',
     'django_cleanup',
-    'background_task',
     'django_celery_results',
     'celery_progress',
 ]
