@@ -7,7 +7,7 @@ class publicKeyUploadForm(ModelForm):
         fields = ['public_key']
 
 
-# class publicKeyUploadForm(ModelForm):
-#     class Meta:
-#         model = keys
-#         fields = ['private_key']
+class priKeyUploadForm(ModelForm):
+    class Meta:
+        model = keys
+        fields = ['private_key']
