@@ -207,7 +207,6 @@ def vote_for(request,post):
             'done':False,
             'nota':False,
         },
-
     })
     contestantList = Contestant.objects.all().filter(post=post_dictionary[post]).order_by('?')
     pks = []
@@ -233,13 +232,12 @@ def vote_for(request,post):
     return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
 
 
-
 @login_required
 @captcha_required
 @is_valid
 def vote(request):
-    key = []
-
+    # global key = []
+    key =[]
     try:
         # print(users[0])
         key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))

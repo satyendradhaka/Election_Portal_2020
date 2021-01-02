@@ -47,6 +47,7 @@ def xor(byte_text, vote_time):
 def encryptMessage(key,message, vote_time):
     message = str.encode(message)
     # users = ['SWC', 'EC', 'CC']
+    print(key)
     for i in range(3):
         with open('images/'+str(key[i].public_key), 'rb') as fr:
             pu = rsa.PublicKey.load_pkcs1(fr.read())

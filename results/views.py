@@ -12,57 +12,16 @@ import random
 from django.contrib.auth.models import User
 from .tasks import do_work
 from celery.result import AsyncResult
-# from asgiref.sync import sync_to_async
-# from background_task import background
-# import  asyncio
 
-# async def hello():
-#   for i in range(6):
-#     await  asyncio.sleep (10)
-#     print(i)
-
-dicti={}
-positions=['vp','hab','tech','cult','sports','welfare','sail','swc','bsen','gsen']
-for i in positions:
-    dicti[i]={}
-
+# dicti={}
+# positions=['vp','hab','tech','cult','sports','welfare','sail','swc','bsen','gsen']
+# for i in positions:
+#     dicti[i]={}
 users = []
 users.append(User.objects.get(username='swc@iitg.ac.in'))
 users.append(User.objects.get(username='alan@iitg.ac.in'))
-users.append(User.objects.get(username='saketkumar@iitg.ac.in'))
-done_process = False
-
-def vote_count(vote):
-  k=vote.split(',')
-  for i in range (10):
-    if (i==9 or i==8):
-      x=k[i].split(':')[1].strip()
-      y=x[1:-1].split()
-      for j in y:
-        if (j in dicti[positions[i]]):
-          dicti[positions[i]][j]=dicti[positions[i]][j]+1
-        else: dicti[positions[i]][j]=1  
-    else:  
-      x=k[i].split(':')
-      if (x[1] in dicti[positions[i]]):
-        dicti[positions[i]][x[1]]=dicti[positions[i]][x[1]]+1
-      else: 
-        dicti[positions[i]][x[1]]=1
-
-def decryptCipherText(cipher_text, vote_time):
-  cipher_text = base64.b64decode(cipher_text.encode())
-  cipher_text = xor(cipher_text, vote_time)
-  file=[]
-  file.append(keys.objects.get(user = users[0]))
-  file.append(keys.objects.get(user = users[1]))
-  file.append(keys.objects.get(user = users[2]))
-#   file = keys.objects.get(user = request.user)
-  for i in range(2, -1, -1):
-    with open(file[i].private_key, "rb") as fr:
-      pr = rsa.PrivateKey.load_pkcs1(fr.read())
-    cipher_text = rsa.decrypt(cipher_text, pr)
-  return cipher_text.decode()
-
+users.append(User.objects.get(username='saketkumar@iitg.ac.in'))  
+ 
 def is_authorized(user):
     if user in users:
         return True
@@ -81,6 +40,22 @@ def publicKey(request):
         keys.objects.create(user=request.user,public_key=request.FILES['myfile'],pubkey=True)
     return render(request, 'pubKeyupload.html', {'pubKey':len(publicKeys)})
 
+
+@login_required
+@user_passes_test(is_authorized,redirect_field_name="home")
+def privateKey(request):
+    privateKeys = keys.objects.filter(prikey=True)
+    if request.method == 'POST' and request.FILES['myfile']:
+        # try:
+        #     keys.objects.filter(user = request.user).delete()
+        # except:
+        #     print("null")
+        key=keys.objects.get(user=request.user)
+        key.private_key = request.FILES['myfile']
+        key.prikey = True
+        key.save()
+    return render(request, 'pubKeyupload.html', {'pubKey':len(privateKeys)})
+
 running =None
 
 
@@ -92,10 +67,11 @@ def results(request):
     if running is not None:
         res = AsyncResult(running)
         if res.ready():
-          task = do_work.delay(20)
+          # voters = Voter.objects.all().values_list('username',flat=True)
+          task = do_work.delay()
           running = task.task_id
     else:
-      task = do_work.delay(20)
+      task = do_work.delay()
       running = task.task_id
     try:
         key = keys.objects.get(user = request.user)
