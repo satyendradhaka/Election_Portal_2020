@@ -7,6 +7,27 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <title>Document</title>
+    <style> 
+        .nextButton { 
+            background-color: rgb(255, 255, 255); 
+            border: 2px solid black; 
+            color: rgb(13, 14, 13); 
+            padding: 5px 10px; 
+            text-align: center; 
+            display: inline-block; 
+            font-size: 20px; 
+            margin: 10px 30px; 
+            cursor: pointer; 
+            text-decoration:none; 
+        } 
+        #nextButtonid:disabled {
+            pointer-events: none;
+            opacity: 0.5;
+            color: #c0c0c0;
+            background-color: #ffffff;
+            border-color: #c0c0c0;
+        }
+    </style>
 </head>
 <body>
    
@@ -15,12 +36,38 @@
         <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
       </div>
       <div id="progress-bar-message">Waiting for progress to start...</div>
-      
+      <form method="POST" action="">
+          {% csrf_token %}
+        <input type="submit" class="nextButton" id="nextButtonid" value = "Next" disabled>
+      </form>
     <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
     <script>
+        function success(progressBarElement, progressBarMessageElement, result){
+            result = this.getMessageDetails(result);
+            progressBarElement.style.backgroundColor = '#76ce60';
+            progressBarMessageElement.textContent = "Decryption Finished, Click Next to view the results";
+            document.getElementById('nextButtonid').disabled = false;
+        }
+        function prog(progressBarElement, progressBarMessageElement, progress){
+            progressBarElement.style.backgroundColor = '#68a9ef';
+        progressBarElement.style.width = progress.percent + "%";
+        var description = progress.description || "";
+        if (progress.current == 0) {
+            if (progress.pending === true) {
+                progressBarMessageElement.textContent = 'Waiting for task to start...';
+            } else {
+                progressBarMessageElement.textContent = 'Task started...';
+            }
+        } else {
+            progressBarMessageElement.textContent = description+progress.current + ' of ' + progress.total + ' processed. ';
+        }
+        }
         document.addEventListener("DOMContentLoaded", function () {
         var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
-        CeleryProgressBar.initProgressBar(progressUrl);
+        CeleryProgressBar.initProgressBar(progressUrl,{
+            onSuccess: success,
+            onProgress:prog,
+        });
       });
     </script>
 
