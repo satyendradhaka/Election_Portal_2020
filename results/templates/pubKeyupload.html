@@ -1,12 +1,38 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{pubKey}}/3
+
+<h2>File Upload: {{keyType}} Key</h2>
+<p class="lead">Please upload the <b>{{keyType}} Key</b> to begin the election.</p>
+<br>
+<!-- Upload  -->
+<form enctype="multipart/form-data" method="post" id="file-upload-form" class="uploader">
+  {% csrf_token %}
+  <input id="file-upload" type="file" name="fileUpload"/>
+
+  <label for="file-upload" id="file-drag">
+    <img id="file-image" src="#" alt="Preview" class="hidden">
+    <div id="start">
+      <i class="fa fa-download" aria-hidden="true"></i>
+      <div>Select the key file with .pem extension or drag here</div>
+      <div id="notimage" class="hidden">Please select an image</div>
+      <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+    </div>
+    <div id="response" class="hidden">
+      <div id="messages"></div>
+      <progress class="progress" id="file-progress" value="0">
+        <span>0</span>%
+      </progress>
+    </div>
+  </label>
+</form>
+
+<!-- {{pubKey}}/3
 <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
     <label for="myfile">Select a file:</label>
-    <input type="file" id="myfile" name="myfile">   
+    <input type="file" id="myfile" name="myfile"> 
     <button type="submit">Submit</button>
-</form>
+</form> -->
   
 {% endblock content %}

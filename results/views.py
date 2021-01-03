@@ -29,7 +29,7 @@ except:
 try:    
     users.append(User.objects.get(username='saketkumar@iitg.ac.in'))  
 except:
-    print("error in results/views.py")
+    print("error 3")
  
 def is_authorized(user):
     if user in users:
@@ -50,7 +50,7 @@ def publicKey(request):
         except:
             print("null")
         keys.objects.create(user=request.user,public_key=request.FILES['myfile'],pubkey=True)
-    return render(request, 'pubKeyupload.html', {'pubKey':public})
+    return render(request, 'pubKeyupload.html', {'pubKey':public, 'keyType': 'Public'})
 
 
 @login_required
@@ -72,7 +72,7 @@ def privateKey(request):
         key.private_key = request.FILES['myfile']
         key.prikey = True
         key.save()
-    return render(request, 'pubKeyupload.html', {'pubKey':private})
+    return render(request, 'pubKeyupload.html', {'pubKey':private, 'keyType':'Private'})
 
 running =None
 
