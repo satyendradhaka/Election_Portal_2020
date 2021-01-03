@@ -19,6 +19,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <!-- <title>Document</title> -->
 </head>
 <body>
@@ -39,13 +40,28 @@
             <p>5. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis ipsum at convallis integer nibh arcu praesent tellus. Dictum lacus quisque habitant convallis non scelerisque tortor a.</p>
             <p>6. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis ipsum at convallis integer nibh arcu praesent tellus. Dictum lacus quisque habitant convallis non scelerisque tortor a.</p>
             <div class="tandc">
-                <img src="https://www.dropbox.com/s/xe9vn04wqp9xvhw/check-square.png?raw=1" alt="">
-                I agree with the above terms and conditions
+                <!-- <img src="https://www.dropbox.com/s/xe9vn04wqp9xvhw/check-square.png?raw=1" alt=""> -->
+                <label>
+                <input required type="checkbox" name="accept_t_and_c" id="accept_t_and_c">
+                <span>I agree with the above terms and conditions</span>
+            </label>
             </div>
             <div class="conclusion">
                 <!-- <a class="privacy-policy" href="#">Read Privacy Policy</a> -->
-                <button class="center buton" type="button"><a href="{% url 'django_auth_adfs:login' %}"><span id="button_text">Login with outlook</span></a></button>
+                <button class="center buton" style="cursor: pointer;" type="button"><a href="{% url 'django_auth_adfs:login' %}"></a><span id="button_text">Login with outlook</span></a></button>
             </div>
         </div>
     </div>
+
+    <script>
+        $(".buton").click(function (e) { 
+            e.preventDefault();
+            if ($("#accept_t_and_c").prop('checked') == true) {
+                window.location.href = "{% url 'django_auth_adfs:login' %}";
+            } else {
+                M.toast({html: 'Please agree with the Terms and Conditions first!', classes: 'toast'})
+                // alert("Please agree with the Terms and Conditions first!");
+            }
+        });
+    </script>
 </body>
