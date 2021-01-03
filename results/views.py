@@ -11,12 +11,22 @@ from .forms import publicKeyUploadForm
 import random
 from django.contrib.auth.models import User
 from .tasks import do_work
+from .models import notaCount
 from celery.result import AsyncResult
 
-# dicti={}
-# positions=['vp','hab','tech','cult','sports','welfare','sail','swc','bsen','gsen']
-# for i in positions:
-#     dicti[i]={}
+post_dictionary =[
+    'VP',
+    'HAB',
+    'Tech',
+    'Cult',
+    'Welfare',
+    'Sports',
+    'SAIL',
+    'SWC',
+    'UGS',
+    'PGS',
+    'GS',      
+]
 users = []
 try:
     users.append(User.objects.get(username='swc@iitg.ac.in'))
@@ -84,20 +94,19 @@ def privateKey(request):
 
 running =None
 
-dicti = {}
+
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
 def results(request):
     if request.method == 'POST':
-        return redirect('publicKey')
-    done = True
+        return redirect('results_view')
     global running
     if running is not None:
         res = AsyncResult(running)
-        if res.ready():
-        #   print('kya',res.result)
-          task = do_work.delay()
-          running = task.task_id
+        # if res.ready():
+        # #   print('kya',res.result)
+        #   task = do_work.delay()
+        #   running = task.task_id
         
     else:
       task = do_work.delay()
@@ -109,4 +118,11 @@ def results(request):
     return render(request, 'results.html', {'task_id':running})   
 
 
-
+@login_required
+@user_passes_test(is_authorized,redirect_field_name="home")
+def results_view(request):
+    cont = []
+    for post in post_dictionary:
+        cont.append(post,Contestant.objects.filter(post=post))
+    nota=notaCount.objects.all()
+    return render(request,'results_view.html',{'Contestants':cont,'nota':nota})
