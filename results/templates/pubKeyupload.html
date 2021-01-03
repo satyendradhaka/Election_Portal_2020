@@ -14,8 +14,7 @@
     <img id="file-image" src="#" alt="Preview" class="hidden">
     <div id="start">
       <i class="fa fa-download" aria-hidden="true"></i>
-      <div>Select the key file with .pem extension or drag here</div>
-      <div id="notimage" class="hidden">Please select an image</div>
+      <div id="file-info">Select the key file with .pem extension or drag here</div>
       <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
     </div>
     <div id="response" class="hidden">
@@ -25,6 +24,9 @@
       </progress>
     </div>
   </label>
+  <div class="w-full text-center mb-10">
+    <button type="submit"><span class="btn btn-primary btn-submit">Submit</span></button>
+  </div>
 </form>
 
 <!-- {{pubKey}}/3
@@ -34,5 +36,21 @@
     <input type="file" id="myfile" name="myfile"> 
     <button type="submit">Submit</button>
 </form> -->
+
+<script>
+  $('#file-upload').change(function(){
+    var url = $(this).val();
+    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+    if (ext !== "pem"){
+      document.getElementById("file-upload").value = "";
+      alert("Unaccepted file format, try again.");
+    } else {
+      document.getElementById("file-info").innerHTML = 'You have selected: ' + document.getElementById("file-upload").value;
+      document.getElementById("file-info").style.color = 'rgb(0, 204, 0)';
+    }
+  })
+
+
+</script>
   
 {% endblock content %}
