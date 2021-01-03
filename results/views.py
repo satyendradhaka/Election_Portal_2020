@@ -48,7 +48,7 @@ def keyUpload(request):
     for i in range(len(privateKeys)):
         private.append(User.objects.get(pk=privateKeys[i]['user']).first_name)
     everyOne = []
-    for i in range(3):
+    for i in range(len(users)):
         everyOne.append(users[i].first_name)
     return render(request,'keyinfo.html',{'public':public,'private':private,'Names':everyOne})
     
@@ -84,6 +84,8 @@ dicti = {}
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
 def results(request):
+    if request.method == 'POST':
+        return redirect('publicKey')
     done = True
     global running
     if running is not None:
@@ -101,4 +103,6 @@ def results(request):
     except:
         key = None
     return render(request, 'results.html', {'task_id':running})   
+
+
 
