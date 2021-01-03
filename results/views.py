@@ -18,10 +18,14 @@ from celery.result import AsyncResult
 # for i in positions:
 #     dicti[i]={}
 users = []
-users.append(User.objects.get(username='swc@iitg.ac.in'))
-users.append(User.objects.get(username='alan@iitg.ac.in'))
-users.append(User.objects.get(username='saketkumar@iitg.ac.in'))  
- 
+try:
+    users.append(User.objects.get(username='swc@iitg.ac.in'))
+    users.append(User.objects.get(username='alan@iitg.ac.in'))
+    users.append(User.objects.get(username='saketkumar@iitg.ac.in'))  
+except:
+    print('error')
+    
+     
 def is_authorized(user):
     if user in users:
         return True
