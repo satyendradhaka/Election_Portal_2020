@@ -33,7 +33,6 @@ def do_work(self):
     voters = Voter.objects.all().filter(final_submit=True)
     for i in range(len(voters)):
         print(voters[i])
-        time.sleep(5)
         vote_string = decryptCipherText(voters[i].vote_string1,voters[i].vote_time)+decryptCipherText(voters[i].vote_string2,voters[i].vote_time)
         print(vote_string)
         vote_count(vote_string)

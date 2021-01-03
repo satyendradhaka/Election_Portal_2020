@@ -95,7 +95,7 @@
                     {{ form }}
                     <br>
                     <input class="
-                    transition login_button relative text-black lg:top-5 bg-white border-2 border-black py-4 px-12 focus:outline-none hover:bg-blue-600 hover:text-white rounded text-lg z-60" type="submit" value="Continue">
+                    transition login_button relative text-black lg:top-5 bg-white border-2 border-black py-4 px-12 focus:outline-none hover:bg-blue-600 hover:text-white rounded text-lg z-60" id="continueBtn" type="submit" value="Continue" disabled>
                 </div>
             </form>
         </div>
@@ -286,11 +286,13 @@
           }
           sendImage();
       }); 
-  
+     
+     var image = false
+     var geol = false
       // Upload image to server - ajax call - with the help of base64 data as a parameter  
      
      function sendImage() {  
-    
+          image = false ;
         
           // Below new canvas to generate flip/mirron image from existing canvas  
           var destinationCanvas = document.createElement("canvas");  
@@ -314,7 +316,13 @@
             'csrfmiddlewaretoken': csrf
           };
           var url = "{% url 'image' %}";
-          $.post(url, postdata);
+          $.post(url, postdata)
+          .done(function(){
+            image = true;
+            if (image && geol){
+                document.getElementById("continueBtn").disabled = false;
+            }
+          });
         // return true;
       };
   </script>   
@@ -323,6 +331,7 @@
 
 <script>
     function post_req(data){
+        geol = false;
         var allCookies = document.cookie;
         var csrf = allCookies.substring(10);
         var postdata = {
@@ -330,7 +339,13 @@
             'csrfmiddlewaretoken': csrf
         };
         var url = "{% url 'geo' %}";
-        $.post(url, postdata);
+        $.post(url, postdata)
+        .done(function(){
+            geol = true;
+            if (image && geol){
+                document.getElementById("continueBtn").disabled = false;
+            }
+        });
     }   
     function geoFindMe() {
         const status = document.querySelector('#status');
