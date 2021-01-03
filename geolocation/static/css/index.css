@@ -112,6 +112,11 @@ div.conclusion {
     color: #FFFFFF;
   }
 
+.toast {
+    position: relative;
+    right: 25%;
+}
+
   /* .privacy-policy {
     position: relative;
     top: 9px;
