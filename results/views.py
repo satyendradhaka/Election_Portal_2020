@@ -23,9 +23,8 @@ try:
     users.append(User.objects.get(username='alan@iitg.ac.in'))
     users.append(User.objects.get(username='saketkumar@iitg.ac.in'))  
 except:
-    print('error')
-    
-     
+    print("error in results/views.py")
+ 
 def is_authorized(user):
     if user in users:
         return True
