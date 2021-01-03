@@ -36,43 +36,47 @@ def is_authorized(user):
         return True
     return False
 
- 
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
-def publicKey(request):
+def keyUpload(request):
     publicKeys = keys.objects.filter(pubkey=True).values('user')
     public=[]
     for i in range(len(publicKeys)):
         public.append(User.objects.get(pk=publicKeys[i]['user']).first_name)
-    if request.method == 'POST' and request.FILES['myfile']:
+    privateKeys = keys.objects.filter(prikey=True).values('user')
+    private=[]
+    for i in range(len(privateKeys)):
+        private.append(User.objects.get(pk=privateKeys[i]['user']).first_name)
+    everyOne = []
+    for i in range(3):
+        everyOne.append(users[i].first_name)
+    return render(request,'keyinfo.html',{'public':public,'private':private,'Names':everyOne})
+    
+
+@login_required
+@user_passes_test(is_authorized,redirect_field_name="home")
+def publicKey(request):
+    if request.method == 'POST' and request.FILES['file-upload']:
         try:
             keys.objects.filter(user = request.user).delete()
         except:
             print("null")
-        keys.objects.create(user=request.user,public_key=request.FILES['myfile'],pubkey=True)
-    return render(request, 'pubKeyupload.html', {'pubKey':public, 'keyType': 'Public'})
+        keys.objects.create(user=request.user,public_key=request.FILES['file-upload'],pubkey=True)
+    return render(request, 'pubKeyupload.html', {'keyType': 'Public'})
 
 
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
 def privateKey(request):
-    privateKeys = keys.objects.filter(prikey=True).values('user')
-    private=[]
-    for i in range(len(privateKeys)):
-        private.append(User.objects.get(pk=privateKeys[i]['user']).first_name)
-    if request.method == 'POST' and request.FILES['myfile']:
-        # try:
-        #     keys.objects.filter(user = request.user).delete()
-        # except:
-        #     print("null")
+    if request.method == 'POST' and request.FILES['file-upload']:
         try:
             key=keys.objects.get(user=request.user)
         except:
             print("fucked up")
-        key.private_key = request.FILES['myfile']
+        key.private_key = request.FILES['file-upload']
         key.prikey = True
         key.save()
-    return render(request, 'pubKeyupload.html', {'pubKey':private, 'keyType':'Private'})
+    return render(request, 'pubKeyupload.html', {'keyType':'Private'})
 
 running =None
 
@@ -96,5 +100,5 @@ def results(request):
         key = keys.objects.get(user = request.user)
     except:
         key = None
-    return render(request, 'results.html', {'key':key,'done':done,'task_id':running})   
+    return render(request, 'results.html', {'task_id':running})   
 
