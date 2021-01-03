@@ -56,26 +56,30 @@ def keyUpload(request):
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
 def publicKey(request):
-    if request.method == 'POST' and request.FILES['file-upload']:
+    files = request.FILES.get('fileUpload', None)
+    if request.method == 'POST' and files is not None:
         try:
             keys.objects.filter(user = request.user).delete()
         except:
             print("null")
-        keys.objects.create(user=request.user,public_key=request.FILES['file-upload'],pubkey=True)
+        keys.objects.create(user=request.user,public_key=files,pubkey=True)
+        return redirect('keyUpload')
     return render(request, 'pubKeyupload.html', {'keyType': 'Public'})
 
 
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
 def privateKey(request):
-    if request.method == 'POST' and request.FILES['file-upload']:
+    files = request.FILES.get('fileUpload', None)
+    if request.method == 'POST' and files is not None:
         try:
             key=keys.objects.get(user=request.user)
         except:
             print("fucked up")
-        key.private_key = request.FILES['file-upload']
+        key.private_key = files
         key.prikey = True
         key.save()
+        return redirect('keyUpload')
     return render(request, 'pubKeyupload.html', {'keyType':'Private'})
 
 running =None
