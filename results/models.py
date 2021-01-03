@@ -11,3 +11,21 @@ class keys(models.Model):
     private_key = models.FileField(upload_to='private_key/',blank=True)
     pubkey = models.BooleanField(default=False)
     prikey = models.BooleanField(default=False)
+
+class notaCount(models.Model):
+    CATEGORY = (
+        ('VP', 'Vice President'),
+        ('HAB', 'General Secretary of Hostel Affairs Board'),
+        ('UGS', 'Under Graduate Senator'),
+        ('PGS','Post Graduate Senator'),
+        ('GS','Girl Senator'),
+        ('Tech','General Secretary of Technical Board'),
+        ('Cult','General Secretary of Cultural Board'),
+        ('Welfare','General Secretary of Students\' Welfare Board'),
+        ('Sports','General Secretary of Sports Board'),
+        ('SAIL','General Seceratry of SAIL'),
+        ('SWC','General Seceratry of SWC'),
+    )
+
+    post = models.CharField(max_length=7, choices=CATEGORY,unique=True)
+    vote_count = models.IntegerField(default=0)

@@ -21,7 +21,7 @@ post_dictionary = {
     'welfare':'Welfare',
     'sports':'Sports',
     'sail':'SAIL',
-    'swc':'SWC',      
+    'swc':'SWC',     
 }
 
 
