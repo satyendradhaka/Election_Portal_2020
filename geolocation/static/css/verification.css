@@ -18,6 +18,12 @@
     color: rgba(46, 47, 47, 0.57);
 }
 
+#continueBtn:disabled {
+    opacity: 0.5;
+    color: #c0c0c0;
+    background-color: #ffffff;
+    border-color: #c0c0c0;
+}
 
 /* @media (width <= 640px) {
     .grid {
@@ -27,11 +33,3 @@
     }
 
     .col-start-1 {
-        grid-column-start: 1;
-    }
-
-    .text-base {
-        font-size: 1rem;
-        line-height: 1.5rem;
-    }
-} */
