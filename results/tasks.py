@@ -13,13 +13,19 @@ for i in positions:
 def vote_count(vote):
   k=vote.split(',')
   for i in range (10):
-    if (i==9 or i==8):
+    if i>=8:
       x=k[i].split(':')[1].strip()
-      y=x[1:-1].split()
-      for j in y:
-        if (j in dicti[positions[i]]):
-          dicti[positions[i]][j]=dicti[positions[i]][j]+1
-        else: dicti[positions[i]][j]=1  
+      if x == 'NOTA':
+        if 'NOTA' in dicti[positions[i]]:
+          dicti[positions[i]]['NOTA'] += 1
+        else:
+          dicti[positions[i]]['NOTA'] = 1
+      else:  
+        y=x[1:-1].split()
+        for j in y:
+          if (j in dicti[positions[i]]):
+            dicti[positions[i]][j]=dicti[positions[i]][j]+1
+          else: dicti[positions[i]][j]=1  
     else:  
       x=k[i].split(':')
       if (x[1] in dicti[positions[i]]):
@@ -32,10 +38,11 @@ def do_work(self):
     progress_recorder = ProgressRecorder(self)
     voters = Voter.objects.all().filter(final_submit=True)
     for i in range(len(voters)):
-        print(voters[i])
+        # print(voters[i])
         vote_string = decryptCipherText(voters[i].vote_string1,voters[i].vote_time)+decryptCipherText(voters[i].vote_string2,voters[i].vote_time)
-        print(vote_string)
+        # print(vote_string)
         vote_count(vote_string)
-        progress_recorder.set_progress(i+1,len(voters))
-    print(dicti)
-    return 'work is complete'
+        progress_recorder.set_progress(i+1,len(voters),description="Decrypting ....")
+        # time.sleep(3)
+    # print(dicti)
+    return dicti

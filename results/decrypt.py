@@ -32,8 +32,8 @@ def decryptCipherText(cipher_text, vote_time):
     files.append(keys.objects.get(user = users[2]))
   except :
     print('None was fetched')
-  print('cipher',cipher_text)
-  print('time',vote_time)
+  # print('cipher',cipher_text)
+  # print('time',vote_time)
   cipher_text = base64.b64decode(cipher_text.encode())
   # users = ['SWC', 'EC', 'CC']
   time_ = float(vote_time)
