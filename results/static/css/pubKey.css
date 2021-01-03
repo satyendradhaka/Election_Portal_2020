@@ -157,4 +157,10 @@ p {
   cursor: pointer;
 }
 
+.btn-submit {
+  height: 50px !important;
+  width: 150px !important;
+  font-size: 24px !important;
+  line-height: 50px !important;
+}
 /*# sourceMappingURL=pubKey.css.map */
