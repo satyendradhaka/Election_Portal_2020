@@ -48,10 +48,25 @@
             progressBarMessageElement.textContent = "Decryption Finished, Click Next to view the results";
             document.getElementById('nextButtonid').disabled = false;
         }
+        function prog(progressBarElement, progressBarMessageElement, progress){
+            progressBarElement.style.backgroundColor = '#68a9ef';
+        progressBarElement.style.width = progress.percent + "%";
+        var description = progress.description || "";
+        if (progress.current == 0) {
+            if (progress.pending === true) {
+                progressBarMessageElement.textContent = 'Waiting for task to start...';
+            } else {
+                progressBarMessageElement.textContent = 'Task started...';
+            }
+        } else {
+            progressBarMessageElement.textContent = description+progress.current + ' of ' + progress.total + ' processed. ';
+        }
+        }
         document.addEventListener("DOMContentLoaded", function () {
         var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
         CeleryProgressBar.initProgressBar(progressUrl,{
             onSuccess: success,
+            onProgress:prog,
         });
       });
     </script>
