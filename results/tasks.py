@@ -42,7 +42,5 @@ def do_work(self):
         vote_string = decryptCipherText(voters[i].vote_string1,voters[i].vote_time)+decryptCipherText(voters[i].vote_string2,voters[i].vote_time)
         # print(vote_string)
         vote_count(vote_string)
-        progress_recorder.set_progress(i+1,len(voters),description="Decrypting ....")
-        # time.sleep(3)
-    # print(dicti)
+        progress_recorder.set_progress(i,len(voters)+2,description="Decrypting ....")
     return dicti
