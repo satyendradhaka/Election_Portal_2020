@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="{% static 'css/keyinfo.css' %}">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <title>Election Keys</title>
+</head>
+<body>
+    <div id="demo">
+        <h1>Public Key Information Table</h1>
+        <!-- <h2>Table of my other Material Design works (list was updated 08.2015)</h2> -->
+        <br>
+        
+        <!-- Responsive table starts here -->
+        <!-- For correct display on small screens you must add 'data-title' to each 'td' in your table -->
+        <div class="table-responsive-vertical shadow-z-1">
+            <!-- Table starts here -->
+            <table id="table" class="table table-hover table-mc-light-blue">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for person in Names %}
+                    <tr>
+                    <td data-title="">{{forloop.counter}}</td>
+                    <td data-title="Name">{{person}}</td>
+                    {% if person in public %}
+                        <td data-title="Status" style="background-color: rgb(139, 251, 139);">Uploaded</td>
+                    {% else %}
+                        <td data-title="Status" style="background-color: rgba(226, 98, 98, 0.329);">Pending</td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if request.user.first_name in public %}
+        <div class="w-full text-center mb-10">
+            <button type="button" class="bg-black text-white h-20 w-60 text-3xl text-center font-bold rounded-sm next-btn"><a href="{% url 'publicKey' %}">Update Key</a></button>
+        </div>
+    {% else %}
+        <div class="w-full text-center mb-10">
+            <button type="button" class="bg-black text-white h-20 w-60 text-3xl text-center font-bold rounded-sm next-btn"><a href="{% url 'publicKey' %}">Add Key</a></button>
+        </div>
+    {% endif %}
+    <script src="{% static 'js/keyinfo.js' %}"></script>
+</body>
+</html>
+
