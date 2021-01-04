@@ -1,5 +1,92 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{% block content %}
-  
-{% endblock content %}{{dicti}}
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"> -->
+  <link rel="stylesheet" href="{% static 'css/results_view.css' %}">
+  <title>Results</title>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sidebar-wrapper">
+               <ul class="sidebar-nav" >
+                   <li class="relative text-5xl left-20 mt-4 mb-4">
+                       <a href="#">
+                           Posts
+                       </a>
+                   </li>
+                   <hr class="bg-white">
+                   {% for i in post_list %}
+                   <li class="relative text-3xl left-28 mt-4 mb-4">
+                      <a href="{% url 'results_view' i %}">{{i}}</a>
+                   </li>
+                   {% endfor %}
+               </ul>
+           </div>
+   <div>
+
+    <header class="header navbar-light bg-faded">
+      <div class="container-fluid">
+        <div class="row text-center">
+            <button type="button" class="btn hamburger-btn" id="menu-toggle">
+            <span class="navbar-toggler-icon" style="height: 36px; width: 36px;"></span>
+            </button>
+            <span class="page-title">{{post_display}}</span>
+            <div class="profile-pic">
+             
+            </div>
+        </div> <!-- ENd of row -->
+      </div> <!-- End of container fluid -->
+    </header>
+   
+
+  <br>
+  <br>
+  <br>
+  <ul class="graph-cont">
+    {% for i in contestants %}    
+      <li data-count="{{i.1}}" data-percent="{{i.2}}" aria-label="{{i.1}} {{i.0}}">
+        <div class="graph-number graph-number-{{forloop.counter}}"></div>
+        <div class="graph-bar graph-bar-{{forloop.counter}}">
+          <div class="graph-bar-progress"></div>
+          <div class="graph-bar-label">{{i.0}}</div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="w-full text-center mb-10">
+    <button type="button" name="choice" value="done" class="bg-black text-white h-20 w-60 text-3xl text-center font-bold rounded-sm next-btn">Total : {{sum}}</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.1.1/d3.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script src='{% static "js/results_view.js" %}'></script>
+</body>
+</html>
+
+
+<!-- {% block content %} -->
+
+  <!-- {% for i in Contestants %}
+    <br>
+    {{i.0}}
+    <br>
+    {% for k in i.1 %}
+      {{k.name}}-{{k.vote_count}}
+    {% endfor %}
+    {% for k in nota %}
+      {% if k.0 == i.0 %}
+        NOTA - {{k.1.vote_count}} 
+      {% endif %}
+    {% endfor %}
+  {% endfor %} -->
+<!-- {% endblock content %} -->
+
+<!-- contestants.1 is a list of contestants -->
+<!-- i in contestants.1 => i.vote_count is the vote_count -->

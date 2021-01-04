@@ -5,6 +5,7 @@ import rsa
 import base64
 import time
 import random
+from django.conf import settings
 # done_process = False
 
 
@@ -39,9 +40,8 @@ def decryptCipherText(cipher_text, vote_time):
   time_ = float(vote_time)
   time__ = time_//1
   cipher_text = xor(cipher_text, time__)
-  # print(files[2].private_key)
   for i in range(2, -1, -1):
-    with open('images/'+str(files[i].private_key), 'rb') as fr:
+    with open(settings.MEDIA_ROOT+'/'+str(files[i].private_key), 'rb') as fr:
       pr = rsa.PrivateKey.load_pkcs1(fr.read())
     cipher_text = rsa.decrypt(cipher_text, pr)
   return cipher_text.decode()
