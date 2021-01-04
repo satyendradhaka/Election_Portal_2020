@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
-  
-{% endblock content %}{{dicti}}
+  {% for i in Contestants %}
+    <br>
+    {{i.0}}
+    <br>
+    {% for k in i.1 %}
+      {{k.name}}-{{k.vote_count}}
+    {% endfor %}
+    {% for k in nota %}
+      {% if k.0 == i.0 %}
+        NOTA - {{k.1.vote_count}} 
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endblock content %}
+
+<!-- contestants.1 is a list of contestants -->
+<!-- i in contestants.1 => i.vote_count is the vote_count -->
