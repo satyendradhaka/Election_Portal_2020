@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
   <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"> -->
@@ -69,24 +70,3 @@
   <script src='{% static "js/results_view.js" %}'></script>
 </body>
 </html>
-
-
-<!-- {% block content %} -->
-
-  <!-- {% for i in Contestants %}
-    <br>
-    {{i.0}}
-    <br>
-    {% for k in i.1 %}
-      {{k.name}}-{{k.vote_count}}
-    {% endfor %}
-    {% for k in nota %}
-      {% if k.0 == i.0 %}
-        NOTA - {{k.1.vote_count}} 
-      {% endif %}
-    {% endfor %}
-  {% endfor %} -->
-<!-- {% endblock content %} -->
-
-<!-- contestants.1 is a list of contestants -->
-<!-- i in contestants.1 => i.vote_count is the vote_count -->
