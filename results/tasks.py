@@ -27,7 +27,7 @@ def vote_count(vote,cat,dicti):
         if i==8:
           nota = cat
         else:
-          nota = 'NOTA'
+          nota = ' NOTA'
         if nota in dicti[positions[i]]:
           dicti[positions[i]][nota] += 1
         else:
@@ -40,6 +40,7 @@ def vote_count(vote,cat,dicti):
           else: dicti[positions[i]][j]=1  
     else:  
       x=k[i].split(':')
+      # print(x[1])
       if (x[1] in dicti[positions[i]]):
         dicti[positions[i]][x[1]]=dicti[positions[i]][x[1]]+1
       else: 
@@ -71,7 +72,7 @@ def do_work(self):
                 cont.vote_count = dicti[post][key]
                 cont.save()
             except:
-                if key == 'NOTA':
+                if key == ' NOTA':
                     notaCount.objects.create(post=post_dictionary[post],vote_count=dicti[post][key])
                 elif key=='UGS' or key=='PGS':
                     notaCount.objects.create(post=key,vote_count=dicti[post][key])    

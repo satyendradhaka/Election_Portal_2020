@@ -28,20 +28,22 @@ post_dictionary =[
     'GS',      
 ]
 users = []
-try:
-    users.append(User.objects.get(username='swc@iitg.ac.in'))
-except:
-    print("error in results/views.py")
-try:    
-    users.append(User.objects.get(username='alan@iitg.ac.in'))
-except:
-    print("error in results/views.py")
-try:    
-    users.append(User.objects.get(username='saketkumar@iitg.ac.in'))  
-except:
-    print("error 3")
+
  
 def is_authorized(user):
+    users.clear()
+    try:
+        users.append(User.objects.get(username='swc@iitg.ac.in'))
+    except:
+        print("error in results/views.py")
+    try:    
+        users.append(User.objects.get(username='alan@iitg.ac.in'))
+    except:
+        print("error in results/views.py")
+    try:    
+        users.append(User.objects.get(username='saketkumar@iitg.ac.in'))  
+    except:
+        print("error 3")
     if user in users:
         return True
     return False
@@ -107,7 +109,6 @@ def results(request):
         # #   print('kya',res.result)
         #   task = do_work.delay()
         #   running = task.task_id
-        
     else:
       task = do_work.delay()
       running = task.task_id
@@ -122,7 +123,13 @@ def results(request):
 @user_passes_test(is_authorized,redirect_field_name="home")
 def results_view(request):
     cont = []
+    nota=[]
     for post in post_dictionary:
-        cont.append(post,Contestant.objects.filter(post=post))
-    nota=notaCount.objects.all()
+        cont.append((post,Contestant.objects.filter(post=post)))
+        try:
+            value=notaCount.objects.get(post=post)
+        except:
+            notaCount.objects.create(post=post,vote_count=0)
+    for i in notaCount.objects.all():
+        nota.append((i.post,i))
     return render(request,'results_view.html',{'Contestants':cont,'nota':nota})
