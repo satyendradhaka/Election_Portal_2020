@@ -71,10 +71,12 @@ def publicKey(request):
     files = request.FILES.get('fileUpload', None)
     if request.method == 'POST' and files is not None:
         try:
-            keys.objects.filter(user = request.user).delete()
+            key=keys.objects.get(user = request.user)
+            key.public_key = files
+            key.pubkey =True
+            key.save()
         except:
-            print("null")
-        keys.objects.create(user=request.user,public_key=files,pubkey=True)
+            keys.objects.create(user=request.user,public_key=files,pubkey=True)
         return redirect('keyUpload')
     return render(request, 'pubKeyupload.html', {'keyType': 'Public'})
 
