@@ -3,7 +3,13 @@
 {% block content %}
 
 <h2>File Upload: {{keyType}} Key</h2>
-<p class="lead">Please upload the <b>{{keyType}} Key</b> to begin the election.</p>
+
+{% if keyType == "Private" %}
+  <p class="lead">Please upload the <b>{{keyType}} Key</b> to view the election results.</p>
+{% else %}
+  <p class="lead">Please upload the <b>{{keyType}} Key</b> to begin the election.</p>
+{% endif %}
+  
 <br>
 <!-- Upload  -->
 <form enctype="multipart/form-data" method="post" id="file-upload-form" class="uploader">
