@@ -14,19 +14,19 @@ from .tasks import do_work
 from .models import notaCount
 from celery.result import AsyncResult
 
-post_dictionary =[
-    'VP',
-    'HAB',
-    'Tech',
-    'Cult',
-    'Welfare',
-    'Sports',
-    'SAIL',
-    'SWC',
-    'UGS',
-    'PGS',
-    'GS',      
-]
+post_dictionary ={
+    'VP':'Vice President',
+    'HAB' : 'General Secretary of Hostel Affairs Board',
+    'UGS': 'Under Graduate Senator',
+    'PGS':'Post Graduate Senator',
+    'GS':'Girl Senator',
+    'Tech':'General Secretary of Technical Board',
+    'Cult':'General Secretary of Cultural Board',
+    'Welfare':'General Secretary of Students\' Welfare Board',
+    'Sports':'General Secretary of Sports Board',
+    'SAIL':'General Seceratry of SAIL',
+    'SWC':'General Seceratry of SWC',    
+}
 users = []
 
  
@@ -103,7 +103,7 @@ running =None
 @user_passes_test(is_authorized,redirect_field_name="home")
 def results(request):
     if request.method == 'POST':
-        return redirect('results_view')
+        return redirect('results_view','VP')
     global running
     if running is not None:
         res = AsyncResult(running)
@@ -123,15 +123,18 @@ def results(request):
 
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
-def results_view(request):
-    cont = []
-    nota=[]
-    for post in post_dictionary:
-        cont.append((post,Contestant.objects.filter(post=post)))
-        try:
-            value=notaCount.objects.get(post=post)
-        except:
-            notaCount.objects.create(post=post,vote_count=0)
-    for i in notaCount.objects.all():
-        nota.append((i.post,i))
-    return render(request,'results_view.html',{'Contestants':cont,'nota':nota})
+def results_view(request,post):
+    cont = list(Contestant.objects.filter(post=post).values_list('name','vote_count'))
+    try:
+        nota = notaCount.objects.get(post=post)
+        cont.append(('NOTA',nota.vote_count))
+    except:
+        cont.append(('NOTA',0))
+    sum=0
+    for i in cont:
+        sum+=i[1]
+    contList = []
+    for i in cont:
+        contList.append((i[0],i[1],i[1]*100/sum))
+    print(contList)
+    return render(request,'results_view.html',{'contestants':contList,'post_display':post_dictionary[post],'sum':sum,'post_list':post_dictionary.keys()})
