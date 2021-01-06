@@ -26,18 +26,14 @@ function setProgress(designation, total) {
   let x = designations[designation] / total * 100;
   console.log(designation);
   console.log(x);
-  let init = 0;
-  let inc = 0.15;
+  let init = x - 1 / total * 100;
   let elem = $(".progress");
   let id = setInterval(frame, 0.5);
   function frame () {
     if(init > x) {
       clearInterval(id);
     } else {
-      init += inc;
-      if(inc <= 0.6) {
-        inc += 0.002;
-      }
+      init += 0.15;
       elem.width(init + '%');
     }
   }
