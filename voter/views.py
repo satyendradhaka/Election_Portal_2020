@@ -48,11 +48,13 @@ def is_valid(function):
         if Voter.objects.all().filter(username=username).exists():
             voter = Voter.objects.get(username=username)
             if voter.final_submit:
-                return HttpResponse('u have already voted')
+                # return HttpResponse('u have already voted')
+                return render(request,'error.html',{})
             else:
                 return function(request, *args, **kwargs) 
         else:
-            return HttpResponse('get out of here')
+            return render(request,'error.html',{})
+            # return HttpResponse('get out of here')
 
     return wrap
 
