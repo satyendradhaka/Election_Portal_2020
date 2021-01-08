@@ -95,3 +95,7 @@ li { cursor: pointer; }
 .custom-li {
   min-width: 50%;
 }
+
+.info-block {
+  margin-top: 50px !important;
+}
