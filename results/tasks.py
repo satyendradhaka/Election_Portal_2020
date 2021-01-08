@@ -5,7 +5,7 @@ from voter.models import Voter,Contestant
 from django.contrib.auth.models import User
 from .decrypt import decryptCipherText
 from .models import notaCount
-
+from .backup import backup_votes
 positions=['vp','hab','tech','cult','sports','welfare','sail','swc','bsen','gsen']
 post_dictionary = {
     'vp':'VP',
@@ -56,6 +56,7 @@ def do_work(self):
     voters = Voter.objects.all().filter(final_submit=True)
     for i in range(len(voters)):
         # print(voters[i])
+        backup_votes(voters[i].vote_string1, voters[i].vote_string2, voters[i].vote_time)
         vote_string = decryptCipherText(voters[i].vote_string1,voters[i].vote_time)+decryptCipherText(voters[i].vote_string2,voters[i].vote_time)
         # print(vote_string)
         if voters[i].category == '0' or voters[i].category == '1':
@@ -73,7 +74,18 @@ def do_work(self):
                 cont.save()
             except:
                 if key == ' NOTA':
+                  try:
                     notaCount.objects.create(post=post_dictionary[post],vote_count=dicti[post][key])
+                  except:
+                    nota = notaCount.objects.get(post=post_dictionary[post])
+                    nota.vote_count= dicti[post][key]
+                    nota.save()
                 elif key=='UGS' or key=='PGS':
-                    notaCount.objects.create(post=key,vote_count=dicti[post][key])    
+                  try:
+                    notaCount.objects.create(post=key,vote_count=dicti[post][key])
+                  except:
+                    nota = notaCount.objects.get(post=key)
+                    nota.vote_count= dicti[post][key]
+                    nota.save()
+                        
     return "Work Completed"
