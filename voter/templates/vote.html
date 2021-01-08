@@ -18,6 +18,12 @@
     </div>
     <input type="hidden" name="choice" id="res">
   </form>
+
+  <div class="w-full text-2xl info-block hidden bg-gray-50">
+    You have opted for <span class="opted-for"></span>.
+    <br>
+    Click on Next to confirm your choice. You may review and modify your choices at the end.
+  </div>
 {% endblock save_and_next %} 
 
 {% block content %}
@@ -42,7 +48,7 @@
             </span>
           </span>
           <span class="py-6"
-            ><p class="text-xl font-bold text-gray-800">{{i.name}}</p>
+            ><p class="text-xl name_{{i.pk}} font-bold text-gray-800">{{i.name}}</p>
             <ul
               class="font-medium max-w-md space-y-1 text-1xl pt-2 text-gray-600"
             >
@@ -63,7 +69,7 @@
     function voteClick(the_chosen_one) {
       
       document.getElementById("res").value = the_chosen_one;
-      console.log(the_chosen_one);
+      // console.log(the_chosen_one);
     }
 
     // function call_post_req(){
