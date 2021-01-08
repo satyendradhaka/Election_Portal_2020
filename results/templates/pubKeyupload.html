@@ -1,12 +1,62 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{pubKey}}/3
+
+<h2>File Upload: {{keyType}} Key</h2>
+
+{% if keyType == "Private" %}
+  <p class="lead">Please upload the <b>{{keyType}} Key</b> to view the election results.</p>
+{% else %}
+  <p class="lead">Please upload the <b>{{keyType}} Key</b> to begin the election.</p>
+{% endif %}
+  
+<br>
+<!-- Upload  -->
+<form enctype="multipart/form-data" method="post" id="file-upload-form" class="uploader">
+  {% csrf_token %}
+  <input id="file-upload" type="file" name="fileUpload"/>
+
+  <label for="file-upload" id="file-drag">
+    <img id="file-image" src="#" alt="Preview" class="hidden">
+    <div id="start">
+      <i class="fa fa-download" aria-hidden="true"></i>
+      <div id="file-info">Select the key file with .pem extension or drag here</div>
+      <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+    </div>
+    <div id="response" class="hidden">
+      <div id="messages"></div>
+      <progress class="progress" id="file-progress" value="0">
+        <span>0</span>%
+      </progress>
+    </div>
+  </label>
+  <div class="w-full text-center mb-10">
+    <button type="submit"><span class="btn btn-primary btn-submit">Submit</span></button>
+  </div>
+</form>
+
+<!-- {{pubKey}}/3
 <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
     <label for="myfile">Select a file:</label>
-    <input type="file" id="myfile" name="myfile">   
+    <input type="file" id="myfile" name="myfile"> 
     <button type="submit">Submit</button>
-</form>
+</form> -->
+
+<script>
+  $('#file-upload').change(function(){
+    var url = $(this).val();
+    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+    if (ext !== "pem"){
+      document.getElementById("file-upload").value = "";
+      alert("Unaccepted file format, try again.");
+    } else {
+      document.getElementById("file-info").innerHTML = 'You have selected: ' + document.getElementById("file-upload").value;
+      document.getElementById("file-info").style.color = 'rgb(0, 204, 0)';
+    }
+  })
+
+
+</script>
   
 {% endblock content %}

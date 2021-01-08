@@ -24,20 +24,14 @@ function getIds(contList) {
 
 function setProgress(designation, total) {
   let x = designations[designation] / total * 100;
-  console.log(designation);
-  console.log(x);
-  let init = 0;
-  let inc = 0.15;
+  let init = x - 1 / total * 100;
   let elem = $(".progress");
   let id = setInterval(frame, 0.5);
   function frame () {
     if(init > x) {
       clearInterval(id);
     } else {
-      init += inc;
-      if(inc <= 0.6) {
-        inc += 0.002;
-      }
+      init += 0.15;
       elem.width(init + '%');
     }
   }
@@ -56,6 +50,8 @@ $(document).ready(function () {
         $("#text_" + ids[index]).addClass("hidden");
       }
     );
+
+
     $("#" + ids[index]).click(function () {
       $(".nota-effect").css("opacity", 1);
       $(".bg-custom").css("background", "rgba(231, 105, 15, 0.1)");
@@ -71,6 +67,8 @@ $(document).ready(function () {
         $("#action_box_container_" + ids[index]).html("<span>Voted</span>");
         selected = true;
         selected_id = ids[index];
+        $(".opted-for").html($(".name_" + selected_id).html());
+        $(".info-block").removeClass("hidden");
         voteClick(selected_id);
       } else if (ids[index] == selected_id) {
         var cha = String.fromCharCode(65+ids.indexOf(selected_id));
@@ -83,6 +81,7 @@ $(document).ready(function () {
         );
         selected = false;
         selected_id = null;
+        $(".info-block").addClass("hidden");
         voteClick(selected_id);
       } else {
         var cha = String.fromCharCode(65+ids.indexOf(selected_id));
@@ -99,9 +98,10 @@ $(document).ready(function () {
         $("#action_box_container_" + ids[index]).html("<span>Voted</span>");
         selected = true;
         selected_id = ids[index];
+        $(".opted-for").html($(".name_" + selected_id).html());
         voteClick(selected_id);
       }
-      console.log(selected_id);
+      // console.log(selected_id);
     });
   });
 
@@ -121,6 +121,8 @@ $(document).ready(function () {
     $(".nota-effect").css("opacity", 0.5);
     $(".bg-custom").css("background", "#E7690F");
     $(".text-custom").css("color", "rgb(236, 232, 229)");
+    $(".opted-for").html("NOTA");
+    $(".info-block").removeClass("hidden");
   });
 
   $("#info-btn").hover(

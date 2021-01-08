@@ -11,75 +11,90 @@ from .forms import publicKeyUploadForm
 import random
 from django.contrib.auth.models import User
 from .tasks import do_work
+from .models import notaCount
 from celery.result import AsyncResult
-# from asgiref.sync import sync_to_async
-# from background_task import background
-# import  asyncio
 
-# async def hello():
-#   for i in range(6):
-#     await  asyncio.sleep (10)
-#     print(i)
-
-dicti={}
-positions=['vp','hab','tech','cult','sports','welfare','sail','swc','bsen','gsen']
-for i in positions:
-    dicti[i]={}
-
+post_dictionary ={
+    'VP':'Vice President',
+    'HAB' : 'General Secretary of Hostel Affairs Board',
+    'UGS': 'Under Graduate Senator',
+    'PGS':'Post Graduate Senator',
+    'GS':'Girl Senator',
+    'Tech':'General Secretary of Technical Board',
+    'Cult':'General Secretary of Cultural Board',
+    'Welfare':'General Secretary of Students\' Welfare Board',
+    'Sports':'General Secretary of Sports Board',
+    'SAIL':'General Seceratry of SAIL',
+    'SWC':'General Seceratry of SWC',    
+}
 users = []
-users.append(User.objects.get(username='swc@iitg.ac.in'))
-users.append(User.objects.get(username='alan@iitg.ac.in'))
-users.append(User.objects.get(username='saketkumar@iitg.ac.in'))
-done_process = False
 
-def vote_count(vote):
-  k=vote.split(',')
-  for i in range (10):
-    if (i==9 or i==8):
-      x=k[i].split(':')[1].strip()
-      y=x[1:-1].split()
-      for j in y:
-        if (j in dicti[positions[i]]):
-          dicti[positions[i]][j]=dicti[positions[i]][j]+1
-        else: dicti[positions[i]][j]=1  
-    else:  
-      x=k[i].split(':')
-      if (x[1] in dicti[positions[i]]):
-        dicti[positions[i]][x[1]]=dicti[positions[i]][x[1]]+1
-      else: 
-        dicti[positions[i]][x[1]]=1
-
-def decryptCipherText(cipher_text, vote_time):
-  cipher_text = base64.b64decode(cipher_text.encode())
-  cipher_text = xor(cipher_text, vote_time)
-  file=[]
-  file.append(keys.objects.get(user = users[0]))
-  file.append(keys.objects.get(user = users[1]))
-  file.append(keys.objects.get(user = users[2]))
-#   file = keys.objects.get(user = request.user)
-  for i in range(2, -1, -1):
-    with open(file[i].private_key, "rb") as fr:
-      pr = rsa.PrivateKey.load_pkcs1(fr.read())
-    cipher_text = rsa.decrypt(cipher_text, pr)
-  return cipher_text.decode()
-
+ 
 def is_authorized(user):
+    users.clear()
+    try:
+        users.append(User.objects.get(username='swc@iitg.ac.in'))
+    except:
+        print("error in results/views.py")
+    try:    
+        users.append(User.objects.get(username='alan@iitg.ac.in'))
+    except:
+        print("error in results/views.py")
+    try:    
+        users.append(User.objects.get(username='saketkumar@iitg.ac.in'))  
+    except:
+        print("error 3")
     if user in users:
         return True
     return False
 
- 
+@login_required
+@user_passes_test(is_authorized,redirect_field_name="home")
+def keyUpload(request):
+    publicKeys = keys.objects.filter(pubkey=True).values('user')
+    public=[]
+    for i in range(len(publicKeys)):
+        public.append(User.objects.get(pk=publicKeys[i]['user']).first_name)
+    privateKeys = keys.objects.filter(prikey=True).values('user')
+    private=[]
+    for i in range(len(privateKeys)):
+        private.append(User.objects.get(pk=privateKeys[i]['user']).first_name)
+    everyOne = []
+    for i in range(len(users)):
+        everyOne.append(users[i].first_name)
+    return render(request,'keyinfo.html',{'public':public,'private':private,'Names':everyOne})
+    
+
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
 def publicKey(request):
-    publicKeys = keys.objects.filter(pubkey=True)
-    if request.method == 'POST' and request.FILES['myfile']:
+    files = request.FILES.get('fileUpload', None)
+    if request.method == 'POST' and files is not None:
         try:
-            keys.objects.filter(user = request.user).delete()
+            key=keys.objects.get(user = request.user)
+            key.public_key = files
+            key.pubkey =True
+            key.save()
         except:
-            print("null")
-        keys.objects.create(user=request.user,public_key=request.FILES['myfile'],pubkey=True)
-    return render(request, 'pubKeyupload.html', {'pubKey':len(publicKeys)})
+            keys.objects.create(user=request.user,public_key=files,pubkey=True)
+        return redirect('keyUpload')
+    return render(request, 'pubKeyupload.html', {'keyType': 'Public'})
+
+
+@login_required
+@user_passes_test(is_authorized,redirect_field_name="home")
+def privateKey(request):
+    files = request.FILES.get('fileUpload', None)
+    if request.method == 'POST' and files is not None:
+        try:
+            key=keys.objects.get(user=request.user)
+        except:
+            print("fucked up")
+        key.private_key = files
+        key.prikey = True
+        key.save()
+        return redirect('keyUpload')
+    return render(request, 'pubKeyupload.html', {'keyType':'Private'})
 
 running =None
 
@@ -87,19 +102,39 @@ running =None
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
 def results(request):
-    done = True
+    if request.method == 'POST':
+        return redirect('results_view','VP')
     global running
     if running is not None:
         res = AsyncResult(running)
-        if res.ready():
-          task = do_work.delay(20)
-          running = task.task_id
+        # if res.ready():
+        # #   print('kya',res.result)
+        #   task = do_work.delay()
+        #   running = task.task_id
     else:
-      task = do_work.delay(20)
+      task = do_work.delay()
       running = task.task_id
     try:
         key = keys.objects.get(user = request.user)
     except:
         key = None
-    return render(request, 'results.html', {'key':key,'done':done,'task_id':running})   
+    return render(request, 'results.html', {'task_id':running})   
 
+
+@login_required
+@user_passes_test(is_authorized,redirect_field_name="home")
+def results_view(request,post):
+    cont = list(Contestant.objects.filter(post=post).values_list('name','vote_count'))
+    try:
+        nota = notaCount.objects.get(post=post)
+        cont.append(('NOTA',nota.vote_count))
+    except:
+        cont.append(('NOTA',0))
+    sum=0
+    for i in cont:
+        sum+=i[1]
+    contList = []
+    for i in cont:
+        contList.append((i[0],i[1],i[1]*100/sum))
+    print(contList)
+    return render(request,'results_view.html',{'contestants':contList,'post_display':post_dictionary[post],'sum':sum,'post_list':post_dictionary.keys()})

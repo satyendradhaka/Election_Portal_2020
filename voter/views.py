@@ -21,7 +21,7 @@ post_dictionary = {
     'welfare':'Welfare',
     'sports':'Sports',
     'sail':'SAIL',
-    'swc':'SWC',      
+    'swc':'SWC',     
 }
 
 
@@ -48,11 +48,13 @@ def is_valid(function):
         if Voter.objects.all().filter(username=username).exists():
             voter = Voter.objects.get(username=username)
             if voter.final_submit:
-                return HttpResponse('u have already voted')
+                # return HttpResponse('u have already voted')
+                return render(request,'error.html',{})
             else:
                 return function(request, *args, **kwargs) 
         else:
-            return HttpResponse('get out of here')
+            return render(request,'error.html',{})
+            # return HttpResponse('get out of here')
 
     return wrap
 
@@ -207,7 +209,6 @@ def vote_for(request,post):
             'done':False,
             'nota':False,
         },
-
     })
     contestantList = Contestant.objects.all().filter(post=post_dictionary[post]).order_by('?')
     pks = []
@@ -233,13 +234,12 @@ def vote_for(request,post):
     return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
 
 
-
 @login_required
 @captcha_required
 @is_valid
 def vote(request):
-    key = []
-
+    # global key = []
+    key =[]
     try:
         # print(users[0])
         key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))

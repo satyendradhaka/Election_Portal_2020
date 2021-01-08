@@ -1,8 +1,8 @@
 {% extends 'base_cop_review.html' %}
 {% load static %}
 {% block content %}
-<div class="relative w-full text-center h-20 sm:h-28 lg:h-32 bg-black gradient-black">
-    <p class="relative font-bold top-5 sm:top-10 text-white text-3xl sm:text-4xl md:text-5xl" id="title">Review Your Ballot</p>
+<div class="relative w-full text-center h-20 sm:h-32 lg:h-36 bg-black">
+    <p class="relative font-bold top-7 sm:top-16 text-white text-2xl sm:text-3xl md:text-4xl" id="title">Review Your Ballot</p>
 </div>
 
 <form method="post">
@@ -15,10 +15,10 @@
             <ul class="sm:flex sm:flex-wrap space-x-7 sm:space-x-10">
                 <button class="mt-3 mb-3 ml-5 sm:mt-5 sm:mb-5 sm:ml-10" type="submit" name="choice" value={{candidate.2}}>
                     <li id="{{candidate.0}}"
-                    class="{{candidate.0}} hover-effect w-40 hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
+                    class="{{candidate.0}} py-5 hover-effect w-40 hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
                         <span  class="py-4 content-center ">
                             <span
-                                class="relative right-14 top-3 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
+                                class="relative bottom-2 self-center transition-opacity duration-500 ease-in-out m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
                                 <span class="text_{{candidate.0}} hidden" >Review</span><span class="index_{{candidate.0}}">{{candidate.0}}
                                 </span>
                             </span>
@@ -59,10 +59,10 @@
                 <button class="mt-3 mb-3 sm:mt-5 sm:mb-5" type="submit" name="choice" value={{candidate.2}}>
             {% endif %}
                 <li id="{{candidate.0}}"
-                class="{{candidate.0}} hover-effect w-40 hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
+                class="{{candidate.0}} py-5 hover-effect w-40 hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
                     <span  class="py-4 content-center ">
                         <span id = "action_box_container_{{candidate.0}}"
-                            class="relative right-10 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
+                            class="relative bottom-2 self-center transition-opacity duration-500 ease-in-out m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
                             <span class="text_{{candidate.0}} hidden" >Review</span><span class="index_{{candidate.0}}">
                                 {{candidate.0}}
                             </span>
@@ -102,10 +102,10 @@
                 {% if candidate.1 == "NOTA" %}
                 <button class="mt-3 mb-3 ml-5 sm:mt-5 sm:mb-5 sm:ml-10" type="submit" name="choice" value={{candidate.2}}>
                     <li id="{{candidate.0}}"
-                        class="{{candidate.0}} hover-effect w-40 hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
+                        class="{{candidate.0}} py-5 hover-effect w-40 hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
                             <span  class="py-4 content-center ">
                                 <span id = "action_box_container_{{candidate.0}}"
-                                    class="relative right-12 top-3 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
+                                    class="relative bottom-2 self-center transition-opacity duration-500 ease-in-out m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
                                     <span class="text_{{candidate.0}} hidden" >Review</span><span class="index_{{candidate.0}}">
                                         {{candidate.0}}
                                     </span>
@@ -129,10 +129,10 @@
                             <button class="mt-3 mb-3 sm:mt-5 sm:mb-5" type="submit" name="choice" value={{candidate.2}}>
                         {% endif %}
                             <li id="{{candidate.0}}"
-                                class="{{candidate.0}} hover-effect w-40 hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
+                                class="{{candidate.0}} py-5 hover-effect w-40 hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black px-4 rounded-md">
                                     <span class="py-4 content-center ">
                                         <span id = "action_box_container_{{cand.1.pk}}"
-                                            class="relative right-12 top-3 transition-opacity duration-500 ease-in-out absolute m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
+                                            class="relative bottom-2 self-center transition-opacity duration-500 ease-in-out m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
                                             <span class="text_{{candidate.0}} hidden" >Review</span><span class="index_{{candidate.0}}">
                                                 {{candidate.0}}
                                             </span>
@@ -154,9 +154,8 @@
         {% endif %}
     {% endfor %}
     <div class="w-full text-center mb-10">
-        <button type="submit" name="choice" value="done" class="bg-black text-white h-20 w-60 text-3xl text-center font-bold rounded-sm next-btn">I Am Done</button>
+        <button type="submit" name="choice" value="done" class="bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn">Submit</button>
     </div>
-    <!-- <button type="submit" >I Am Done</button> -->
 </form>
 {% endblock %}
 <!-- candidate.0 is the post and candidate.1 is the candidate object or NOTA can access any of the properties -->
