@@ -21,7 +21,9 @@ post_dictionary = {
     'welfare':'Welfare',
     'sports':'Sports',
     'sail':'SAIL',
-    'swc':'SWC',     
+    'swc':'SWC',
+    'bsen':'UGS',
+    'gsen':'GS'     
 }
 
 
@@ -117,7 +119,7 @@ def voteCountModifier(request):
 
 @login_required
 @captcha_required
-@is_valid             
+@is_valid
 def getMeSelectedCandidates(request):
     voter = Voter.objects.get(username = request.user.username)
     prog = voter.get_category_display()
@@ -154,7 +156,7 @@ def getMeSelectedCandidates(request):
     if not dicti['swc'] == 'NOTA':
         selectedCandidates.append(('SWC',Contestant.objects.get(pk=dicti['swc']),'swc'))
     else:
-        selectedCandidates.append(('SWC','NOTA','swc'))    
+        selectedCandidates.append(('SWC','NOTA','swc'))     
     
     if dicti['bsen']['nota']:
         selectedCandidates.append((prog[:2],'NOTA','bsen'))
@@ -177,6 +179,16 @@ def getMeSelectedCandidates(request):
         
     return selectedCandidates
 
+
+# @login_required
+# @captcha_required
+# @is_valid
+# def ham(request):
+#     try:
+#         voter = Voter.objects.get(username=request.user.username)
+#     except:
+#         return redirect('vote')
+#         
 
 @login_required
 @captcha_required
@@ -210,6 +222,23 @@ def vote_for(request,post):
             'nota':False,
         },
     })
+    posts_done = request.session.get('posts_done',
+        {
+            'VP': '-1',
+            'HAB': '-1',
+            'Tech':'-1',
+            'Cult':'-1',
+            'Welfare':'-1',
+            'Sports':'-1',
+            'SAIL':'-1',
+            'SWC':'-1',
+            'UGS': '-1',
+            'PGS':'-1',
+            'Girls':'-1',
+
+        }
+    )
+    posts_done[post_dictionary[post]] = "Current" + str(posts_done[post_dictionary[post]])
     contestantList = Contestant.objects.all().filter(post=post_dictionary[post]).order_by('?')
     pks = []
     for i in contestantList:
@@ -222,6 +251,7 @@ def vote_for(request,post):
         
         if request.POST['choice'] == post_dictionary[post]:
             dicti[post] = 'NOTA'
+            posts_done[post_dictionary[post]] = "NOTA"
         else:
             try:
                 cont = Contestant.objects.get(pk=request.POST['choice'])
@@ -229,9 +259,12 @@ def vote_for(request,post):
                 return redirect('vote')
             if cont.post == post_dictionary[post]:
                 dicti[post]=request.POST['choice']
+                posts_done[post_dictionary[post]] = str(dicti[post])
         request.session['option']=dicti
+        request.session['posts_done']=posts_done
         return redirect('vote')
-    return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display()})
+    print(posts_done)
+    return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()]})
 
 
 @login_required
@@ -310,7 +343,35 @@ def vote(request):
             request.session['option']=dicti
     elif not dicti['gsen']['done']:
         post = 'gsen'
+    posts_done = request.session.get('posts_done',
+        {
+            'VP': '-1',
+            'HAB': '-1',
+            'Tech':'-1',
+            'Cult':'-1',
+            'Welfare':'-1',
+            'Sports':'-1',
+            'SAIL':'-1',
+            'SWC':'-1',
+            'UGS': '-1',
+            'PGS':'-1',
+            'Girls':'-1',
 
+        }
+    )
+    if voter.category == '0':
+        posts_done['Girls'] = '-2'
+        posts_done['PGS'] = '-2'
+    elif voter.category == '1':
+        posts_done['PGS'] = '-2'
+    elif voter.category == '2':
+        posts_done['Girls'] = '-2'
+        posts_done['UGS'] = '-2'
+    else:
+        posts_done['UGS'] = '-2'
+
+    request.session['posts_done'] = posts_done
+        
     if post is None:
         selectedCandidates = getMeSelectedCandidates(request)
         if request.method == "POST":
@@ -356,11 +417,13 @@ def vote(request):
         return vote_for(request,post)
     
     elif post == 'bsen':
+        posts_done[post_dictionary[post]] = "Current"+posts_done[post_dictionary[post]]
         max_len = 7
         cont_post = 'UGS'
         if voter.category == '0' or voter.category == '1':
             contestantList = Contestant.objects.all().filter(post='UGS').order_by('?')
         else:
+            post_dictionary['bsen'] = 'PGS'
             contestantList = Contestant.objects.all().filter(post='PGS').order_by('?')
             cont_post = 'PGS'
         pks = []
@@ -369,8 +432,11 @@ def vote(request):
         if request.method == "POST":
             if request.POST.getlist('nota'):
                 dicti['bsen']['nota'] = True
+                posts_done[post_dictionary[post]] = "NOTA"
             elif request.POST.getlist('choice'):
                 list_selected=request.POST.getlist('choice')
+                listToStr = ' '.join([str(elem) for elem in list_selected]) 
+                posts_done[post_dictionary[post]] = "Current"+listToStr
                 for i in range(min(len(list_selected),7)):
                     try:
                         cont = Contestant.objects.get(pk=list_selected[i])
@@ -384,9 +450,11 @@ def vote(request):
                 return redirect('vote')
             dicti['bsen']['done'] = True
             request.session['option']=dicti
+            request.session['posts_done']=posts_done
             return redirect('vote')
-        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display()})
+        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()]})
     elif post == 'gsen':
+        posts_done['Girls'] = "Current"+posts_done['Girls']
         max_len = 3
         contestantList = Contestant.objects.all().filter(post='GS').order_by('?')
         pks = []
@@ -394,10 +462,13 @@ def vote(request):
             pks.append(i.pk)
         if request.method == "POST":
             if request.POST.getlist('nota'):
+                posts_done['Girls'] = "NOTA"
                 dicti['gsen']['nota'] = True
             elif request.POST.getlist('choice'):
                 list_selected=request.POST.getlist('choice')
-                for i in range(min(len(list_selected),7)):
+                listToStr = ' '.join([str(elem) for elem in list_selected]) 
+                posts_done['Girls'] = "Current"+listToStr
+                for i in range(min(len(list_selected),3)):
                     try:
                         cont = Contestant.objects.get(pk=list_selected[i])
                     except:
@@ -410,5 +481,6 @@ def vote(request):
                 return redirect('vote')
             dicti['gsen']['done'] = True
             request.session['option']=dicti
+            request.session['posts_done']=posts_done
             return redirect('vote')
-        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display()})
+        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()]})
