@@ -49,7 +49,7 @@
     </div>
 
     <script>
-        $(".buton").click(function (e) { 
+        $("#next-btn").click(function (e) { 
             e.preventDefault();
             if ($("#accept_t_and_c").prop('checked') == true) {
                 window.location.href = "{% url 'django_auth_adfs:login' %}";
