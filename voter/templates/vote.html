@@ -10,21 +10,46 @@
 {% endblock designation_info %}
 
 {% block save_and_next %}
-  <form method="post"><!-- onsubmit="call_post_req()" -->
-    {% csrf_token %}
-    <div class="inline mt-10 pr-7 2xl:pr-80 sm:pr-auto pl-7 sm:pl-7 space-y-4 voter-list-btn">
-      <button id="next-btn" type="submit" class="relative mr-10 sm:mr-auto float-right bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn">Next</button>
-      <button id="nota" type="button" onclick="voteClick('{{contestantList.0.post}}')" class="lg:float-right relative bottom-4 mr-5 bg-custom text-custom h-14 w-48 text-lg text-center font-bold rounded-sm next-btn">NOTA</button>
-    </div>
-    <input type="hidden" name="choice" id="res">
-    <div class="p-4 w-full text-lg text-right info-block text-gray-600 hidden" style="background-color: #f9f9f969;">
-      <div class="w-1/2 float-right">
-        You have opted for <span class="opted-for font-bold"></span>.
-        <!-- <br> -->
-        Click on Next to confirm your choice. You may review and modify your choices at the end.
+<div class="sm:flex sm:flex-wrap w-full">
+<!-- <div class="inline mt-10 pr-7 2xl:pr-80 sm:pr-auto pl-7 sm:pl-7 space-y-4 voter-list-btn"> -->
+      <div class=" w-full sm:w-7/12 md:w-5/12">
+        <div class="flex bg-gray-100 w-full rounded-lg p-5 h-full items-center">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" class="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4" viewBox="0 0 24 24">
+            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+            <path d="M22 4L12 14.01l-3-3"></path>
+          </svg>
+          <span>
+            <span class="font-ah text-base">
+              <span class="opted-for font-bold">
+              Select the candidiate you want to vote for.
+            </span>
+            <br>
+            Tip: You can also use Keyboard Keys respective to the candidiate to Vote.
+          </span>
+          </span>
+        </div>
       </div>
-    </div>
-  </form>
+      <div class="sm:float-right h-full w-full sm:w-5/12 md:w-7/12 py-2">
+        <form method="post" class= "space-y-5 sm:space-x-5 "><!-- onsubmit="call_post_req()" -->
+          {% csrf_token %}
+        
+            <button id="next-btn" type="submit" class="opacity-10 cursor-not-allowed sm:mr-auto float-right bg-black text-white h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5" disabled>Next</button>
+            <button id="nota" type="button" onclick="voteClick('{{contestantList.0.post}}')" class="float-right  bg-custom text-custom h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5">NOTA</button>
+          
+          <input type="hidden" name="choice" id="res">
+          
+          <!-- <div class="p-4 w-full text-lg text-right info-block text-gray-600 hidden" style="background-color: #f9f9f969;">
+      
+            <div class="w-1/2 float-right">
+              You have opted for <span class="opted-for font-bold"></span>.
+              Click on Next to confirm your choice. You may review and modify your choices at the end.
+            </div> -->
+        </form>
+      </div> 
+  </div>
+  <div class="w-full h-32 block sm:hidden">
+
+  </div>
 
 {% endblock save_and_next %} 
 

@@ -5,6 +5,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
         <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
@@ -17,14 +23,19 @@
         <title>Gymkhana Elections 2021</title>
 </head>
 <body>
-  <div class="progress-bar w-full bg-black h-4">
+  <div class="absolute z-10 progress-bar w-full bg-black h-4">
     <div class="progress h-4" style="background-color: #2B00FF;"></div>
   </div>
-
-  <div class="relative flex flex-row w-full h-40 sm:h-40 lg:h-40 bg-black">
-    <p class="relative top-10 sm:top-20 text-white pl-5 sm:pl-20 text-xl sm:text-3xl md:text-4xl 2xl:text-5xl" id="title">{% block designation %} {% endblock designation %}</p>
-    <button id="info-btn" class="relative bottom-5 sm:top-7 ml-5"><img src="{% static 'info.png' %}" alt=""></button>
-    <p id="info-txt" class="hidden relative top-8 sm:top-12 md:top-16 lg:top-5 ml-5 text-xs lg:text-base text-white w-60 sm:w-80 md:w-96">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti vitae asperiores rerum, aspernatur aut facilis ad ducimus nihil magnam aliquid fugit molestias blanditiis quod cumque quidem quo aliquam eaque. Rem.</p>
+  <!-- relative bottom-5 sm:top-7 ml-5 -->
+  <!-- top-10 sm:top-20 pl-5 sm:pl-20 -->
+  <div class="flex flex-row w-full h-32 bg-black pt-12 pl-12 items-center">
+    <p class="text-white text-xl sm:text-3xl md:text-4xl" id="title">{% block designation %} {% endblock designation %}</p>
+    <a class="tooltipped p-4" data-position="right" data-tooltip="I am a tooltip" id="info-btn"><svg width="24" height="24" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12.1562 6.5C12.1562 6.76522 12.0509 7.01957 11.8634 7.20711C11.6758 7.39464 11.4215 7.5 11.1562 7.5C10.891 7.5 10.6367 7.39464 10.4491 7.20711C10.2616 7.01957 10.1562 6.76522 10.1562 6.5C10.1562 6.23478 10.2616 5.98043 10.4491 5.79289C10.6367 5.60536 10.891 5.5 11.1562 5.5C11.4215 5.5 11.6758 5.60536 11.8634 5.79289C12.0509 5.98043 12.1562 6.23478 12.1562 6.5ZM9.15625 10.25C9.15625 10.0511 9.23527 9.86032 9.37592 9.71967C9.51657 9.57902 9.70734 9.5 9.90625 9.5H11.4062C11.6052 9.5 11.7959 9.57902 11.9366 9.71967C12.0772 9.86032 12.1562 10.0511 12.1562 10.25V14.5H12.9062C13.1052 14.5 13.2959 14.579 13.4366 14.7197C13.5772 14.8603 13.6562 15.0511 13.6562 15.25C13.6562 15.4489 13.5772 15.6397 13.4366 15.7803C13.2959 15.921 13.1052 16 12.9062 16H9.90625C9.70734 16 9.51657 15.921 9.37592 15.7803C9.23527 15.6397 9.15625 15.4489 9.15625 15.25C9.15625 15.0511 9.23527 14.8603 9.37592 14.7197C9.51657 14.579 9.70734 14.5 9.90625 14.5H10.6562V11H9.90625C9.70734 11 9.51657 10.921 9.37592 10.7803C9.23527 10.6397 9.15625 10.4489 9.15625 10.25Z" fill="white"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1562 0C5.08125 0 0.15625 4.925 0.15625 11C0.15625 17.075 5.08125 22 11.1562 22C17.2313 22 22.1562 17.075 22.1562 11C22.1562 4.925 17.2313 0 11.1562 0ZM1.65625 11C1.65625 8.48044 2.65714 6.06408 4.43874 4.28249C6.22033 2.50089 8.63669 1.5 11.1562 1.5C13.6758 1.5 16.0922 2.50089 17.8738 4.28249C19.6554 6.06408 20.6562 8.48044 20.6562 11C20.6562 13.5196 19.6554 15.9359 17.8738 17.7175C16.0922 19.4991 13.6758 20.5 11.1562 20.5C8.63669 20.5 6.22033 19.4991 4.43874 17.7175C2.65714 15.9359 1.65625 13.5196 1.65625 11Z" fill="white"/>
+      </svg>
+    </a>
+    <!-- <p id="info-txt" class="text-xs lg:text-base text-white w-64 sm:w-80 md:w-96">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti vitae asperiores rerum, aspernatur aut facilis ad ducimus nihil magnam aliquid fugit molestias blanditiis quod cumque quidem quo aliquam eaque. Rem.</p> -->
   </div>
   
   <div class="mt-10 mb-20 pr-7 2xl:pr-80 sm:pr-auto pl-7 sm:pl-7 space-y-4 voter_list">
@@ -34,6 +45,11 @@
     {% block save_and_next %}
     {% endblock save_and_next %}
   </div>
-  
+  <script>
+     document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.tooltipped');
+        var instances = M.Tooltip.init(elems, {});
+      });
+  </script>
 </body>
 </html>
