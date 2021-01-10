@@ -156,16 +156,8 @@ $(document).ready(function () {
     function () {
       if ($(window).width() <= 768 ) {
         $("#next-btn").insertAfter("#nota");
-        // $("#nota").attr('class', 'opacity-10 cursor-not-allowed  sm:mr-auto float-right bg-black text-white h-14 w-full sm:w-48 text-lg text-center font-bold rounded-sm next-btn px-5');
-        // $("#nota").css('margin-left', $(window).width() * 2 / 7);
-        // $("#next-btn").attr('class', 'float-right  bg-custom text-custom h-14 w-full sm:w-48 text-lg text-center font-bold rounded-sm next-btn px-5');
-        // $("#next-btn").css('margin-left', $(window).width() * 2 / 7);
       } else {
         $("#nota").insertAfter("#next-btn");
-        // $("#nota").css('margin-left', 0);
-        // $("#next-btn").css('margin-left', 0);
-        // $("#nota").attr('class', 'lg:float-right relative bottom-4 mr-5 bg-custom text-custom h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
-        // $("#next-btn").attr('class', 'relative mr-10 sm:mr-auto float-right bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
       }
     }
   );

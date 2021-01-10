@@ -1,6 +1,19 @@
 img {
   max-width: none;
 }
+.green_ki_ma_ki_black:focus{
+  background-color: #2E2F2F !important;
+}
+.green_ki_ma_ki_blue:focus{
+  background-color: #2B00FF !important;
+}
+.green_ki_ma_ki_orange:focus{
+  background-color: #F08A4B !important;
+}
+/* button:focus {
+  /* outline: none; */
+  /* background-color: rgba(46, 47, 47, 0) !important; */
+} */
 
 @font-face {
   font-family: 'Atkinson Hyperlegible';
@@ -92,6 +105,12 @@ li { cursor: pointer; }
   border: 2px solid #E7690F;
   box-sizing: border-box;
   border-radius: 2px;
+}
+.bg-orange {
+  background:#E7690F;
+}
+.bg-blue-500{
+  background:#2B00FF;
 }
 
 .bg-custom:hover {

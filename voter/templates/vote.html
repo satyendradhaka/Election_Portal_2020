@@ -19,12 +19,12 @@
             <path d="M22 4L12 14.01l-3-3"></path>
           </svg>
           <span>
-            <span class="font-ah text-base">
-              <span class="opted-for font-bold">
+            <span class="font-ah  text-base">
+              <span class="opted-for font-bold text-gray-800 ">
               Select the candidiate you want to vote for.
             </span>
             <br>
-            Tip: You can also use Keyboard Keys respective to the candidiate to Vote.
+            <span class = " opacity-80">Tip: You can also use Keyboard Keys respective to the candidiate to Vote.</span>
           </span>
           </span>
         </div>
@@ -33,7 +33,7 @@
         <form method="post" class= "space-y-5 sm:space-x-5 "><!-- onsubmit="call_post_req()" -->
           {% csrf_token %}
         
-            <button id="next-btn" type="submit" class="opacity-10 cursor-not-allowed sm:mr-auto float-right bg-black text-white h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5" disabled>Next</button>
+            <button id="next-btn" type="submit" class="opacity-10 cursor-not-allowed sm:mr-auto float-right bg-black text-white h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5 green_ki_ma_ki_black" disabled>Next</button>
             <button id="nota" type="button" onclick="voteClick('{{contestantList.0.post}}')" class="float-right  bg-custom text-custom h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5">NOTA</button>
           
           <input type="hidden" name="choice" id="res">
