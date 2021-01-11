@@ -436,7 +436,7 @@ def vote(request):
             elif request.POST.getlist('choice'):
                 list_selected=request.POST.getlist('choice')
                 listToStr = ' '.join([str(elem) for elem in list_selected]) 
-                posts_done[post_dictionary[post]] = "Current"+listToStr
+                posts_done[post_dictionary[post]] = listToStr
                 for i in range(min(len(list_selected),7)):
                     try:
                         cont = Contestant.objects.get(pk=list_selected[i])
@@ -467,7 +467,7 @@ def vote(request):
             elif request.POST.getlist('choice'):
                 list_selected=request.POST.getlist('choice')
                 listToStr = ' '.join([str(elem) for elem in list_selected]) 
-                posts_done['Girls'] = "Current"+listToStr
+                posts_done['Girls'] = listToStr
                 for i in range(min(len(list_selected),3)):
                     try:
                         cont = Contestant.objects.get(pk=list_selected[i])
