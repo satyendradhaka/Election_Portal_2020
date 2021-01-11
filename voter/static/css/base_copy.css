@@ -40,13 +40,6 @@ img {
   }
 }
 
-@media (min-width: 1024px) {
-  .voter-list-btn {
-      margin-left: 7%;
-      margin-right: 7%;
-  }
-}
-
 .adjust-right {
   margin-right: 7%;
 }

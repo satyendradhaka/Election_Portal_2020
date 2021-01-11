@@ -146,10 +146,6 @@ $(document).ready(function () {
 
   if ($(window).width() <= 768 ) {
     $("#next-btn").insertAfter("#nota");
-    // $("#nota").attr('class', 'float-left bg-custom text-custom h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
-    // $("#nota").css('margin-left', $(window).width() * 2 / 7);
-    // $("#next-btn").attr('class', 'float-left bg-black text-white h-14 w-48 text-lg text-center font-bold rounded-sm next-btn');
-    // $("#next-btn").css('margin-left', $(window).width() * 2 / 7);
   }
 
   $(window).resize(
