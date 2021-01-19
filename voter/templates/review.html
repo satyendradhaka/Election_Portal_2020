@@ -26,7 +26,7 @@
                         {% if candidate.1 == "NOTA" %}
                             <span class="py-6">
                                 <span><img
-                                    class="rounded-sm"
+                                    class="rounded-sm mt-3"
                                     width="130"
                                     src="{% static 'contestants/Nota.jpeg' %}" />
                                 </span>
@@ -35,7 +35,7 @@
                         {% else %}
                             <span class="py-6">
                                 <span><img
-                                    class="rounded-sm"
+                                    class="rounded-sm mt-3"
                                     width="130"
                                     src="{% static candidate.1.pic %}" />
                                 </span>
@@ -71,7 +71,7 @@
                     {% if candidate.1 == "NOTA" %}
                         <span class="py-6">
                             <span><img
-                                class="rounded-sm"
+                                class="rounded-sm mt-3"
                                 width="130"
                                 src="{% static 'contestants/Nota.jpeg' %}" />
                             </span>
@@ -80,7 +80,7 @@
                     {% else %}
                         <span class="py-6">
                             <span><img
-                                class="rounded-sm"
+                                class="rounded-sm mt-3"
                                 width="130"
                                 src="{% static candidate.1.pic %}" />
                             </span>
@@ -107,13 +107,17 @@
                                 <span id = "action_box_container_{{candidate.0}}"
                                     class="relative bottom-2 self-center transition-opacity duration-500 ease-in-out m-auto border border-black rounded-md bg-gray-100 text-base font-bold px-3 py-2 ">
                                     <span class="text_{{candidate.0}} hidden" >Review</span><span class="index_{{candidate.0}}">
-                                        {{candidate.0}}
+                                        {% if candidate.0 == 'GS' %}
+                                            Girls
+                                        {% else %}
+                                            {{candidate.0}}
+                                        {% endif %}
                                     </span>
                                 </span>
                             </span>
                             <span class="py-6">
                                 <span><img
-                                    class="rounded-sm"
+                                    class="rounded-sm mt-3"
                                     width="130"
                                     src="{% static 'contestants/Nota.jpeg' %}" />
                                 </span>
@@ -140,7 +144,7 @@
                                     </span>
                                     <span class="py-6">
                                         <span><img
-                                            class="rounded-sm"
+                                            class="rounded-sm mt-3"
                                             width="130"
                                             src="{% static cand.1.pic %}" />
                                         </span>

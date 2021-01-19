@@ -238,7 +238,8 @@ def vote_for(request,post):
 
         }
     )
-    posts_done[post_dictionary[post]] = "Current" + str(posts_done[post_dictionary[post]])
+    if not posts_done[post_dictionary[post]].startswith("Current"):
+        posts_done[post_dictionary[post]] = "Current " + str(posts_done[post_dictionary[post]])
     contestantList = Contestant.objects.all().filter(post=post_dictionary[post]).order_by('?')
     pks = []
     for i in contestantList:
@@ -264,7 +265,7 @@ def vote_for(request,post):
         request.session['posts_done']=posts_done
         return redirect('vote')
     print(posts_done)
-    return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()]})
+    return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()],'selected':posts_done[post_dictionary[post]]})
 
 
 @login_required
@@ -417,7 +418,8 @@ def vote(request):
         return vote_for(request,post)
     
     elif post == 'bsen':
-        posts_done[post_dictionary[post]] = "Current"+posts_done[post_dictionary[post]]
+        if not posts_done[post_dictionary[post]].startswith("Current"):
+            posts_done[post_dictionary[post]] = "Current "+posts_done[post_dictionary[post]]
         max_len = 7
         cont_post = 'UGS'
         if voter.category == '0' or voter.category == '1':
@@ -452,9 +454,11 @@ def vote(request):
             request.session['option']=dicti
             request.session['posts_done']=posts_done
             return redirect('vote')
-        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()]})
+        print(posts_done)
+        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()],'selected':posts_done[post_dictionary[post]]})
     elif post == 'gsen':
-        posts_done['Girls'] = "Current"+posts_done['Girls']
+        if not posts_done['Girls'].startswith("Current"):
+            posts_done['Girls'] = "Current "+posts_done['Girls']
         max_len = 3
         contestantList = Contestant.objects.all().filter(post='GS').order_by('?')
         pks = []
@@ -483,4 +487,5 @@ def vote(request):
             request.session['option']=dicti
             request.session['posts_done']=posts_done
             return redirect('vote')
-        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()]})
+        print(posts_done)
+        return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()],'selected':posts_done['Girls']})

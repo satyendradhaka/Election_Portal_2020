@@ -114,10 +114,12 @@
 
 {% block vote_js %}  
   <script>
+    
     $(document).ready(function () {
       var ids = JSON.parse(document.getElementById('pks-data').textContent);
       getIds(ids);
       setProgress('{{post}}', {{request.session.total_no}});
+      
     });
   </script>
   

@@ -20,6 +20,7 @@ function getIds(contList) {
     let element = contList[index];
     ids.push(element);
   }
+  console.log(ids);
 }
 
 function setProgress(designation, total) {
@@ -172,3 +173,4 @@ document.onkeyup = function (e) {
   }
 }
 });
+
