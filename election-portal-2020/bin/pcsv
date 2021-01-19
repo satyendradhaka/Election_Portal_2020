@@ -1,7 +1,0 @@
-#!/home/sking/Documents/venv/election-portal-2020/bin/python3
-import pcsv
-from jtutils import fix_broken_pipe
-
-if __name__ == "__main__":
-    fix_broken_pipe()
-    pcsv.pcsv()
