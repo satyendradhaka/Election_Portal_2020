@@ -15,7 +15,16 @@
         Your Response has already been saved!
         <br>
         <br>
-        You needn't worry :)
+        You needn't worry and may Logout :)
+        <br>
+        <br>
+        <div class="text-center">
+            <button
+              class="vote__button transition text-lg font-ah inline-flex bg-black text-white border-0 py-4 px-8  focus:outline-none hover:bg-blue-600 rounded md:mt-0"
+            >
+                <a href="{% url 'django_auth_adfs:logout' %}">Logout</a>
+            </button>
+        </div>
     </div>
 </body>
 </html>
