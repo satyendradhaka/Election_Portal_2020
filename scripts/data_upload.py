@@ -11,9 +11,9 @@ def csv_to_voter():
 	reader = csv.reader(csvfile, quoting=csv.QUOTE_ALL)
 	for i, row in enumerate(reader):
 		print("voter", i+1)
-		username = smart_str(row[0])
+		username = smart_str(row[0]).lower()
 		category = smart_str(row[1])
-		hostel = smart_str(row[2])
+		rollNumber = smart_str(row[2])
 		dept = smart_str(row[3])
 		vote_string1=""
 		vote_string2=""
@@ -21,7 +21,7 @@ def csv_to_voter():
 		voter_loc = Point(0.0,0.0)
 		voter = Voter(username=username,
 			category=category,
-			hostel=hostel,
+			rollNumber=int(rollNumber),
 			dept=dept,
 			vote_string1 = vote_string1,
 			vote_string2 = vote_string2,

@@ -27,11 +27,11 @@ def save_user_geolocation(request):
 @is_valid    
 def save_user_image(request):
     username = request.user.username
-    image_name = request.user.last_name + ".png"
     if Voter.objects.all().filter(username=username).exists():
         voter = Voter.objects.get(username=username)
     else:
         return HttpResponse('get the fuck out of here')
+    image_name = str(voter.rollNumber) + ".png"
     if request.method == 'POST':
         imagebase64= request.POST['imagebase64data']
         try:
@@ -67,7 +67,7 @@ def verification(request):
         
     try:
         voter = Voter.objects.get(username = request.user.username)
-        hostel = voter.hostel
+        rollNumber = voter.rollNumber
         dept = voter.dept
         year = 21-int(request.user.last_name[:2])
         if year == 1:
@@ -82,7 +82,7 @@ def verification(request):
         return redirect('captcha')
     if not request.method=='POST':
         form = FormWithCaptcha()
-        return render(request, 'verification.html', {'form': form,'hostel':hostel,'dept':dept,'year':y,'voter_id':uid[0].upper()})
+        return render(request, 'verification.html', {'form': form,'rollNumber':rollNumber,'dept':dept,'year':y,'voter_id':uid[0].upper()})
         
     form = FormWithCaptcha(request.POST)
     if form.is_valid():
@@ -91,4 +91,4 @@ def verification(request):
         return redirect('vote')
     else:
         return redirect('captcha')
-    return render(request, 'verification.html', {'form': form,'hostel':hostel,'dept':dept,'year':y,'voter_id':uid[0].upper()})
+    return render(request, 'verification.html', {'form': form,'rollNumber':rollNumber,'dept':dept,'year':y,'voter_id':uid[0].upper()})

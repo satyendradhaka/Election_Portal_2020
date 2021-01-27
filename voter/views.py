@@ -47,13 +47,22 @@ def is_valid(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
         username = request.user.username
-        if Voter.objects.all().filter(username=username).exists():
-            voter = Voter.objects.get(username=username)
+        rollNumber = int(request.user.last_name)
+        keys = request.session.get('ready',True)
+        # print(Voter.objects.all().filter(rollNumber=int(rollNumber)))
+        if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys:
+            try:
+                voter = Voter.objects.get(username=username)
+                # print('kya bc')
+            except:
+                voter = Voter.objects.get(rollNumber=rollNumber)
+                voter.username = username
+                voter.save()
             if voter.final_submit:
                 # return HttpResponse('u have already voted')
                 return render(request,'error.html',{})
             else:
-                return function(request, *args, **kwargs) 
+                return function(request, *args, **kwargs)  
         else:
             return render(request,'error.html',{})
             # return HttpResponse('get out of here')
@@ -278,8 +287,14 @@ def vote(request):
         # print(users[0])
         key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))
         key.append(keys.objects.get(user=User.objects.get(username='alan@iitg.ac.in')))
-        key.append(keys.objects.get(user=User.objects.get(username='saketkumar@iitg.ac.in')))
-        request.session['ready'] = True
+        key.append(keys.objects.get(user=User.objects.get(username='satyendr@iitg.ac.in')))
+        print(keys.objects.filter(pubkey=True))
+        if len(keys.objects.filter(pubkey=True)) == 3:
+            request.session['ready'] = True
+        else:
+            request.session['ready'] = False
+            print("damn")
+            return redirect('captcha')
     except:
         # print(users[0])
         request.session['ready'] = False
@@ -315,7 +330,10 @@ def vote(request):
 
     })
     print(dicti)
-    voter = Voter.objects.get(username=request.user.username)
+    try:
+        voter = Voter.objects.get(username=request.user.username)
+    except:
+        voter = Voter.objects.get(username=request.user.last_name)
     if voter.category == '0' or voter.category == '2':
         request.session['total_no'] = 9
     else:

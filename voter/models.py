@@ -11,7 +11,7 @@ class Voter(models.Model):
                 ('3','PG-Girl'),)
     category = models.CharField(max_length=1,choices=CATEGORY)
     final_submit = models.BooleanField(default=False) #0 if false 1 if true
-    hostel = models.CharField(max_length=50, default='MANAS')
+    rollNumber = models.IntegerField(default=0)
     dept = models.CharField(max_length=50, default='CSE')
     vote_string1 = models.CharField(max_length=5000, default='')
     vote_string2 = models.CharField(max_length=5000, default='') 
