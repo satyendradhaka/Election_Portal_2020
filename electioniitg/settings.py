@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django_cleanup',
     'django_celery_results',
     'celery_progress',
+    'stats',
 ]
 
 MIDDLEWARE = [
