@@ -13,7 +13,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css"
     />
-    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
     <script
       src="https://code.jquery.com/jquery-3.5.1.js"
       integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -192,7 +192,7 @@
     <div class="grid place-items-center h-screen w-full">
       <div class="flex flex-col align-items-center">
         <div class="flex justify-center z-40">
-          <img src="https://www.dropbox.com/s/j8lgoa7kw5tm0yd/vote.png?raw=1" />
+          <img src="{% static 'images/logo.svg'%}" />
         </div>
         <div class="text-center h1-64px pt-8 z-40 relative">
           Efficient Secure <br />
@@ -202,20 +202,21 @@
           </div>
         </div>
         <button
-          class="transition relative mt-8 text-black bg-white border-2 border-black py-4 px-12 focus:outline-none hover:bg-blue-600 hover:text-white rounded text-lg z-60"
+        onclick="location.href = '/home'" class="transition relative mt-8 text-black bg-white border-2 border-black py-4 px-12 focus:outline-none hover:bg-blue-600 hover:text-white rounded text-lg z-60"
         >
-          Login with Outlook
+        Meet the Candidates👋
+      
         </button>
 
         <div class="flex justify-center mt-6 w-full relative z-4">
           <img
-            src="{% static 'iitg_logo.png' %}"
+            src="{% static 'iitg_logo.jpg' %}"
             alt="iitg"
             style="width: 50px; object-fit: cover"
             class="mr-8"
           />
           <img
-            src="{% static 'elections_logo.png' %}"
+            src="{% static 'elections_logo.jpg' %}"
             alt="iitg"
             style="width: 50px; object-fit: cover"
           />

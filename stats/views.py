@@ -1,4 +1,4 @@
-from typing import final
+# from typing import final
 from django.shortcuts import render
 from voter.models import Voter
 from django.db.models import Q
