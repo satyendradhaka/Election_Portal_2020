@@ -1,0 +1,123 @@
+html, body {
+    /* position:fixed; */
+    /* height: 100vw; */
+    width: 100vw;
+    margin-bottom: 40px;
+}
+
+@media (max-width: 640px) {
+    html, body {
+        position: fixed;
+        width: 100vw;
+    }
+}
+
+@media (max-width: 1024px) {
+    #canvas_container{
+        transform: scale(0.95,0.95);
+    }
+}
+
+@media (max-width: 768px) {
+    #canvas_container{
+        transform: scale(0.80,0.80);
+        margin-left: -96px;
+        margin-top: -42px;
+       }
+}
+@media (max-width: 640px) {
+    #canvas_container{
+        transform: scale(0.6,0.6);
+        margin-left: -120px;
+        margin-top: -72px;
+       }
+       .details{
+        margin-top: -60px;
+        padding-left: 24px;
+    }   
+}
+@media (max-width: 516px) {
+    #canvas_container{
+        transform: scale(0.45,0.45);
+        margin-left: -216px;
+        margin-top: -120px;
+       }
+       .details{
+        margin-top: -112px;
+        padding-left: 0px;
+    }   
+   
+
+}
+@font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('../fonts/regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Atkinson Hyperlegible Bold';
+    src: url('../fonts/bold.ttf') format('truetype');
+}
+
+.font-ah {
+    font-family: Atkinson Hyperlegible;
+}
+
+.font-bold {
+    font-family: Atkinson Hyperlegible Bold;
+}
+
+.text-gray-600{
+    font-family: Atkinson Hyperlegible;
+    color: #4C4D4D;
+  }
+
+.text-black-500 {
+    font: #2E2F2F;
+}
+
+#video {
+    /* position: absolute; */
+    /* left: 35%; */
+    /* top: 19.5%; */
+    z-index: 1;
+}
+.inside-shadow {
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    /* box-shadow:         inset 0 0 10px #000000; */
+    box-shadow:  10px 0 0 rgba(255, 255, 255, 0), 10px 0 0 rgba(255, 255, 255, 0) , 10px 0 0 rgba(255, 255, 255, 0)
+ }
+
+#canvas {
+    /* position: absolute;
+    top: 100%;
+    top: 20%;
+    left: 35%; */
+    z-index: 0;
+}
+
+.custom-font {
+    font-family: Atkinson Hyperlegible;
+    color: rgba(46, 47, 47, 0.57);
+}
+
+#continueBtn:disabled {
+    opacity: 0.5;
+    color: #c0c0c0;
+    background-color: #ffffff;
+    border-color: #c0c0c0;
+}
+
+button:focus {
+    outline: none;
+    background-color: rgba(37,99,235);
+}
+
+.bg-black-50 {
+    background-color: #2E2F2F;
+}
+
+.bg-orange-500:hover {
+    background-color: #f08a4b;
+}
