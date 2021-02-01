@@ -47,7 +47,10 @@ def is_valid(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
         username = request.user.username
-        rollNumber = int(request.user.last_name)
+        try:
+            rollNumber = int(request.user.last_name)
+        except:
+            print("some admin")
         keys = request.session.get('ready',True)
         # print(Voter.objects.all().filter(rollNumber=int(rollNumber)))
         if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys:
@@ -58,11 +61,12 @@ def is_valid(function):
                 voter = Voter.objects.get(rollNumber=rollNumber)
                 voter.username = username
                 voter.save()
-            if voter.final_submit:
-                # return HttpResponse('u have already voted')
-                return render(request,'error.html',{})
-            else:
-                return function(request, *args, **kwargs)  
+            # if voter.final_submit:
+            #     # return HttpResponse('u have already voted')
+            #     return render(request,'error.html',{})
+            # else:
+            # IMP:this is for testing uncomment and add a tab in below line
+            return function(request, *args, **kwargs)  
         else:
             return render(request,'error.html',{})
             # return HttpResponse('get out of here')

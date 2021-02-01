@@ -46,8 +46,24 @@
 {% endblock save_and_next %}  
 
 {% block content %}
+<!-- <div class="sm:flex sm:flex-wrap w-full "> -->
+  <div class=" w-full ">
+    <div class="flex bg-gray-100 w-full rounded-lg p-5 h-full items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class = "w-6 h-6 flex-shrink-0 mr-4 =" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    
+      <span>
+      <span>
+        <span class="font-ah  text-base">
+          <span class="font-bold text-gray-800 ">
+           In this section you can vote for multiple candidiates
+        </span>
+        </span>
+      </span>
+    </div>
+  </div>
+
 {{ pks|json_script:"pks-data" }}
-  <ul class="nota-effect space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
+  <ul class="nota-effect pt-4 space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
       {% for i in contestantList %}
         <li id="{{i.pk}}"
           class="custom-li hover:shadow transition-colors duration-300 ease-in-out bg-gray-50 border-2 border-black pl-4 rounded-md flex space-x-4"
