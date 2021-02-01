@@ -102,11 +102,11 @@ WSGI_APPLICATION = 'electioniitg.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postg',
-        'USER': 'postgres',
+        'NAME': 'postgres',
+        'USER': 'election',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
-        'PORT': '5433',
+        'PORT': '5432',
     }
 }
 
@@ -154,7 +154,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # MEDIA_ROOT = '/home/dhaka/projects/swc/Election_Portal_2020/media'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
-MEDIA_URL = 'election_portal/images/'
+MEDIA_URL = '/images/'
 
 #recaptcha secrets
 RECAPTCHA_PUBLIC_KEY = '6Ld6GA4aAAAAAOqs7W7tVW4DayvPyCzHzbBZNGiB'
