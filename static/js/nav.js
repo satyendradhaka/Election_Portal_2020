@@ -18,7 +18,7 @@ $(document).ready(function(){
 
     $(window).resize(
         function () {
-          if ($(window).width() <= 1280 ) {
+          if ($(window).width() <= 1024 ) {
             $("#primary_nav").animate({left: "-9rem"}, 150);
             $("body").css("overflow-x","hidden");
             $("#primary_nav").css("overflow-y","hidden");
