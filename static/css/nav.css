@@ -1,0 +1,66 @@
+.active::after{
+    content : "";
+    display: inline-block;
+    height: 25px;
+    width:25px;
+    background: white;
+    position: absolute;
+    top: 50%;
+    justify-self: center;
+    left: 0;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+  }
+  .line::before{
+    content : "";
+    display: inline-block;
+    width:7px;
+    bottom:0;
+    background:#585959;
+    position: absolute;
+    top: 0;
+    justify-self: center;
+    left: 0;
+    transform: translate(-50%,0);
+  }
+  .voted::after{
+    content : "";
+    display: inline-block;
+    height: 25px;
+    width:25px;
+    background: #2B00FF;
+    position: absolute;
+    top: 50%;
+    justify-self: center;
+    left: 0;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+  }
+  .nota::after{
+    content : "";
+    display: inline-block;
+    height: 25px;
+    width:25px;
+    background: #F08A4B;
+    position: absolute;
+    top: 50%;
+    justify-self: center;
+    left: 0;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+  }
+  .null::after{
+    content : "";
+    display: inline-block;
+    height: 25px;
+    width:25px;
+    background: #585959;
+    position: absolute;
+    top: 50%;
+    justify-self: center;
+    left: 0;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+  }
+  
+  

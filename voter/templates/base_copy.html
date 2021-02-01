@@ -24,21 +24,93 @@
         <title>Gymkhana Elections 2021</title>
 </head>
 <body>
+  <style>
+    .active::after{
+    content : "";
+    display: inline-block;
+    height: 15px;
+    width:15px;
+    background: white;
+    position: absolute;
+    top: 50%;
+    justify-self: center;
+    left: 0%;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+  }
+  .line::before{
+    content : "";
+    display: inline-block;
+    width:5px;
+    bottom:0;
+    background:#585959;
+    position: absolute;
+    top: 0;
+    justify-self: center;
+    left: 0%;
+    transform: translate(-50%,0);
+  }
+  .voted::after{
+    content : "";
+    display: inline-block;
+    height: 15px;
+    width:15px;
+    background: #2B00FF;
+    position: absolute;
+    top: 50%;
+    justify-self: center;
+    left: 0%;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+  }
+  .nota::after{
+    content : "";
+    display: inline-block;
+    height: 15px;
+    width:15px;
+    background: #F08A4B;
+    position: absolute;
+    top: 50%;
+    justify-self: center;
+    left: 0%;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+  }
+  .null::after{
+    content : "";
+    display: inline-block;
+    height: 15px;
+    width:15px;
+    background: #585959;
+    position: absolute;
+    top: 50%;
+    justify-self: center;
+    left: 0%;
+    border-radius: 100%;
+    transform: translate(-50%,-50%);
+  }
   
-  <a href="https://www.iitg.ac.in/">
+  
+  </style>
+  
+  <a href="">
     <img class = "fixed right-0 top-0 sm:h-32 h-16 z-50 " src = "{% static 'iitg.jpg' %}"></img>
   </a>
   <div id="primary_nav" class="fixed pt-2 block w-36 left-0 h-full z-10 bg-black">
-    <ul class="block mt-8 list-none text-left transition no-underline text-white font-bold text-xl space-y-2">
+    <ul class="block mt-8 list-none text-left transition no-underline text-white font-bold text-xl ml-4">
       {% for i in ham %}
         {% if i.1|startswith %}
-          <li><button Class="h-12 w-full pl-7 text-left waves-effect waves-light green_ki_ma_ki_black border-l-4 border-white cursor-default">{{i.0}}</button></li>
+        <!-- Selected -->
+          <li class = ""><button Class="relative line active h-12 w-full pl-7 text-left  green_ki_ma_ki_black  cursor-default">{{i.0}}</button></li>
         {% elif i.1 == "-1"%}
-          <li><button Class="opacity-50 pl-7 text-left h-12 w-full waves-effect waves-light green_ki_ma_ki_black hover:opacity-100 cursor-default">{{i.0}}</button></li>
+         <!-- Inactive -->
+          <li class = ""><button Class="relative line null opacity-50 pl-7 text-left h-12 w-full  green_ki_ma_ki_black cursor-default">{{i.0}}</button></li>
         {% elif i.1 == "NOTA" %}
-          <li><button Class="bg-orange  pl-7 text-left h-12 w-full waves-effect waves-light green_ki_ma_ki_orange cursor-default">{{i.0}}</button></li>
+         <!-- NOTA -->
+          <li class = ""><button Class="relative line nota pl-7 text-left h-12 w-full  green_ki_ma_ki_orange cursor-default">{{i.0}}</button></li>
         {% elif i.1 != "-2" %}
-          <li><button Class="bg-blue-500 pl-7 text-left h-12 w-full waves-effect waves-light green_ki_ma_ki_blue cursor-default">{{i.0}}</button></li>
+         <!-- Voted --> 
+          <li class = ""><button Class="relative line voted pl-7 text-left h-12 w-full  green_ki_ma_ki_blue cursor-default">{{i.0}}</button></li>
         {% endif %}
       {% endfor %}
     </ul>
@@ -67,7 +139,7 @@
 </div>
 
   
-  <div class="container mt-32 pt-8 mb-20 pr-7 2xl:pr-80 sm:pr-auto pl-7 sm:pl-7 space-y-4">
+  <div class="container lg:pl-40 xl:pl-18 mt-32 pt-8 mb-20 pr-7 2xl:pr-80 sm:pr-auto pl-7 sm:pl-7 space-y-4">
     {% block content %}
     {% endblock content %}
     
