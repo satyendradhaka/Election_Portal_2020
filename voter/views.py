@@ -193,15 +193,6 @@ def getMeSelectedCandidates(request):
     return selectedCandidates
 
 
-# @login_required
-# @captcha_required
-# @is_valid
-# def ham(request):
-#     try:
-#         voter = Voter.objects.get(username=request.user.username)
-#     except:
-#         return redirect('vote')
-#         
 
 @login_required
 @captcha_required
@@ -399,7 +390,7 @@ def vote(request,post_got="default"):
 
     request.session['posts_done'] = posts_done
 
-    if not post_got == "default":
+    if post_got != "default" and post_got in dicti.keys():
         post = post_got
         for ke,values in posts_done.items():
             if values.startswith("Current"):
@@ -417,10 +408,6 @@ def vote(request,post_got="default"):
             if request.POST['choice'] == "done":
                 voter.final_submit = True
                 vote_string=voteCountModifier(request)  
-                #encrypt the string using our function
-                # 103 and 147
-                # vote_string = js.dumps(request.session['option'])
-                # print(vote_string)    
                 voter.vote_time = time.time()
                 voter.vote_string1 = encryptMessage(key,
                     vote_string[:100], int(voter.vote_time))

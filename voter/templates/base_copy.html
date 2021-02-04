@@ -101,16 +101,16 @@
       {% for i in ham %}
         {% if i.1|startswith %}
         <!-- Selected -->
-          <li class = ""><button id= "{{forloop.counter}}" Class="relative line active h-12 w-full pl-7 text-left  green_ki_ma_ki_black  cursor-default">{{i.0}}</button></li>
+          <li class = ""><button onclick="hamClick(this.id, '{{i.0}}')" id= "ham-{{forloop.counter}}" Class="relative line active h-12 w-full pl-7 text-left  green_ki_ma_ki_black  cursor-default">{{i.0}}</button></li>
         {% elif i.1 == "-1"%}
          <!-- Inactive -->
-          <li class = ""><button id= "{{forloop.counter}}" Class="relative line null opacity-50 pl-7 text-left h-12 w-full  green_ki_ma_ki_black cursor-default">{{i.0}}</button></li>
+          <li class = ""><button onclick="hamClick(this.id, '{{i.0}}')" id= "ham-{{forloop.counter}}" Class="relative line null opacity-50 pl-7 text-left h-12 w-full  green_ki_ma_ki_black cursor-default">{{i.0}}</button></li>
         {% elif i.1 == "NOTA" %}
          <!-- NOTA -->
-          <li class = ""><button id="{{forloop.counter}}" Class="relative line nota pl-7 text-left h-12 w-full  green_ki_ma_ki_orange cursor-default">{{i.0}}</button></li>
+          <li class = ""><button onclick="hamClick(this.id, '{{i.0}}')" id="ham-{{forloop.counter}}" Class="relative line nota pl-7 text-left h-12 w-full  green_ki_ma_ki_orange cursor-default">{{i.0}}</button></li>
         {% elif i.1 != "-2" %}
          <!-- Voted --> 
-          <li class = ""><button id="{{forloop.counter}}" Class="relative line voted pl-7 text-left h-12 w-full  green_ki_ma_ki_blue cursor-default">{{i.0}}</button></li>
+          <li class = ""><button onclick="hamClick(this.id, '{{i.0}}')" id="ham-{{forloop.counter}}" Class="relative line voted pl-7 text-left h-12 w-full  green_ki_ma_ki_blue cursor-default">{{i.0}}</button></li>
         {% endif %}
       {% endfor %}
     </ul>
@@ -171,8 +171,29 @@
           res[i]="nota";
         }
         $("#" + res[i]).trigger("click"); 
-      }    
+      }
+      
     });
+    function hamClick(idstr,poststr){
+        console.log(idstr);
+        var id = parseInt(idstr.substr(4,idstr.length-1));
+        if (id<9){
+          var post_value = poststr.toLowerCase();
+          console.log(post_value);
+          
+          var temp = "{% url 'vote' %}";
+          console.log(temp);
+          var post = temp+post_value;
+        } 
+        else if(id==11){
+          var post = "{%url 'named_vote' 'gsen' %}";
+          
+        }
+        else{
+          var post = "{% url 'named_vote' 'bsen' %}";
+        }
+        window.location.href = post;
+      };
     
     // console.log(selected_new);
   </script>
