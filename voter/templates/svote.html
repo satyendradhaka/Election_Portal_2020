@@ -47,20 +47,36 @@
 
 {% block content %}
 <!-- <div class="sm:flex sm:flex-wrap w-full "> -->
-  <div class=" w-full ">
-    <div class="flex bg-gray-100 w-full rounded-lg p-5 h-full items-center">
-      <svg xmlns="http://www.w3.org/2000/svg" class = "w-6 h-6 flex-shrink-0 mr-4 =" viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-    
+  <div id="warning-msg" class=" transition duration-500 ease-in-out text-white px-6 py-4 border-0 rounded relative mb-4 bg-pink-500">
+    <span class="text-lg inline-block align-middle">
+      <svg width="48" height="48"  class = "w-8 h-8 flex-shrink-0 mr-4 =" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M26 35C26 35.5304 25.7893 36.0391 25.4142 36.4142C25.0391 36.7893 24.5304 37 24 37C23.4696 37 22.9609 36.7893 22.5858 36.4142C22.2107 36.0391 22 35.5304 22 35C22 34.4696 22.2107 33.9609 22.5858 33.5858C22.9609 33.2107 23.4696 33 24 33C24.5304 33 25.0391 33.2107 25.4142 33.5858C25.7893 33.9609 26 34.4696 26 35ZM25.5 18.5C25.5 18.1022 25.342 17.7206 25.0607 17.4393C24.7794 17.158 24.3978 17 24 17C23.6022 17 23.2206 17.158 22.9393 17.4393C22.658 17.7206 22.5 18.1022 22.5 18.5V27.5C22.5 27.8978 22.658 28.2794 22.9393 28.5607C23.2206 28.842 23.6022 29 24 29C24.3978 29 24.7794 28.842 25.0607 28.5607C25.342 28.2794 25.5 27.8978 25.5 27.5V18.5Z" fill="white"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M19.6729 6.48801C21.5989 3.15801 26.4029 3.15801 28.3289 6.48801L46.2629 37.496C48.1889 40.83 45.7829 45 41.9329 45H6.06892C2.21692 45 -0.187078 40.83 1.73892 37.496L19.6729 6.48801ZM25.7329 7.99001C25.5574 7.68599 25.3049 7.43354 25.0009 7.25802C24.6968 7.0825 24.352 6.9901 24.0009 6.9901C23.6499 6.9901 23.305 7.0825 23.001 7.25802C22.6969 7.43354 22.4445 7.68599 22.2689 7.99001L4.33692 38.998C4.16089 39.3021 4.06807 39.6472 4.06782 39.9986C4.06756 40.3499 4.15987 40.6951 4.33546 40.9995C4.51105 41.3038 4.76372 41.5565 5.06803 41.7322C5.37235 41.9078 5.71756 42.0002 6.06892 42H41.9329C42.284 42 42.6289 41.9076 42.9329 41.732C43.2369 41.5565 43.4894 41.304 43.6649 41C43.8405 40.6959 43.9329 40.3511 43.9329 40C43.9329 39.6489 43.8405 39.304 43.6649 39L25.7329 7.98801V7.99001Z" fill="white"/>
+        </svg>
+        
+    </span>
+    <span class="inline-block align-middle mr-8">
+      <b class="capitalize">AWARE!</b> In this section you can vote for multiple candidiates
+    </span>
+    <button id="warning-btn" class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-6 outline-none focus:outline-none">
+      <span>×</span>
+    </button>
+  </div>
+  <!-- <div class=" w-full ">
+    <div class="flex bg-red-300 bg-opacity-10 w-full rounded-lg p-5 h-full items-center">
+       <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg> -->
+      <!-- <svg xmlns="http://www.w3.org/2000/svg" class = "w-6 h-6 flex-shrink-0 mr-4 =" viewBox="0 0 24 24" width="48" height="48"><path d="M13 17.5a1 1 0 11-2 0 1 1 0 012 0zm-.25-8.25a.75.75 0 00-1.5 0v4.5a.75.75 0 001.5 0v-4.5z"></path><path fill-rule="evenodd" d="M9.836 3.244c.963-1.665 3.365-1.665 4.328 0l8.967 15.504c.963 1.667-.24 3.752-2.165 3.752H3.034c-1.926 0-3.128-2.085-2.165-3.752L9.836 3.244zm3.03.751a1 1 0 00-1.732 0L2.168 19.499A1 1 0 003.034 21h17.932a1 1 0 00.866-1.5L12.866 3.994z"></path></svg>
       <span>
       <span>
-        <span class="font-ah  text-base">
-          <span class="font-bold text-gray-800 ">
-           In this section you can vote for multiple candidiates
-        </span>
+        <span class="font-ah  text-xl">
+          <div class="font-bold text-red-700 ">
+           <span class=" float-left">In this section you can vote for multiple candidiates<span> <button class=" float-right text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-green-600 rounded text-base">Got It</button>
+           </div>
+        
         </span>
       </span>
     </div>
-  </div>
+  </div> --> 
 
 {{ pks|json_script:"pks-data" }}
   <ul class="nota-effect pt-4 space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
@@ -85,15 +101,15 @@
           <span class="py-6"
             ><p class="text-xl font-bold text-gray-800">{{i.name}}</p>
             <ul
-              class="font-medium max-w-md space-y-1 text-1xl pt-2 text-gray-600"
+              class="pr-2 font-medium max-w-md space-y-1 text-1xl pt-2 text-gray-600"
             >
               <!-- <li>{{i.agenda1}}</li>
               <li>{{i.agenda2}}</li>
               <li>{{i.agenda3}}</li>
               <li>{{i.agenda4}}</li> -->
-              <li>On time maintainance of hostels by creating seperate maintainance cells. Introducing the Best TA Awards and 24x7 access to the Internet.  </li>
-              <li>On time maintainance of hostels by creating seperate maintainance cells. Introducing the Best TA Awards and 24x7 access to the Internet. </li>
-              <li>On time maintainance of hostels by creating seperate maintainance cells. Introducing the Best TA Awards and 24x7 access to the Internet. </li>
+              <li>On time maintainance of hostels by creating seperate maintainance cells.   </li>
+              <li>Introducing the Best TA Awards and 24x7 access to the Internet. </li>
+              <li>Introducing the Best TA Awards and 24x7 access to the Internet. </li>
             </ul>
           </span>
         </li>
@@ -129,7 +145,14 @@
       var ids = JSON.parse(document.getElementById('pks-data').textContent);
       getIds(ids);
       setProgress('{{post}}', {{request.session.total_no}});
+
+      $("#warning-btn").click(function(){
+        // $("#warning-msg").css("opacity", "0");
+        $("#warning-msg").fadeOut(1000);
+        $("#warning-msg").css("display", "none");
+      });
     });
+
   </script>
   <script src="{% static 'js/svote.js' %}"></script>
 {% endblock vote_js %}

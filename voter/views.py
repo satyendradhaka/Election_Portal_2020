@@ -51,12 +51,12 @@ def is_valid(function):
             rollNumber = int(request.user.last_name)
         except:
             print("some admin")
-        keys = request.session.get('ready',True)
+        keys_bool = request.session.get('ready',True)
         # print(Voter.objects.all().filter(rollNumber=int(rollNumber)))
-        if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys:
+        if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys_bool:
             try:
                 voter = Voter.objects.get(username=username)
-                # print('kya bc')
+                print('kya bc')
             except:
                 voter = Voter.objects.get(rollNumber=rollNumber)
                 voter.username = username
@@ -235,6 +235,9 @@ def vote_for(request,post):
             'nota':False,
         },
     })
+    # 1-8 => {% url "named_vote" 'vp' %}
+    # 9 or 10 => 'bsen'
+    # >10 => 'gsen'
     posts_done = request.session.get('posts_done',
         {
             'VP': '-1',
@@ -284,22 +287,23 @@ def vote_for(request,post):
 @login_required
 @captcha_required
 @is_valid
-def vote(request):
+def vote(request,post_got="default"):
     # global key = []
     key =[]
     try:
-        # print(users[0])
+        # print(users[0]    )
         key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))
         key.append(keys.objects.get(user=User.objects.get(username='alan@iitg.ac.in')))
-        key.append(keys.objects.get(user=User.objects.get(username='satyendr@iitg.ac.in')))
+        key.append(keys.objects.get(user=User.objects.get(username='saketkumar@iitg.ac.in')))
         print(keys.objects.filter(pubkey=True))
         if len(keys.objects.filter(pubkey=True)) == 3:
             request.session['ready'] = True
         else:
             request.session['ready'] = False
-            print("damn")
+            print("damnio")
             return redirect('captcha')
     except:
+        # print(e)
         # print(users[0])
         request.session['ready'] = False
         print("damn")
@@ -394,7 +398,14 @@ def vote(request):
         posts_done['UGS'] = '-2'
 
     request.session['posts_done'] = posts_done
-        
+
+    if not post_got == "default":
+        post = post_got
+        for ke,values in posts_done.items():
+            if values.startswith("Current"):
+                posts_done[ke] = values[7:]
+        request.session['posts_done'] = posts_done
+           
     if post is None:
         selectedCandidates = getMeSelectedCandidates(request)
         if request.method == "POST":

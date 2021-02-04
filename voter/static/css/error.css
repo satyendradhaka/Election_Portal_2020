@@ -7,6 +7,39 @@
     font-family: 'Atkinson Hyperlegible Bold';
     src: url('../fonts/bold.ttf') format('truetype');
 }
+@font-face {
+    font-family: 'Atkinson Hyperlegible';
+    src: url('../fonts/regular.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Atkinson Hyperlegible Bold';
+    src: url('../fonts/bold.ttf') format('truetype');
+  }
+  
+  .font-ah {
+    font-family: Atkinson Hyperlegible;
+  }
+  
+  .font-bold {
+    font-family: Atkinson Hyperlegible Bold;
+  }  
+
+.bg-gray-50:hover{
+    background-color: #EAEAEA;
+}
+
+.text-gray-800{
+    color: #4C4D4D;
+}
+
+.bg-black{
+    background-color: #2E2F2F;
+  }
+
+.bg-blue-500{
+    background:#2B00FF;
+}
 
 .font-ah {
     font-family: Atkinson Hyperlegible;
@@ -17,40 +50,20 @@
 }
 
 body, html {
-    background-color: #F08A4B;
+    /* background-color: #F08A4B; */
     height: 100%;
 }
 
-.sorry-msg {
-    position: relative;
-    top: 37%;
-}
-
-@media (min-width: 768px) {
-    .sorry-msg {
-        padding-right: 15% !important;
-        padding-left: 15% !important;
-    }
-}
-
-@media (min-width: 1024px) {
-    .sorry-msg {
-        padding-right: 22% !important;
-        padding-left: 22% !important;
-    }
-}
-
-@media (min-width: 1280px) {
-    .sorry-msg {
-        padding-right: 25% !important;
-        padding-left: 25% !important;
-    }
-}
-
-@media (min-width: 1536px) {
-    .sorry-msg {
-        padding-left: 30% !important;
-        padding-right: 30% !important;
-    }
-}
-
+.created_by {
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    bottom: 4%;
+    font-size: 1.1em;
+    font-family: Atkinson Hyperlegible;
+    font-style: normal;
+    font-weight: normal;
+    color: black;
+    /* background-color: #2B00FF; */
+  }
+  

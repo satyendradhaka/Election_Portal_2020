@@ -28,8 +28,8 @@
     .active::after{
     content : "";
     display: inline-block;
-    height: 15px;
-    width:15px;
+    height: 18px;
+    width:18px;
     background: white;
     position: absolute;
     top: 50%;
@@ -55,7 +55,7 @@
     display: inline-block;
     height: 15px;
     width:15px;
-    background: #2B00FF;
+    background: #6FA4F3;
     position: absolute;
     top: 50%;
     justify-self: center;
@@ -68,7 +68,7 @@
     display: inline-block;
     height: 15px;
     width:15px;
-    background: #F08A4B;
+    background: #F3AC81;
     position: absolute;
     top: 50%;
     justify-self: center;
@@ -94,23 +94,23 @@
   </style>
   
   <a href="">
-    <img class = "fixed right-0 top-0 sm:h-32 h-16 z-50 " src = "{% static 'iitg.jpg' %}"></img>
+    <img class = "fixed right-0 top-0 sm:h-32 h-16 z-50 hidden sm:block " src = "{% static 'iitg.jpg' %}"></img>
   </a>
   <div id="primary_nav" class="fixed pt-2 block w-36 left-0 h-full z-10 bg-black">
     <ul class="block mt-8 list-none text-left transition no-underline text-white font-bold text-xl ml-4">
       {% for i in ham %}
         {% if i.1|startswith %}
         <!-- Selected -->
-          <li class = ""><button Class="relative line active h-12 w-full pl-7 text-left  green_ki_ma_ki_black  cursor-default">{{i.0}}</button></li>
+          <li class = ""><button id= "{{forloop.counter}}" Class="relative line active h-12 w-full pl-7 text-left  green_ki_ma_ki_black  cursor-default">{{i.0}}</button></li>
         {% elif i.1 == "-1"%}
          <!-- Inactive -->
-          <li class = ""><button Class="relative line null opacity-50 pl-7 text-left h-12 w-full  green_ki_ma_ki_black cursor-default">{{i.0}}</button></li>
+          <li class = ""><button id= "{{forloop.counter}}" Class="relative line null opacity-50 pl-7 text-left h-12 w-full  green_ki_ma_ki_black cursor-default">{{i.0}}</button></li>
         {% elif i.1 == "NOTA" %}
          <!-- NOTA -->
-          <li class = ""><button Class="relative line nota pl-7 text-left h-12 w-full  green_ki_ma_ki_orange cursor-default">{{i.0}}</button></li>
+          <li class = ""><button id="{{forloop.counter}}" Class="relative line nota pl-7 text-left h-12 w-full  green_ki_ma_ki_orange cursor-default">{{i.0}}</button></li>
         {% elif i.1 != "-2" %}
          <!-- Voted --> 
-          <li class = ""><button Class="relative line voted pl-7 text-left h-12 w-full  green_ki_ma_ki_blue cursor-default">{{i.0}}</button></li>
+          <li class = ""><button id="{{forloop.counter}}" Class="relative line voted pl-7 text-left h-12 w-full  green_ki_ma_ki_blue cursor-default">{{i.0}}</button></li>
         {% endif %}
       {% endfor %}
     </ul>

@@ -10,6 +10,7 @@ html, body {
 -webkit-overflow-scrolling: touch;
 }
 
+
 @media (max-width: 640px) {
     html, body {
         /* position: fixed; */
@@ -84,6 +85,9 @@ html, body {
 
 .text-black-500 {
     font: #2E2F2F;
+}
+.bg_black{
+    
 }
 
 #video {
