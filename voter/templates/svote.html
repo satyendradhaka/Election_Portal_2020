@@ -31,7 +31,7 @@
   <div class="sm:float-right h-full w-full sm:w-5/12 md:w-7/12 py-2">
     <form method="post" class= "space-y-5 sm:space-x-5">
       {% csrf_token %}
-        <button id="next-btn" type="submit" class="opacity-10 cursor-not-allowed sm:mr-auto float-right bg-black text-white h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5 green_ki_ma_ki_black" disabled>Next</button>
+        <button id="next-btn" type="submit" class="opacity-10 cursor-not-allowed sm:mr-auto float-right bg-black text-white h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5 green_ki_ma_ki_black" disabled>Save and Next</button>
         <button id="nota" type="button" class="float-right  bg-custom text-custom h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5">NOTA</button>
       {% for i in contestantList %}
         <input type="checkbox" style="opacity: 0; height: 0; width: 0;" name="choice" id="hidden{{i.pk}}" value="{{i.pk}}">

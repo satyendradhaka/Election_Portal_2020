@@ -403,7 +403,7 @@ def vote(request,post_got="default"):
         post = post_got
         for ke,values in posts_done.items():
             if values.startswith("Current"):
-                posts_done[ke] = values[7:]
+                posts_done[ke] = values[8:]
         request.session['posts_done'] = posts_done
            
     if post is None:
@@ -429,22 +429,8 @@ def vote(request,post_got="default"):
                 voter.voter_location = Point(request.session['longitude'], request.session['latitude'])
                 voter.save()
                 return render(request,'thankyou.html',{})
-            elif request.POST['choice'] == "bsen" or request.POST['choice'] == "gsen":
-                dicti[request.POST['choice']]['done']=False
-                dicti[request.POST['choice']]['nota']=False
-                if request.POST['choice']=="bsen":
-                    leng = 7
-                else:
-                    leng = 3
-                for i in range(leng):
-                    key = 'choice'+str(i+1)
-                    dicti[request.POST['choice']][key]=None
-                request.session['option']=dicti
-                return redirect('vote')
             else:
-                dicti[request.POST['choice']]=None
-                request.session['option']=dicti
-                return redirect('vote')
+                return redirect('named_vote',request.POST['choice'])
         return render(request,'review.html',{'selectedCandidates':selectedCandidates})
     
     elif not (post == 'bsen' or post == 'gsen'):
@@ -465,6 +451,13 @@ def vote(request,post_got="default"):
         for i in contestantList:
             pks.append(i.pk)
         if request.method == "POST":
+            dicti['bsen']['done']=False
+            dicti['bsen']['nota']=False
+            leng = 7
+            for i in range(leng):
+                key = 'choice'+str(i+1)
+                dicti['bsen'][key]=None
+            request.session['option']=dicti
             if request.POST.getlist('nota'):
                 dicti['bsen']['nota'] = True
                 posts_done[post_dictionary[post]] = "NOTA"
@@ -498,6 +491,13 @@ def vote(request,post_got="default"):
         for i in contestantList:
             pks.append(i.pk)
         if request.method == "POST":
+            dicti['gsen']['done']=False
+            dicti['gsen']['nota']=False
+            leng=3
+            for i in range(leng):
+                key = 'choice'+str(i+1)
+                dicti['gsen'][key]=None
+            request.session['option']=dicti
             if request.POST.getlist('nota'):
                 posts_done['Girls'] = "NOTA"
                 dicti['gsen']['nota'] = True
