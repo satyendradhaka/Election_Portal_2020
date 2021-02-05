@@ -30,9 +30,9 @@
       <div class="sm:float-right h-full w-full sm:w-5/12 md:w-7/12 py-2">
         <form method="post" class= "space-y-5 sm:space-x-5"><!-- onsubmit="call_post_req()" -->
           {% csrf_token %}
-        
-            <button id="next-btn" type="submit" class="opacity-10 cursor-not-allowed sm:mr-auto float-right bg-black text-white h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5 green_ki_ma_ki_black" disabled>Save and Next</button>
-            <button id="nota" type="button" onclick="voteClick('{{contestantList.0.post}}')" class="float-right  bg-custom text-custom h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5">NOTA</button>
+            
+            <button id="next-btn" type="submit" class="opacity-10 cursor-not-allowed sm:mr-auto float-right bg-black waves-effect waves-light text-white h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5 green_ki_ma_ki_black" disabled>Save</button>
+            <button id="nota" type="button" onclick="voteClick('{{contestantList.0.post}}')" class="float-right waves-effect waves-light  bg-custom text-custom h-16 sm:h-14 w-full sm:w-48 text-xl sm:text-lg text-center font-bold rounded-sm next-btn px-5">NOTA</button>
           
           <input type="hidden" name="choice" id="res">
         </form>
@@ -46,6 +46,30 @@
 
 {% block content %}
 {{ pks|json_script:"pks-data" }}
+<style>
+  .lds-dual-ring {
+  display: inline-block;
+  }
+  .lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 5px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  border-color: #fff transparent  #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+  }
+</style>
   <ul class="nota-effect space-y-4 sm:space-y-0 sm:flex sm:space-x-4">
       {% for i in contestantList %}
         <li id="{{i.pk}}"
@@ -120,6 +144,12 @@
       getIds(ids);
       setProgress('{{post}}', {{request.session.total_no}});
       
+      console.log("reset");
+      // $("#next-btn").html = "Save";
+      $("#next-btn").click(async function (e) {
+        console.log("set");
+        document.getElementById('next-btn').innerHTML = '<div class="mt-1 lds-dual-ring"></div>';
+      });
     });
   </script>
   

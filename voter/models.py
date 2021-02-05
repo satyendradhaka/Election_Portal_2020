@@ -34,7 +34,7 @@ class Contestant(models.Model):
         ('GS','Girl Senator'),
         ('Tech','General Secretary of Technical Board'),
         ('Cult','General Secretary of Cultural Board'),
-        ('Welfare','General Secretary of Students\' Welfare Board'),
+        ('Welfare','General Secretary of Welfare Board'),
         ('Sports','General Secretary of Sports Board'),
         ('SAIL','General Seceratry of SAIL'),
         ('SWC','General Seceratry of SWC'),
