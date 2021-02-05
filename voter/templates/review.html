@@ -181,7 +181,8 @@
         {% endif %}
     {% endfor %}
     <div class="w-full mx-5 sm:ml-10 mb-10 mt-10">
-        <button type="submit" name="choice" value="done" class="bg-black text-white hover:bg-blue-600    h-14 w-48 text-lg text-center font-bold rounded-sm next-btn">Submit</button>
+        <input id="submit_pucca" type="submit" class="hidden" name="choice" value="done">
+        <button id="submit_final" type="button" class="bg-black text-white hover:bg-blue-600 h-14 w-48 text-lg text-center font-bold rounded-sm next-btn">Submit</button>
     </div>
 </form>
 
@@ -191,6 +192,16 @@
         // $("#warning-msg").css("opacity", "0");
         $("#warning-msg").fadeOut(1000);
         $("#warning-msg").css("display", "none");
+      });
+      $("#submit_final").click(function () {
+          if (window.confirm("Are you sure? You won't be able to go back."))
+            {
+                $("#submit_pucca").trigger("click");
+            }
+            else
+            {
+                console.log("Mana kar diya!");
+            }
       });
     });
 
