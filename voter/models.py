@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.gis.db.models import PointField
 from django.contrib.gis.geos import Point
+from django.db.models.fields import CharField
 
 class Voter(models.Model):
     username = models.CharField(max_length=100) 
@@ -48,6 +49,9 @@ class Contestant(models.Model):
     vote_count = models.IntegerField(default=0)
     pic = models.CharField(max_length=1000)
     random_suppling = models.IntegerField(default=0)
-    
+    tagline = models.CharField(max_length=1000, blank=True, default="Technology is my Middle Name!")
+    agendaPDF = models.CharField(max_length=1000, blank=True, default="")
+    video = models.CharField(max_length=1000, blank=True, default="")
+
     def __str__(self):
         return self.name + " for " + self.post

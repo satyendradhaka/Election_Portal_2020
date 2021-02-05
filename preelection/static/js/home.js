@@ -9,6 +9,7 @@
 // });
 document.getElementById("default_tab").click();
 function openDesignation(evt, designationName) {
+  console.log(designationName);
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("designation_tabcontent");
   for (i = 0; i < tabcontent.length; i++) {

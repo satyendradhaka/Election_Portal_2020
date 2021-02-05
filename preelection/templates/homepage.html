@@ -83,7 +83,7 @@
           <a class="mr-6 hover:text-blue-900" href = "https://students-web-commitee.gitbook.io/gymkhana-elections/">Rules and Regulations</a>
           <a class="mr-6 hover:text-blue-900" href = "#">Statistics(after elections)</a>
           <a class="mr-6 hover:text-blue-900" href="#candidiates"
-            >Candidiates</a
+            >Candidates</a
           >
           <a class="mr-6 hover:text-blue-900" href="{% static 'nomination.pdf' %}">Nominate</a>
         </nav>
@@ -238,7 +238,74 @@
           Girls Senator
         </button>
       </div>
-      <section id="VP" class="text-gray-600 body-font designation_tabcontent">
+
+      {% for i in candidates %}
+         <section id="{{i.1}}" class="text-gray-600 body-font designation_tabcontent">
+        <div class="container px-5 py-24 mx-auto">
+          <div class="flex flex-wrap -m-4">
+            {% for j in i.2 %}
+            <div class="p-4 md:w-1/3">
+              <div
+                class="h-full border-2 border-black border-opacity-60 rounded-lg overflow-hidden"
+              >
+                <video
+                  style="background: transparent"
+                  class="video-js vjs-theme-city lg:h-60 w-full"
+                  id="video6"
+                  allow="autoplay"
+                  controls
+                >
+                  <source src="{% static 'contestants_pre/movie.mp4' %}" type="video/mp4" />
+                  <!-- <source src="movie9.ogg" type="video/ogg" /> -->
+                  Your browser does not support HTML video.
+                </video>
+
+                <div class="p-6">
+                  <h2
+                    class="tracking-widest text-xs title-font font-medium text-indigo-500 mb-1"
+                  >
+                    {{j.tagline}}
+                  </h2>
+                  <h1
+                    class="title-font text-lg font-medium font-bold text-gray-900 mb-3"
+                  >
+                    {{j.name}}
+                  </h1>
+                  <ul class="designation-list browser-default">
+                    <li style="font-size: 1.3em">
+                      {{j.agenda1}}
+                    </li>
+                    <li style="font-size: 1.3em">{{j.agenda2}}</li>
+                    <li style="font-size: 1.3em">{{j.agenda3}}</li>
+                  </ul>
+                  <div class="mt-4">
+                    
+                    <a
+                      class="agenda__link text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0" href="{% static 'contestants_pre/j.agendaPDF' %}"
+                      >View Agenda
+                      <svg
+                        class="w-4 h-4 ml-2"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5l7 7-7 7"></path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            </div>
+            </div>
+         </section>
+      {% endfor %}
+      <!-- <section id="VP" class="text-gray-600 body-font designation_tabcontent">
        <div class="grid place-items-center h-screen w-full pt-10">
         <div class="flex flex-col align-items-center w-3/4">
           <div class="flex justify-center ">
@@ -325,7 +392,7 @@
              <img src="{% static 'images/soon.svg'%}" />
            </div>
          </div>
-       </section>
+       </section> -->
 
 
        
@@ -389,6 +456,10 @@
                 </div>
               </div>
             </div>
+
+
+
+
             <div class="p-4 md:w-1/3">
               <div
                 class="h-full border-2 border-black border-opacity-60 rounded-lg overflow-hidden"
