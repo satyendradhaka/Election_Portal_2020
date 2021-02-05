@@ -51,12 +51,12 @@ def is_valid(function):
             rollNumber = int(request.user.last_name)
         except:
             print("some admin")
-        keys = request.session.get('ready',True)
+        keys_bool = request.session.get('ready',True)
         # print(Voter.objects.all().filter(rollNumber=int(rollNumber)))
-        if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys:
+        if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys_bool:
             try:
                 voter = Voter.objects.get(username=username)
-                # print('kya bc')
+                print('kya bc')
             except:
                 voter = Voter.objects.get(rollNumber=rollNumber)
                 voter.username = username
@@ -193,15 +193,6 @@ def getMeSelectedCandidates(request):
     return selectedCandidates
 
 
-# @login_required
-# @captcha_required
-# @is_valid
-# def ham(request):
-#     try:
-#         voter = Voter.objects.get(username=request.user.username)
-#     except:
-#         return redirect('vote')
-#         
 
 @login_required
 @captcha_required
@@ -235,6 +226,9 @@ def vote_for(request,post):
             'nota':False,
         },
     })
+    # 1-8 => {% url "named_vote" 'vp' %}
+    # 9 or 10 => 'bsen'
+    # >10 => 'gsen'
     posts_done = request.session.get('posts_done',
         {
             'VP': '-1',
@@ -284,22 +278,23 @@ def vote_for(request,post):
 @login_required
 @captcha_required
 @is_valid
-def vote(request):
+def vote(request,post_got="default"):
     # global key = []
     key =[]
     try:
-        # print(users[0])
+        # print(users[0]    )
         key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))
         key.append(keys.objects.get(user=User.objects.get(username='alan@iitg.ac.in')))
-        key.append(keys.objects.get(user=User.objects.get(username='satyendr@iitg.ac.in')))
+        key.append(keys.objects.get(user=User.objects.get(username='saketkumar@iitg.ac.in')))
         print(keys.objects.filter(pubkey=True))
         if len(keys.objects.filter(pubkey=True)) == 3:
             request.session['ready'] = True
         else:
             request.session['ready'] = False
-            print("damn")
+            print("damnio")
             return redirect('captcha')
     except:
+        # print(e)
         # print(users[0])
         request.session['ready'] = False
         print("damn")
@@ -394,7 +389,14 @@ def vote(request):
         posts_done['UGS'] = '-2'
 
     request.session['posts_done'] = posts_done
-        
+
+    if post_got != "default" and post_got in dicti.keys():
+        post = post_got
+        for ke,values in posts_done.items():
+            if values.startswith("Current"):
+                posts_done[ke] = values[8:]
+        request.session['posts_done'] = posts_done
+           
     if post is None:
         selectedCandidates = getMeSelectedCandidates(request)
         if request.method == "POST":
@@ -406,10 +408,6 @@ def vote(request):
             if request.POST['choice'] == "done":
                 voter.final_submit = True
                 vote_string=voteCountModifier(request)  
-                #encrypt the string using our function
-                # 103 and 147
-                # vote_string = js.dumps(request.session['option'])
-                # print(vote_string)    
                 voter.vote_time = time.time()
                 voter.vote_string1 = encryptMessage(key,
                     vote_string[:100], int(voter.vote_time))
@@ -418,22 +416,8 @@ def vote(request):
                 voter.voter_location = Point(request.session['longitude'], request.session['latitude'])
                 voter.save()
                 return render(request,'thankyou.html',{})
-            elif request.POST['choice'] == "bsen" or request.POST['choice'] == "gsen":
-                dicti[request.POST['choice']]['done']=False
-                dicti[request.POST['choice']]['nota']=False
-                if request.POST['choice']=="bsen":
-                    leng = 7
-                else:
-                    leng = 3
-                for i in range(leng):
-                    key = 'choice'+str(i+1)
-                    dicti[request.POST['choice']][key]=None
-                request.session['option']=dicti
-                return redirect('vote')
             else:
-                dicti[request.POST['choice']]=None
-                request.session['option']=dicti
-                return redirect('vote')
+                return redirect('named_vote',request.POST['choice'])
         return render(request,'review.html',{'selectedCandidates':selectedCandidates})
     
     elif not (post == 'bsen' or post == 'gsen'):
@@ -454,6 +438,13 @@ def vote(request):
         for i in contestantList:
             pks.append(i.pk)
         if request.method == "POST":
+            dicti['bsen']['done']=False
+            dicti['bsen']['nota']=False
+            leng = 7
+            for i in range(leng):
+                key = 'choice'+str(i+1)
+                dicti['bsen'][key]=None
+            request.session['option']=dicti
             if request.POST.getlist('nota'):
                 dicti['bsen']['nota'] = True
                 posts_done[post_dictionary[post]] = "NOTA"
@@ -487,6 +478,13 @@ def vote(request):
         for i in contestantList:
             pks.append(i.pk)
         if request.method == "POST":
+            dicti['gsen']['done']=False
+            dicti['gsen']['nota']=False
+            leng=3
+            for i in range(leng):
+                key = 'choice'+str(i+1)
+                dicti['gsen'][key]=None
+            request.session['option']=dicti
             if request.POST.getlist('nota'):
                 posts_done['Girls'] = "NOTA"
                 dicti['gsen']['nota'] = True
