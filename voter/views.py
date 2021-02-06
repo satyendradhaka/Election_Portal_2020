@@ -50,7 +50,7 @@ def is_valid(function):
         try:
             rollNumber = int(request.user.last_name)
         except:
-            print("some admin")
+            return render(request,'error.html',{'message': 'You are not a recognized voter! Please login with your student id.'})
         keys_bool = request.session.get('ready',True)
         # print(Voter.objects.all().filter(rollNumber=int(rollNumber)))
         if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys_bool:
@@ -63,12 +63,16 @@ def is_valid(function):
                 voter.save()
             # if voter.final_submit:
             #     # return HttpResponse('u have already voted')
-            #     return render(request,'error.html',{})
+            #     return render(request,'error.html',{'message':'You Have already voted, hope we meet next year.'})
             # else:
             # IMP:this is for testing uncomment and add a tab in below line
             return function(request, *args, **kwargs)  
         else:
-            return render(request,'error.html',{})
+            if not keys_bool:
+                message = 'You are a bit early. Kindly volunteer in setting up the polling booth.'
+            else:
+                message = "Sorry, we searched a lot! Couldn't find any matching entry with your name."
+            return render(request,'error.html',{'message': message})
             # return HttpResponse('get out of here')
 
     return wrap

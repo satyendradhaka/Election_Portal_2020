@@ -2,7 +2,6 @@ import csv
 import random
 from django.utils.encoding import smart_str
 from voter.models import Contestant, Voter
-from django.contrib.gis.geos import Point
 
 CHARS = "abcdefghjkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789"
 
