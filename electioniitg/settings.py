@@ -32,7 +32,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7*627ja$7))_#l2f3rv^^#y+^f87o14t#do2yl9!(x$1$vc1wo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -104,10 +104,10 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'postgres',
         # 'NAME': 'postg',
-        # 'USER': 'election',
-        'USER': 'postgres',
-       'PASSWORD': '1saket@postgres',
-        # 'PASSWORD': 'postgres',
+        'USER': 'election',
+        #'USER': 'postgres',
+       #'PASSWORD': '1saket@postgres',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
         # 'PORT': '5433',
