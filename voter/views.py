@@ -35,7 +35,7 @@ def captcha_required(function):
     location = request.session.get('location',False)
     image = request.session.get('image',False)
     b = captcha and location and image
-    print(captcha,location,image)
+    #print(captcha,location,image)
     if not b:
         return redirect('captcha')
     else:
@@ -52,11 +52,11 @@ def is_valid(function):
         except:
             return render(request,'error.html',{'message': 'You are not a recognized voter! Please login with your student id.'})
         keys_bool = request.session.get('ready',True)
-        # print(Voter.objects.all().filter(rollNumber=int(rollNumber)))
+        # #print(Voter.objects.all().filter(rollNumber=int(rollNumber)))
         if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys_bool:
             try:
                 voter = Voter.objects.get(username=username)
-                print('kya bc')
+                #print('kya bc')
             except:
                 voter = Voter.objects.get(rollNumber=rollNumber)
                 voter.username = username
@@ -131,7 +131,7 @@ def voteCountModifier(request):
                 vote_string += str(dicti['gsen'][key])+" "
                 
         vote_string += '},'
-    print(vote_string)
+    #print(vote_string)
     return vote_string
 
 @login_required
@@ -275,7 +275,7 @@ def vote_for(request,post):
         request.session['option']=dicti
         request.session['posts_done']=posts_done
         return redirect('vote')
-    print(posts_done)
+    #print(posts_done)
     return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()],'selected':posts_done[post_dictionary[post]]})
 
 
@@ -286,22 +286,22 @@ def vote(request,post_got="default"):
     # global key = []
     key =[]
     try:
-        # print(users[0]    )
+        # #print(users[0]    )
         key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))
         key.append(keys.objects.get(user=User.objects.get(username='alan@iitg.ac.in')))
-        key.append(keys.objects.get(user=User.objects.get(username='saketkumar@iitg.ac.in')))
-        print(keys.objects.filter(pubkey=True))
+        key.append(keys.objects.get(user=User.objects.get(username='satyendr@iitg.ac.in')))
+        #print(keys.objects.filter(pubkey=True))
         if len(keys.objects.filter(pubkey=True)) == 3:
             request.session['ready'] = True
         else:
             request.session['ready'] = False
-            print("damnio")
+            #print("damnio")
             return redirect('captcha')
-    except:
-        # print(e)
-        # print(users[0])
+    except Exception as e:
+        #print(e)
+        # #print(users[0])
         request.session['ready'] = False
-        print("damn")
+        #print("damn")
         return redirect('captcha')
     dicti=request.session.get('option',{
         'vp': None,
@@ -339,6 +339,9 @@ def vote(request,post_got="default"):
         voter = Voter.objects.get(username=request.user.last_name)
     if voter.category == '0' or voter.category == '2':
         request.session['total_no'] = 9
+        # print(voter.category)
+        dicti['gsen']['done'] = True
+        request.session['option']=dicti
     else:
         request.session['total_no'] = 10
     post= None
@@ -360,9 +363,6 @@ def vote(request,post_got="default"):
         post = 'swc'
     elif not dicti['bsen']['done']:
         post = 'bsen'    
-        if voter.category == '0' or voter.category == '2':
-            dicti['gsen']['done'] = True
-            request.session['option']=dicti
     elif not dicti['gsen']['done']:
         post = 'gsen'
     posts_done = request.session.get('posts_done',
@@ -393,6 +393,7 @@ def vote(request,post_got="default"):
         posts_done['UGS'] = '-2'
 
     request.session['posts_done'] = posts_done
+    print(posts_done)
 
     if post_got != "default" and post_got in dicti.keys():
         post = post_got
@@ -471,7 +472,7 @@ def vote(request,post_got="default"):
             request.session['option']=dicti
             request.session['posts_done']=posts_done
             return redirect('vote')
-        print(posts_done)
+        #print(posts_done)
         return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()],'selected':posts_done[post_dictionary[post]]})
     elif post == 'gsen':
         if not posts_done['Girls'].startswith("Current"):
@@ -511,5 +512,5 @@ def vote(request,post_got="default"):
             request.session['option']=dicti
             request.session['posts_done']=posts_done
             return redirect('vote')
-        print(posts_done)
+        #print(posts_done)
         return render(request,'svote.html',{'contestantList':contestantList,'pks':pks,'max_len':max_len,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()],'selected':posts_done['Girls']})

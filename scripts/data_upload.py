@@ -2,8 +2,58 @@ import csv
 import random
 from django.utils.encoding import smart_str
 from voter.models import Contestant, Voter
+from django.contrib.gis.geos import Point
 
 CHARS = "abcdefghjkmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789"
+
+deptList ={
+    '01': 'CSE',
+    '02': 'ECE',
+    '03': 'ME',
+    '04': 'Civil',
+    '05': 'Design',
+    '06': 'BSBE',
+    '07': 'CL',
+    '08': 'EEE',
+    '21': ['Physics','EP'],
+    '22': ['Chemistry','CST'],
+    '23': 'MNC',
+    '41': ['HSS','Development Studies'],
+    '51': 'Energy',
+    '52': 'Environment',
+    '53': 'Nano-Tech',
+    '54': 'Rural-Tech',
+    '55': 'Linguistics',
+	'61': 'Data Science',
+	'62': 'FST-CL',
+	'63': 'Emobility',
+
+}
+
+def deptIdentify(rollNumber):
+    roll = rollNumber
+    program= None
+    if roll[2]=='0':
+        program='UG'
+    else:
+        program="PG"
+    dept=None
+    
+    if roll[4:6] != '21' and roll[4:6] != '22' and roll[4:6]!='41':
+        dept = deptList[roll[4:6]]
+    elif roll[4:6]=='41':
+        if roll[2:4]=='22':
+            dept=deptList[roll[4:6]][1]
+        else:
+            dept=deptList[roll[4:6]][0]
+    else:
+        if program == 'UG':
+            dept = deptList[roll[4:6]][1]
+        else:
+            dept = deptList[roll[4:6]][0]
+
+    return dept
+
 
 def csv_to_voter():
 	csvfile = open('voter.csv', 'r')
@@ -13,7 +63,7 @@ def csv_to_voter():
 		username = smart_str(row[0]).lower()
 		category = smart_str(row[1])
 		rollNumber = smart_str(row[2])
-		dept = smart_str(row[3])
+		dept = deptIdentify(smart_str(row[2]))
 		vote_string1=""
 		vote_string2=""
 		vote_time = ""
