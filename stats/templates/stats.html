@@ -368,24 +368,33 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
-      var dicti = null;
       function ajaxCall(){
         $.ajax({
           url: "{% url 'data' %}",
           dataType: 'json',
           method: 'GET',
           success: function (data) {
-            dicti = data;
-            console.log(dicti);
+            setDeptCount(data)
           },
           error: function (err) {
-            console.log(err);
+            console.log(err);            
           },
+          complete: function(){
+            setInterval(function(){ajaxCall();}, 90000);
+          }
         });
       }
       $(document).ready(function () {
-        setInterval(function(){ajaxCall();}, 1000);
+        ajaxCall();
       });
+      
+      function setDeptCount(dicti) {
+        console.log(dicti["deptCount"]);
+        for (let index = 0; index < dicti["deptCount"].length; index++) {
+          const element = dicti["deptCount"][index];
+          
+        }
+      }
       // let temp_data = [];
       // for (let index = 0; index < dicti["deptCount"].length; index++) {
       //   const element = dicti["deptCount"][index];
