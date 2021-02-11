@@ -103,7 +103,7 @@
         </div>
       </div>
       <div class="z-10 bg-blue-500 w-1/4 font-bold py-10">
-        <div class="text-white text-3xl z-10 font-bold text-center">Total Votes Count</div>
+        <div class="text-white text-3xl z-10 font-bold text-center">Voters Online</div>
         <div class="flex z-10 justify-center space-x-2 py-5">
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
@@ -388,86 +388,149 @@
         ajaxCall();
       });
       
+      let vote_percent = [];
+      let graph_labels = [];
+      let tots = [];
       function setDeptCount(dicti) {
         console.log(dicti["deptCount"]);
-        for (let index = 0; index < dicti["deptCount"].length; index++) {
-          const element = dicti["deptCount"][index];
-          
+        vote_percent = [];
+        graph_labels = [];
+        tots = [];
+        for (var key in dicti["deptCount"]) {
+            // check if the property/key is defined in the object itself, not in parent
+            if (dicti["deptCount"].hasOwnProperty(key)) {           
+                // console.log(key, dicti["deptCount"][key]);
+                vote_percent.push(dicti["deptCount"][key]["count"]);
+                graph_labels.push(key);
+                tots.push(dicti["deptCount"][key]["total"]);
+            }
         }
+        console.log(tots);
+        // console.log(graph_labels);
+        // console.log(vote_percent);
+      
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+          type: 'horizontalBar',
+            data: {
+                labels: graph_labels,
+                datasets: [{
+                    label: 'Department Wise Statistics',
+                    data: vote_percent,
+                    backgroundColor: [
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                    ],
+                    borderColor: [
+                    'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 24,
+                            fontFamily: 'Atkinson Hyperlegible',
+                            fontColor: '#FFFFFF',
+                            fontStyle: 'normal',
+                            fontWeight: 'bold',
+                        },
+                        gridLines: {
+                          display: false
+                        },
+                        barPercentage: 0.4,
+                        categoryPercentage: 1.0
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 0,
+                            min: 0,
+                            max: 100,
+                            callback: function (value, index, values) {
+                              return (value / tots[index] * 100).toFixed(0) + '%';
+                            },
+                          },
+                        scaleLabel: {
+                          display: true,
+                          labelString: 'Percentage',
+                        },
+                        gridLines: {
+                          display: false
+                        }
+                    }]
+                },
+                "animation": {
+                "duration": 1,
+                  "onComplete": function () {
+                    var chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+                    
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'default';
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                      var meta = chartInstance.controller.getDatasetMeta(i);
+                      meta.data.forEach(function (bar, index) {
+                        var data = dataset.data[index];
+                        ctx.fillText(data, bar._model.x, bar._model.y - 1);
+                      });
+                    });
+                  }
+              },
+                legend: {
+                  display: false,
+                },
+                tooltips: {
+                  enabled: false,
+                },
+                title: {
+                    display: true,
+                    text: 'Department Vise Statistics',
+                    fontFamily: 'Atkinson Hyperlegible Bold',
+                    fontSize: 25,
+                    fontColor: '#FFFFFF',
+                    fontStyle: 'normal',
+                    fontWeight: 'bold',
+                }
+            },
+        });
       }
-      // let temp_data = [];
-      // for (let index = 0; index < dicti["deptCount"].length; index++) {
-      //   const element = dicti["deptCount"][index];
-        
-      // }
-      var ctx = document.getElementById('myChart');
-      var myChart = new Chart(ctx, {
-        type: 'horizontalBar',
-          data: {
-              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-              datasets: [{
-                  label: 'Department Vise Statistice',
-                  data: [12, 19, 3, 5, 2, 3],
-                  backgroundColor: [
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)'
-                  ],
-                  borderColor: [
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)'
-                  ],
-                  borderWidth: 1
-              }]
-          },
-          options: {
-              scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true,
-                          fontSize: 24,
-                          fontFamily: 'Atkinson Hyperlegible',
-                          fontColor: '#FFFFFF',
-                          fontStyle: 'normal',
-                          fontWeight: 'bold',
-                      },
-                      gridLines: {
-                        display: false
-                      },
-                      barPercentage: 0.4,
-                      categoryPercentage: 1.0
-                  }],
-                  xAxes: [{
-                      ticks: {
-                          beginAtZero: true,
-                          fontSize: 0
-                      },
-                      gridLines: {
-                        display: false
-                      }
-                  }]
-              },
-              legend: {
-                display: false,
-              },
-              title: {
-                  display: true,
-                  text: 'Department Vise Statistics',
-                  fontFamily: 'Atkinson Hyperlegible Bold',
-                  fontSize: 25,
-                  fontColor: '#FFFFFF',
-                  fontStyle: 'normal',
-                  fontWeight: 'bold',
-              }
-          },
-      });
       </script>
   </body>
 </html>
