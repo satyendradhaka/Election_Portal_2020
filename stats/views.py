@@ -1,49 +1,382 @@
 # from typing import final
+from django.db.models.expressions import Random
 from django.shortcuts import render
 from voter.models import Voter
 from django.db.models import Q
-
+from django.http import JsonResponse
+import random
 # Create your views here.
-deptList ={
-    '01': 'CSE',
-    '02': 'ECE',
-    '03': 'ME',
-    '04': 'Civil',
-    '05': 'Design',
-    '06': 'BSBE',
-    '07': 'CL',
-    '08': 'EEE',
-    '21': ['Physics','EP'],
-    '22': ['Chemistry','CST'],
-    '23': 'MNC',
-    '41': ['HSS','Development Studies'],
-    '51': 'Energy',
-    '52': 'Environment',
-    '53': 'Nano-Tech',
-    '54': 'Rural-Tech',
-    '55': 'Linguistics'
-}
+deptList =[
+    'CSE',
+    'ECE',
+    'ME',
+    'Civil',
+    'Design',
+    'BSBE',
+    'CL',
+    'EEE',
+    'Physics',
+    'Chemistry',
+    'MNC',
+    'HSS',
+    'Energy',
+    'Environment',
+    'Nano-Tech',
+    'Rural-Tech',
+    'Linguistics',
+]
 
-def deptIdentify(rollNumber):
-    roll = str(rollNumber)
-    program= None
-    if roll[2]=='0':
-        program='UG'
-    else:
-        program="PG"
-    dept=None
-    
-    if roll[4:6] != '21' and roll[4:6] != '22' and roll[4:6]!='41':
-        dept = deptList(roll[4:6])
-    elif roll[4:6]=='41':
-        if roll[2:4]=='22':
-            dept=deptList(roll[4:6])[1]
-        else:
-            dept=deptList(roll[4:6])[0]
-    else:
-        if program == 'UG':
-            dept = deptList(roll[4:6])[1]
-        else:
-            dept = deptList(roll[4:6])[0]
 
-    return program,dept
+def voteData(request):
+    deptCount = {}
+    jagruk = 0
+    data = {}
+    for i in deptList:
+        total = Voter.objects.filter(dept = i).count()
+        count = Voter.objects.filter(Q(dept=i) & Q(final_submit=True)).count()
+        deptCount[i] = {'count':count,'total':total,'percent':(count*100)/total}
+        if deptCount[i]['percent'] > jagruk:
+            jagruk = deptCount[i]['percent']  
+            data['jagruk']=i
+    defaultCoords=25
+    data['deptCount'] = deptCount
+    data['totalVoted'] = Voter.objects.filter(final_submit = True).count()
+    data['totalVoters'] = Voter.objects.all().count()
+    if data['totalVoted'] <=25:
+        defaultCoords=data['totalVoted']
+    data['coords'] = random.sample([[coords[0].x,coords[0].y] for coords in Voter.objects.filter(final_submit=True).values_list('voter_location')], defaultCoords)
+    print(data['coords'])
+    return JsonResponse(data)
+
+
+def stats(request):
+    return render(request,'stats.html',{})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

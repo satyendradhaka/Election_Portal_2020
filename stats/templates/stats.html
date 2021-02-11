@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Animate a point along a route</title>
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/stats.css' %}" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      .ripple {
+        /* margin: auto; */
+        /* margin-top: 10rem; */
+        background-color: #ff84dc;
+        /* width: 1rem; */
+        /* height: 1rem; */
+        border-radius: 50%;
+        animation: ripple 2s linear infinite;
+      }
+      /* @keyframes ripple {
+        0% {
+          box-shadow: 0 0 0 0rem rgba(#2b00ff85, 0.2),
+            0 0 0 0.01px rgba(43, 0, 255, 0.2), 0 0 0 2rem rgba(43, 0, 255, 0.2),
+            0 0 0 0.022px rgba(43, 0, 255, 0.2);
+        }
+        100% {
+          box-shadow: 0 0 0 0.01px rgba(43, 0, 255, 0.2),
+            0 0 0 0.02px rgba(43, 0, 255, 0.2), 0 0 0 5rem rgba(43, 0, 255, 0.2),
+            0 0 0 0.033px rgba(43, 0, 255, 0);
+        }
+      } */
+    </style>
+  </head>
+  <body>
+    <style>
+      .overlay {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+
+      .overlay button {
+        font: 600 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+        background-color: #3386c0;
+        color: #fff;
+        display: inline-block;
+        margin: 0;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+
+      .overlay button:hover {
+        background-color: #4ea0da;
+      }
+      .font_ah{
+        font-family: Atkinson Hyperlegible;
+         font-style: normal;
+        font-weight: bold;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+    
+    <div class="flex z-10 justify-around">
+      <div class="z-10 w-1/6 font-bold flex pt-8 justify-center text-center align-middle content-center justify-items-center z-50 align-items-center justify-content-center text-align-center text-white text-7xl">Gymkhana Elections 2021</div>
+    </div>
+    <!-- i will code here -->
+    <div class="flex z-10 justify-around mt-40">
+      <div class="bg-pink-5000 z-10 w-1/5 py-10 px-10">
+        <div class="text-white text-3xl z-10 font-bold text-center">Total Votes Count</div>
+        <div class="flex z-10 justify-center space-x-2 py-5">
+          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+        </div>
+      </div>
+      <div class="z-10 bg-blue-500 w-1/5 py-10 px-10">
+        <div class="text-white text-3xl z-10 font-bold text-center">Total Votes Count</div>
+        <div class="flex z-10 justify-center space-x-2 py-5">
+          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex z-10 justify-around mt-40">
+      <div class="z-50 bg-black w-4/5">
+        <canvas id="myChart" width="40" height="20"></canvas>
+      </div>
+    </div>
+
+
+    <div id="map"></div>
+
+    <div class="overlay hidden">
+      <button id="replay">Replay</button>
+    </div>
+
+    <script>
+      // TO MAKE THE MAP APPEAR YOU MUST
+      // ADD YOUR ACCESS TOKEN FROM
+      // https://account.mapbox.com
+      mapboxgl.accessToken =
+        "pk.eyJ1Ijoic2h1YmhhbWdhbmRoaTY1IiwiYSI6ImNranN3bnpxNTQzdTIycmxvZ3g2MjB5bzcifQ.r157xCeh45aMVGSIum6iHw";
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/shubhamgandhi65/ckjsx5kgw73wx19oa741og6yy",
+        center: [ 78.9629, 20.5937],
+        zoom: 2.5,
+      });
+
+      // San Francisco
+      var origin = [85.1414, 25.61];
+
+      // Washington DC
+      var destination = [91.6916, 26.1878];
+
+      // A simple line from origin to destination.
+      var route = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            geometry: {
+              type: "LineString",
+              coordinates: [origin, destination],
+            },
+          },
+        ],
+      };
+
+      // A single point that animates along the route.
+      // Coordinates are initially set to origin.
+      var point = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              type: "Point",
+              coordinates: origin,
+            },
+          },
+        ],
+      };
+      var origin_coords = [
+        [77.23, 28.66],
+        [72.8333, 18.9667],
+        [88.3378, 22.5411],
+        [80.275, 13.0825],
+        [80.947, 26.847],
+        [79.0831, 21.1539],
+        [77.4167, 28.6667],
+        [85.1414, 25.61],
+        [75.8486, 30.9083],
+      ];
+      var geojson = {
+        type: "FeatureCollection",
+        features: [],
+      };
+
+      origin_coords.forEach((coords) => {
+        var temp = {
+          type: "Feature",
+          properties: {
+            message: "Bar",
+            iconSize: [50, 50],
+          },
+          geometry: {
+            type: "Point",
+            coordinates: coords,
+          },
+        };
+        geojson.features.push(temp);
+      });
+      console.log(geojson);
+      //points on map
+      geojson.features.forEach((marker) => {
+        // create a DOM element for the marker
+        var el = document.createElement("div");
+        el.className = "marker ripple ";
+        // el.innerHTML = "<span class = 'ripple'></span>";
+        // "<svg width='10' height='10' viewBox='0 0 50 50' fill='none' xmlns='http://www.w3.org/2000/svg'><ellipse cx='25' cy='25' rx='25' ry='25' fill='#FF84DC'/></svg>";
+        // el.style.backgroundImage = "url(https://i.ibb.co/0Z7F6q6/DoT.png)";
+        // el.style.backgroundPosition = "center";
+        el.style.width = "6px";
+        el.style.height = "6px";
+
+        // el.addEventListener("click", function () {
+        //   window.alert(marker.properties.message);
+        // });
+
+        // add marker to map
+        new mapboxgl.Marker(el)
+          .setLngLat(marker.geometry.coordinates)
+          .addTo(map);
+      });
+
+      // // Calculate the distance in kilometers between route start/end point.
+      // var lineDistance = turf.length(route.features[0]);
+
+      // var arc = [];
+
+      // // Number of steps to use in the arc and animation, more steps means
+      // // a smoother arc and animation, but too many steps will result in a
+      // // low frame rate
+      // var steps = 300;
+
+      // // Draw an arc between the `origin` & `destination` of the two points
+      // for (var i = 0; i < lineDistance; i += lineDistance / steps) {
+      //   var segment = turf.along(route.features[0], i);
+      //   arc.push(segment.geometry.coordinates);
+      // }
+
+      // // Update the route with calculated arc coordinates
+      // route.features[0].geometry.coordinates = arc;
+
+      // Used to increment the value of the point measurement against the route.
+      var counter = 0;
+      map.on("load", function () {
+        // Add a source and layer displaying a point which will be animated in a circle.
+        //<a href="https://imgbb.com/"><img src="https://i.ibb.co/0Z7F6q6/DoT.png" alt="DoT" border="0"></a>
+        map.loadImage(
+          "https://i.ibb.co/0Z7F6q6/DoT.png",
+          function (error, image) {
+            if (error) throw error;
+            map.addImage("cat", image);
+          }
+        );
+        map.addSource("Dot", {
+          type: "geojson",
+          data: {
+            type: "FeatureCollection",
+            features: [
+              {
+                type: "Feature",
+                geometry: {
+                  type: "Point",
+                  coordinates: [0, 0],
+                },
+              },
+            ],
+          },
+        });
+        map.addLayer({
+          id: "Dot_img",
+          type: "symbol",
+          source: "Dot",
+          layout: {
+            "icon-image": "cat",
+            "icon-size": 0.05,
+          },
+        });
+        map.addSource("route", {
+          type: "geojson",
+          data: route,
+        });
+
+        map.addSource("point", {
+          type: "geojson",
+          data: point,
+        });
+
+          // map.addLayer({
+          //   id: "route",
+          //   source: "route",
+          //   type: "line",
+          //   paint: {
+          //     "line-width": 2,
+          //     "line-color": "#2B00FF",
+          //   },
+          // });
+
+        map.addLayer({
+          id: "point",
+          source: "point",
+          type: "symbol",
+          layout: {
+            "icon-image": "cat",
+            "icon-size": 0.05,
+          },
+        });
+
+        // function animate() {
+        //   var start =
+        //     route.features[0].geometry.coordinates[
+        //       counter >= steps ? counter - 1 : counter
+        //     ];
+        //   var end =
+        //     route.features[0].geometry.coordinates[
+        //       counter >= steps ? counter : counter + 1
+        //     ];
+        //   if (!start || !end) return;
+
+        //   // Update point geometry to a new position based on counter denoting
+        //   // the index to access the arc
+        //   point.features[0].geometry.coordinates =
+        //     route.features[0].geometry.coordinates[counter];
+
+        //   // Calculate the bearing to ensure the icon is rotated to match the route arc
+        //   // The bearing is calculated between the current point and the next point, except
+        //   // at the end of the arc, which uses the previous point and the current point
+        //   point.features[0].properties.bearing = turf.bearing(
+        //     turf.point(start),
+        //     turf.point(end)
+        //   );
+
+        //   // Update the source with this new data
+        //   map.getSource("point").setData(point);
+
+        //   // Request the next frame of animation as long as the end has not been reached
+        //   if (counter < steps) {
+        //     requestAnimationFrame(animate);
+        //   }
+
+        //   counter = counter + 1;
+        // }
+
+        document
+          .getElementById("replay")
+          .addEventListener("click", function () {
+            // Set the coordinates of the original point back to origin
+            point.features[0].geometry.coordinates = origin;
+
+            // Update the source layer
+            map.getSource("point").setData(point);
+
+            // Reset the counter
+            counter = 0;
+
+            // Restart the animation
+            animate(counter);
+          });
+
+        // Start the animation
+        animate(counter);
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+      var ctx = document.getElementById('myChart');
+      var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+          data: {
+              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+              datasets: [{
+                  label: 'Department Vise Statistice',
+                  data: [12, 19, 3, 5, 2, 3],
+                  backgroundColor: [
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)'
+                  ],
+                  borderColor: [
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)',
+                      'rgba(247, 24, 115, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true,
+                          fontSize: 24,
+                          fontFamily: 'Atkinson Hyperlegible',
+                          fontColor: '#FFFFFF',
+                          fontStyle: 'normal',
+                          fontWeight: 'bold',
+                      },
+                      gridLines: {
+                        display: false
+                      },
+                      barPercentage: 0.4,
+                      categoryPercentage: 1.0
+                  }],
+                  xAxes: [{
+                      ticks: {
+                          beginAtZero: true,
+                          fontSize: 0
+                      },
+                      gridLines: {
+                        display: false
+                      }
+                  }]
+              },
+              legend: {
+                labels: {
+                    // This more specific font property overrides the global property
+                    fontColor: 'white'
+                }
+            }
+          }
+      });
+      </script>
+  </body>
+</html>

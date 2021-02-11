@@ -15,19 +15,18 @@ deptList ={
     '06': 'BSBE',
     '07': 'CL',
     '08': 'EEE',
-    '21': ['Physics','EP'],
-    '22': ['Chemistry','CST'],
+    '21': 'Physics',
+    '22': 'Chemistry',
     '23': 'MNC',
-    '41': ['HSS','Development Studies'],
+    '41': 'HSS',
     '51': 'Energy',
     '52': 'Environment',
     '53': 'Nano-Tech',
     '54': 'Rural-Tech',
     '55': 'Linguistics',
-	'61': 'Data Science',
-	'62': 'FST-CL',
-	'63': 'Emobility',
-
+	'61': 'Others',
+	'62': 'Others',
+	'63': 'Others',
 }
 
 def deptIdentify(rollNumber):
@@ -37,20 +36,8 @@ def deptIdentify(rollNumber):
         program='UG'
     else:
         program="PG"
-    dept=None
     
-    if roll[4:6] != '21' and roll[4:6] != '22' and roll[4:6]!='41':
-        dept = deptList[roll[4:6]]
-    elif roll[4:6]=='41':
-        if roll[2:4]=='22':
-            dept=deptList[roll[4:6]][1]
-        else:
-            dept=deptList[roll[4:6]][0]
-    else:
-        if program == 'UG':
-            dept = deptList[roll[4:6]][1]
-        else:
-            dept = deptList[roll[4:6]][0]
+    dept = deptList[roll[4:6]]
 
     return dept
 
@@ -63,7 +50,7 @@ def csv_to_voter():
 		username = smart_str(row[0]).lower()
 		category = smart_str(row[1])
 		rollNumber = smart_str(row[2])
-		dept = deptIdentify(smart_str(row[2]))
+		dept = deptIdentify(smart_str(row[2]))  
 		vote_string1=""
 		vote_string2=""
 		vote_time = ""
