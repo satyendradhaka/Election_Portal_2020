@@ -8,6 +8,11 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js"></script>
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.css"
@@ -88,7 +93,7 @@
     </div>
     <!-- i will code here -->
     <div class="flex z-10 justify-around mt-40">
-      <div class="bg-pink-5000 z-10 w-1/5 py-10 px-10">
+      <div class="bg-pink-5000 z-10 w-1/4 font-bold py-10">
         <div class="text-white text-3xl z-10 font-bold text-center">Total Votes Count</div>
         <div class="flex z-10 justify-center space-x-2 py-5">
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
@@ -97,7 +102,7 @@
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
         </div>
       </div>
-      <div class="z-10 bg-blue-500 w-1/5 py-10 px-10">
+      <div class="z-10 bg-blue-500 w-1/4 font-bold py-10">
         <div class="text-white text-3xl z-10 font-bold text-center">Total Votes Count</div>
         <div class="flex z-10 justify-center space-x-2 py-5">
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
@@ -198,7 +203,7 @@
         };
         geojson.features.push(temp);
       });
-      console.log(geojson);
+      // console.log(geojson);
       //points on map
       geojson.features.forEach((marker) => {
         // create a DOM element for the marker
@@ -363,6 +368,29 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
+      var dicti = null;
+      function ajaxCall(){
+        $.ajax({
+          url: "{% url 'data' %}",
+          dataType: 'json',
+          method: 'GET',
+          success: function (data) {
+            dicti = data;
+            console.log(dicti);
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+      }
+      $(document).ready(function () {
+        setInterval(function(){ajaxCall();}, 1000);
+      });
+      // let temp_data = [];
+      // for (let index = 0; index < dicti["deptCount"].length; index++) {
+      //   const element = dicti["deptCount"][index];
+        
+      // }
       var ctx = document.getElementById('myChart');
       var myChart = new Chart(ctx, {
         type: 'horizontalBar',
@@ -418,12 +446,18 @@
                   }]
               },
               legend: {
-                labels: {
-                    // This more specific font property overrides the global property
-                    fontColor: 'white'
-                }
-            }
-          }
+                display: false,
+              },
+              title: {
+                  display: true,
+                  text: 'Department Vise Statistics',
+                  fontFamily: 'Atkinson Hyperlegible Bold',
+                  fontSize: 25,
+                  fontColor: '#FFFFFF',
+                  fontStyle: 'normal',
+                  fontWeight: 'bold',
+              }
+          },
       });
       </script>
   </body>
