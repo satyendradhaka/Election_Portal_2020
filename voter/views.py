@@ -141,6 +141,7 @@ def getMeSelectedCandidates(request):
     voter = Voter.objects.get(username = request.user.username)
     prog = voter.get_category_display()
     dicti=request.session.get('option')
+    girl = request.session.get('girls',True)
     selectedCandidates = []
     if not dicti['vp'] == 'NOTA':
         selectedCandidates.append(('VP',Contestant.objects.get(pk=dicti['vp']),'vp'))
@@ -184,15 +185,16 @@ def getMeSelectedCandidates(request):
             if dicti['bsen'][key] is not None:
                 choice.append((key,Contestant.objects.get(pk=dicti['bsen'][key])))
         selectedCandidates.append((prog[:2],choice,'bsen'))
-    if dicti['gsen']['nota']:
-        selectedCandidates.append(('GS','NOTA','gsen'))
-    else:
-        choice = []
-        for i in range(3):
-            key = 'choice'+str(i+1)
-            if dicti['gsen'][key] is not None:
-                choice.append((key,Contestant.objects.get(pk=dicti['gsen'][key])))
-        selectedCandidates.append(('GS',choice,'gsen'))
+    if girl:
+        if dicti['gsen']['nota']:
+            selectedCandidates.append(('GS','NOTA','gsen'))
+        else:
+            choice = []
+            for i in range(3):
+                key = 'choice'+str(i+1)
+                if dicti['gsen'][key] is not None:
+                    choice.append((key,Contestant.objects.get(pk=dicti['gsen'][key])))
+            selectedCandidates.append(('GS',choice,'gsen'))
         
     return selectedCandidates
 
@@ -341,9 +343,11 @@ def vote(request,post_got="default"):
         request.session['total_no'] = 9
         # print(voter.category)
         dicti['gsen']['done'] = True
+        request.session['girls'] = False
         request.session['option']=dicti
     else:
         request.session['total_no'] = 10
+        request.session['girls'] = True
     post= None
     if dicti['vp'] is None:
         post = 'vp'

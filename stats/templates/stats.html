@@ -8,6 +8,11 @@
       name="viewport"
       content="initial-scale=1,maximum-scale=1,user-scalable=no"
     />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js"></script>
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.css"
@@ -22,12 +27,13 @@
       body {
         margin: 0;
         padding: 0;
+        background-color: #FFF3F0;
       }
       #map {
         position: absolute;
         top: 0;
         bottom: 0;
-        width: 100%;
+        width: 50%;
       }
       .ripple {
         /* margin: auto; */
@@ -80,9 +86,21 @@
          font-style: normal;
         font-weight: bold;
       }
+      .border-pink{
+        border: 5px solid #F71873;
+        box-sizing: border-box;
+        border-radius: 12px;
+      }
+      .border-pink{
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)), #2E2F2F;
+        border: 3px solid #F71873;
+        box-sizing: border-box;
+        border-radius: 10px;
+      }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
     
+<<<<<<< HEAD
     <div class="flex z-10 justify-around">
       <div class="z-10 w-1/6 font-bold flex pt-8 justify-center text-center align-middle content-center justify-items-center z-50 align-items-center justify-content-center text-align-center text-white text-7xl">Gymkhana Elections 2021</div>
     </div>
@@ -104,17 +122,74 @@
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+=======
+    <div class="flex z-10">
+      <div class="sm:w-1/2">
+        <div id="map"></div>
+      </div>
+      <div class="z-10 block px-12 sm:pr-0 h-screen bg-black sm:pl-4 lg:px-6 xl:px-12 sm:w-1/2 space-y-8 mt-0 pt-16">
+          <h3 class="text-7xl place-self-center w-full text-center text-white font-bold">Gymkhana <br> Elections 2021</h3>
+          <!-- <h3 class="text-7xl place-self-center w-full text-center text-white font-bold"></h3> -->
+          <div class="flex text-white font-ah justify-center space-x-10">
+            <div id="count" class="cursor-pointer underline">Vote Count</div>
+            <div id="hostel" class="cursor-pointer">Hostel Wise</div>
+            <div id="branch" class="cursor-pointer">Branch Wise</div>
+          </div>
+          <div class="hidden branch z-50 bg-black w-4/5">
+            <canvas id="myChart" width="40" height="20"></canvas>
+          </div>
+          <div class="space-y-2">
+          <div class="count border-pink w-4/6 z-10 font-bold py-4 mx-auto">
+            <div class="text-white text-2xl z-10 font-bold text-center">Total Votes Count</div>
+            <div class="flex z-10 justify-center space-x-2 py-5">
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">4</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">6</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+            </div>
+          </div>
+          <div class="count z-10 border-pink w-4/6 z-10 py-4 flex mx-auto">
+            <div class=" w-1/2">
+            <div class="text-gray-300 opacity-30 text-base z-10 font-ah text-center">Leading Hostel</div>
+             <div class="text-white text-2xl z-10 font-bold text-center">Umiam</div>
+            </div>
+            <div class=" w-1/2">
+            <div class="text-white text-gray-300 opacity-30 text-base z-10 font-ah text-center">Leading Department</div>
+              <div class="text-white text-2xl z-10 font-bold text-center">MnC</div>
+            </div>
+          </div>
+          <div class="count z-10 border-pink w-4/6 z-10 font-bold py-4 mx-auto">
+            <div class="text-white text-2xl z-10 font-bold text-center">Voting Percentage</div>
+            <div class="flex z-10 justify-center space-x-2 py-5">
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">3</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">9</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">%</div>
+            </div>
+          </div>
+>>>>>>> 5f91f4ec767e0371e737863d7fd7bdcf7dd29edd
         </div>
       </div>
     </div>
-    <div class="flex z-10 justify-around mt-40">
-      <div class="z-50 bg-black w-4/5">
-        <canvas id="myChart" width="40" height="20"></canvas>
+    <!-- <div class="count border-pink w-4/6 z-10 font-bold py-4 mx-auto">
+      <div class="text-white text-2xl z-10 font-bold text-center">Leading Hostel</div>
+      <div class="text-white text-2xl z-10 font-bold text-center">Umiam</div>
       </div>
-    </div>
+      <div class="text-white text-2xl z-10 font-bold text-center">Leading Department</div>
+      <div class="text-white text-2xl z-10 font-bold text-center">MnC</div>
+      </div>
+    </div> -->
 
-
-    <div id="map"></div>
+    <!-- <div class="flex z-10 justify-around">
+      
+    </div> -->
+    <!-- i will code here -->
+    <!-- <div class="flex z-10 justify-around mt-40">
+      
+      
+    </div> -->
+    <!-- <div class="flex z-10 justify-around mt-40">
+      
+    </div> -->
 
     <div class="overlay hidden">
       <button id="replay">Replay</button>
@@ -130,7 +205,7 @@
         container: "map",
         style: "mapbox://styles/shubhamgandhi65/ckjsx5kgw73wx19oa741og6yy",
         center: [ 78.9629, 20.5937],
-        zoom: 2.5,
+        zoom: 4,
       });
 
       // San Francisco
@@ -198,7 +273,7 @@
         };
         geojson.features.push(temp);
       });
-      console.log(geojson);
+      // console.log(geojson);
       //points on map
       geojson.features.forEach((marker) => {
         // create a DOM element for the marker
@@ -363,32 +438,13 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
-      var ctx = document.getElementById('myChart');
-      var myChart = new Chart(ctx, {
-        type: 'horizontalBar',
-          data: {
-              labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-              datasets: [{
-                  label: 'Department Vise Statistice',
-                  data: [12, 19, 3, 5, 2, 3],
-                  backgroundColor: [
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)'
-                  ],
-                  borderColor: [
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)',
-                      'rgba(247, 24, 115, 1)'
-                  ],
-                  borderWidth: 1
-              }]
+      function ajaxCall(){
+        $.ajax({
+          url: "{% url 'data' %}",
+          dataType: 'json',
+          method: 'GET',
+          success: function (data) {
+            setDeptCount(data)
           },
           options: {
               scales: {
@@ -427,7 +483,173 @@
             text: 'Department Vise Statistics'
         }
           }
+        });
+      }
+      $(document).ready(function () {
+        ajaxCall();
+        $("#branch").click(function (e) {
+          e.preventDefault();
+          $('.count').each(function(i, obj) {
+              $(this).addClass("hidden");
+          });
+          $('.branch').each(function(i, obj) {
+            $(this).removeClass("hidden");
+          });
+        });
+        $("#count").click(function (e) { 
+          e.preventDefault();
+          $('.branch').each(function(i, obj) {
+              $(this).addClass("hidden");
+          });
+          $('.count').each(function(i, obj) {
+            $(this).removeClass("hidden");
+          });
+        });
       });
+      
+      let vote_percent = [];
+      let graph_labels = [];
+      let tots = [];
+      function setDeptCount(dicti) {
+        console.log(dicti["deptCount"]);
+        vote_percent = [];
+        graph_labels = [];
+        tots = [];
+        for (var key in dicti["deptCount"]) {
+            // check if the property/key is defined in the object itself, not in parent
+            if (dicti["deptCount"].hasOwnProperty(key)) {           
+                // console.log(key, dicti["deptCount"][key]);
+                vote_percent.push(dicti["deptCount"][key]["count"]);
+                graph_labels.push(key);
+                tots.push(dicti["deptCount"][key]["total"]);
+            }
+        }
+        console.log(tots);
+        // console.log(graph_labels);
+        // console.log(vote_percent);
+      
+        var ctx = document.getElementById('myChart');
+        var myChart = new Chart(ctx, {
+          type: 'horizontalBar',
+            data: {
+                labels: graph_labels,
+                datasets: [{
+                    label: 'Department Wise Statistics',
+                    data: vote_percent,
+                    backgroundColor: [
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                    ],
+                    borderColor: [
+                    'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 24,
+                            fontFamily: 'Atkinson Hyperlegible',
+                            fontColor: '#FFFFFF',
+                            fontStyle: 'normal',
+                            fontWeight: 'bold',
+                        },
+                        gridLines: {
+                          display: false
+                        },
+                        barPercentage: 0.4,
+                        categoryPercentage: 1.0
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 0,
+                            min: 0,
+                            max: 100,
+                            callback: function (value, index, values) {
+                              return (value / tots[index] * 100).toFixed(0) + '%';
+                            },
+                          },
+                        scaleLabel: {
+                          display: true,
+                          labelString: 'Percentage',
+                        },
+                        gridLines: {
+                          display: false
+                        }
+                    }]
+                },
+                "animation": {
+                "duration": 1,
+                  "onComplete": function () {
+                    var chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+                    
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'default';
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                      var meta = chartInstance.controller.getDatasetMeta(i);
+                      meta.data.forEach(function (bar, index) {
+                        var data = dataset.data[index];
+                        ctx.fillText(data, bar._model.x, bar._model.y - 1);
+                      });
+                    });
+                  }
+              },
+                legend: {
+                  display: false,
+                },
+                tooltips: {
+                  enabled: false,
+                },
+                title: {
+                    display: true,
+                    text: 'Department Vise Statistics',
+                    fontFamily: 'Atkinson Hyperlegible Bold',
+                    fontSize: 25,
+                    fontColor: '#FFFFFF',
+                    fontStyle: 'normal',
+                    fontWeight: 'bold',
+                }
+            },
+        });
+      }
       </script>
   </body>
 </html>
