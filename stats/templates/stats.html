@@ -27,12 +27,13 @@
       body {
         margin: 0;
         padding: 0;
+        background-color: #FFF3F0;
       }
       #map {
         position: absolute;
         top: 0;
         bottom: 0;
-        width: 100%;
+        width: 50%;
       }
       .ripple {
         /* margin: auto; */
@@ -85,41 +86,86 @@
          font-style: normal;
         font-weight: bold;
       }
+      .border-pink{
+        border: 5px solid #F71873;
+        box-sizing: border-box;
+        border-radius: 12px;
+      }
+      .border-pink{
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)), #2E2F2F;
+        border: 3px solid #F71873;
+        box-sizing: border-box;
+        border-radius: 10px;
+      }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
     
-    <div class="flex z-10 justify-around">
-      <div class="z-10 w-1/6 font-bold flex pt-8 justify-center text-center align-middle content-center justify-items-center z-50 align-items-center justify-content-center text-align-center text-white text-7xl">Gymkhana Elections 2021</div>
+    <div class="flex z-10">
+      <div class="sm:w-1/2">
+        <div id="map"></div>
+      </div>
+      <div class="z-10 block px-12 sm:pr-0 h-screen bg-black sm:pl-4 lg:px-6 xl:px-12 sm:w-1/2 space-y-8 mt-0 pt-16">
+          <h3 class="text-7xl place-self-center w-full text-center text-white font-bold">Gymkhana <br> Elections 2021</h3>
+          <!-- <h3 class="text-7xl place-self-center w-full text-center text-white font-bold"></h3> -->
+          <div class="flex text-white font-ah justify-center space-x-10">
+            <div id="count" class="cursor-pointer underline">Vote Count</div>
+            <div id="hostel" class="cursor-pointer">Hostel Wise</div>
+            <div id="branch" class="cursor-pointer">Branch Wise</div>
+          </div>
+          <div class="hidden branch z-50 bg-black w-4/5">
+            <canvas id="myChart" width="40" height="20"></canvas>
+          </div>
+          <div class="space-y-2">
+          <div class="count border-pink w-4/6 z-10 font-bold py-4 mx-auto">
+            <div class="text-white text-2xl z-10 font-bold text-center">Total Votes Count</div>
+            <div class="flex z-10 justify-center space-x-2 py-5">
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">4</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">6</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
+            </div>
+          </div>
+          <div class="count z-10 border-pink w-4/6 z-10 py-4 flex mx-auto">
+            <div class=" w-1/2">
+            <div class="text-gray-300 opacity-30 text-base z-10 font-ah text-center">Leading Hostel</div>
+             <div class="text-white text-2xl z-10 font-bold text-center">Umiam</div>
+            </div>
+            <div class=" w-1/2">
+            <div class="text-white text-gray-300 opacity-30 text-base z-10 font-ah text-center">Leading Department</div>
+              <div class="text-white text-2xl z-10 font-bold text-center">MnC</div>
+            </div>
+          </div>
+          <div class="count z-10 border-pink w-4/6 z-10 font-bold py-4 mx-auto">
+            <div class="text-white text-2xl z-10 font-bold text-center">Voting Percentage</div>
+            <div class="flex z-10 justify-center space-x-2 py-5">
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">3</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">9</div>
+              <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">%</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- <div class="count border-pink w-4/6 z-10 font-bold py-4 mx-auto">
+      <div class="text-white text-2xl z-10 font-bold text-center">Leading Hostel</div>
+      <div class="text-white text-2xl z-10 font-bold text-center">Umiam</div>
+      </div>
+      <div class="text-white text-2xl z-10 font-bold text-center">Leading Department</div>
+      <div class="text-white text-2xl z-10 font-bold text-center">MnC</div>
+      </div>
+    </div> -->
+
+    <!-- <div class="flex z-10 justify-around">
+      
+    </div> -->
     <!-- i will code here -->
-    <div class="flex z-10 justify-around mt-40">
-      <div class="bg-pink-5000 z-10 w-1/4 font-bold py-10">
-        <div class="text-white text-3xl z-10 font-bold text-center">Total Votes Count</div>
-        <div class="flex z-10 justify-center space-x-2 py-5">
-          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
-          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
-          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
-          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
-        </div>
-      </div>
-      <div class="z-10 bg-blue-500 w-1/4 font-bold py-10">
-        <div class="text-white text-3xl z-10 font-bold text-center">Voters Online</div>
-        <div class="flex z-10 justify-center space-x-2 py-5">
-          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
-          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
-          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
-          <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
-        </div>
-      </div>
-    </div>
-    <div class="flex z-10 justify-around mt-40">
-      <div class="z-50 bg-black w-4/5">
-        <canvas id="myChart" width="40" height="20"></canvas>
-      </div>
-    </div>
-
-
-    <div id="map"></div>
+    <!-- <div class="flex z-10 justify-around mt-40">
+      
+      
+    </div> -->
+    <!-- <div class="flex z-10 justify-around mt-40">
+      
+    </div> -->
 
     <div class="overlay hidden">
       <button id="replay">Replay</button>
@@ -135,7 +181,7 @@
         container: "map",
         style: "mapbox://styles/shubhamgandhi65/ckjsx5kgw73wx19oa741og6yy",
         center: [ 78.9629, 20.5937],
-        zoom: 2.5,
+        zoom: 4,
       });
 
       // San Francisco
@@ -386,6 +432,24 @@
       }
       $(document).ready(function () {
         ajaxCall();
+        $("#branch").click(function (e) {
+          e.preventDefault();
+          $('.count').each(function(i, obj) {
+              $(this).addClass("hidden");
+          });
+          $('.branch').each(function(i, obj) {
+            $(this).removeClass("hidden");
+          });
+        });
+        $("#count").click(function (e) { 
+          e.preventDefault();
+          $('.branch').each(function(i, obj) {
+              $(this).addClass("hidden");
+          });
+          $('.count').each(function(i, obj) {
+            $(this).removeClass("hidden");
+          });
+        });
       });
       
       let vote_percent = [];
