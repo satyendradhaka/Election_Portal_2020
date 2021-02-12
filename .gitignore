@@ -6,4 +6,5 @@ migrations/
 
 #oauth secerts
 voter.csv
-contestant.csv
+
+*.pyc

@@ -1,14 +1,6 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//   var elems = document.querySelectorAll(".slider");
-//   var instances = M.Slider.init(elems, {
-//     indicators: true,
-//     height: 300,
-//   });
-//
-//   document.getElementById("default_tab").idName = "";
-// });
 document.getElementById("default_tab").click();
 function openDesignation(evt, designationName) {
+  console.log(designationName);
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("designation_tabcontent");
   for (i = 0; i < tabcontent.length; i++) {

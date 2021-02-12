@@ -1,128 +1,382 @@
 # from typing import final
+from django.db.models.expressions import Random
 from django.shortcuts import render
 from voter.models import Voter
 from django.db.models import Q
-
+from django.http import JsonResponse
+import random
 # Create your views here.
+deptList =[
+    'CSE',
+    'ECE',
+    'ME',
+    'Civil',
+    'Design',
+    'BSBE',
+    'CL',
+    'EEE',
+    'Physics',
+    'Chemistry',
+    'MNC',
+    'HSS',
+    'Energy',
+    'Environment',
+    'Nano-Tech',
+    'Rural-Tech',
+    'Linguistics',
+]
 
-def pollStats(request):
 
-    #overall voted percentage
-    total = Voter.objects.all().count()
-    voted = Voter.objects.filter(final_submit = True).count()
-    print(voted,'-',total)
+def voteData(request):
+    deptCount = {}
+    jagruk = 0
+    data = {}
+    for i in deptList:
+        total = Voter.objects.filter(dept = i).count()
+        count = Voter.objects.filter(Q(dept=i) & Q(final_submit=True)).count()
+        deptCount[i] = {'count':count,'total':total,'percent':(count*100)/total}
+        if deptCount[i]['percent'] > jagruk:
+            jagruk = deptCount[i]['percent']  
+            data['jagruk']=i
+    defaultCoords=25
+    data['deptCount'] = deptCount
+    data['totalVoted'] = Voter.objects.filter(final_submit = True).count()
+    data['totalVoters'] = Voter.objects.all().count()
+    if data['totalVoted'] <=25:
+        defaultCoords=data['totalVoted']
+    data['coords'] = random.sample([[coords[0].x,coords[0].y] for coords in Voter.objects.filter(final_submit=True).values_list('voter_location')], defaultCoords)
+    print(data['coords'])
+    return JsonResponse(data)
 
-    # UG PG voted students count
-    totalUG = Voter.objects.filter(Q(category='0')|Q(category='1')).count() 
-    totalPG = Voter.objects.filter(Q(category='2')|Q(category='3')).count() 
-    ugVoted = Voter.objects.filter( ( Q(category='0') | Q(category='1') ) & Q(final_submit=True) ).count()
-    pgVoted = Voter.objects.filter( ( Q(category='3') | Q(category='2') ) & Q(final_submit=True) ).count()
-    print(totalUG,'-',totalPG,'-',ugVoted,'-',pgVoted)
 
-    # Girls vote count
-    totalGirls = Voter.objects.filter(Q(category='1') | Q(category='3')).count()
-    girlsVoted = Voter.objects.filter( ( Q(category='1') | Q(category='3') ) & Q(final_submit=True) ).count()
-    ugGirls = Voter.objects.filter(category='1').count()
-    pgGirls = Voter.objects.filter(category='3').count()
-    ugGirlsVoted = Voter.objects.filter( Q(category='1') & Q(final_submit=True)  ).count()
-    pgGirlsVoted = Voter.objects.filter( Q(category='3') & Q(final_submit=True)  ).count()
-    print(totalGirls, girlsVoted, ugGirlsVoted, pgGirlsVoted)
-    return render(request,'stats.html',{'total': total, 'voted': voted, 'totalUG': totalUG, 'totalPG': totalPG, 'ugVoted': ugVoted, 'pgVoted': pgVoted, 'totalGirls': totalGirls, 'girlsVoted': girlsVoted, 'ugGirlsVoted': ugGirlsVoted, 'pgGirlsVoted': pgGirlsVoted, 'ugGirls': ugGirls, 'pgGirls': pgGirls})
+def stats(request):
+    return render(request,'stats.html',{})
 
-def ugDeptStats(request):
-    deptCount = {
-        'CSE': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'MNC': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'Design': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'ME': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'CST': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'CL': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'EP': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'BT': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'CE': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'ECE': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'EEE': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'BSBE': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
-        'EEE': {
-            'total': 0,
-            'totalVoted': 0,
-            'girls': 0,
-            'girslVoted': 0
-        },
 
-    }
 
-    for dept, count in deptCount.items():
-        print(dept)
-        if dept =='MNC':
-            dept='MA'
-        if dept == 'Design':
-            dept = 'DD'
-        count['total'] = Voter.objects.filter(( Q(category='0') | Q(category='1') ) & Q(dept=dept) ).count()
-        count['totalVoted'] = Voter.objects.filter(( Q(category='0') | Q(category='1') ) & Q(dept=dept) & Q(final_submit=True) ).count()
-        count['girls'] = Voter.objects.filter(Q(category='1') & Q(dept=dept) ).count()
-        count['girlsVoted'] = Voter.objects.filter(Q(category='1') & Q(dept=dept) & Q(final_submit=True)).count()
-        print(count)
-    # print(deptCount)
-    return render(request,'stats.html', deptCount)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

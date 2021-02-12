@@ -32,7 +32,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7*627ja$7))_#l2f3rv^^#y+^f87o14t#do2yl9!(x$1$vc1wo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -96,21 +96,17 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = 'electioniitg.wsgi.application'
 
-# Database
+# Database 
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
    'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postgres',
-        # 'NAME': 'postg',
+        'NAME': 'election',
         'USER': 'election',
-        #'USER': 'postgres',
-       #'PASSWORD': '1saket@postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
-        # 'PORT': '5433',
     }
 }
 
@@ -167,7 +163,7 @@ AUTH_ADFS = {
     "CLIENT_ID": "28024e5d-ba48-4a7a-bf64-b026271cce73",
     "RELYING_PARTY_ID": "api://85ad6626-12c9-4c0d-a730-c07f81cd09c9",
     "AUDIENCE": "api://85ad6626-12c9-4c0d-a730-c07f81cd09c9",
-    "LOGIN_EXEMPT_URLS": ["api/", "public/","admin/",""],
+    "LOGIN_EXEMPT_URLS": [""],
 }
 
 # Configure django to redirect users to the right URL for login
