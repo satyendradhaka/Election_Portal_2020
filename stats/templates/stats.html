@@ -88,7 +88,7 @@
     </div>
     <!-- i will code here -->
     <div class="flex z-10 justify-around mt-40">
-      <div class="bg-pink-5000 z-10 w-1/5 py-10 px-10">
+      <div class="bg-pink-5000 z-10 w-1/4 font-bold py-10">
         <div class="text-white text-3xl z-10 font-bold text-center">Total Votes Count</div>
         <div class="flex z-10 justify-center space-x-2 py-5">
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
@@ -97,7 +97,7 @@
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
         </div>
       </div>
-      <div class="z-10 bg-blue-500 w-1/5 py-10 px-10">
+      <div class="z-10 bg-blue-500 w-1/4 font-bold py-10">
         <div class="text-white text-3xl z-10 font-bold text-center">Total Votes Count</div>
         <div class="flex z-10 justify-center space-x-2 py-5">
           <div class="bg-white text-black px-8 py-6 text-3xl rounded-md">1</div>
@@ -419,10 +419,13 @@
               },
               legend: {
                 labels: {
-                    // This more specific font property overrides the global property
-                    fontColor: 'white'
+                    display: 
                 }
-            }
+            },
+            title: {
+            display: true,
+            text: 'Department Vise Statistics'
+        }
           }
       });
       </script>
