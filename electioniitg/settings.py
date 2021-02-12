@@ -96,7 +96,7 @@ AUTHENTICATION_BACKENDS = (
 
 WSGI_APPLICATION = 'electioniitg.wsgi.application'
 
-# Database
+# Database 
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
@@ -166,7 +166,7 @@ AUTH_ADFS = {
     "CLIENT_ID": "28024e5d-ba48-4a7a-bf64-b026271cce73",
     "RELYING_PARTY_ID": "api://85ad6626-12c9-4c0d-a730-c07f81cd09c9",
     "AUDIENCE": "api://85ad6626-12c9-4c0d-a730-c07f81cd09c9",
-    "LOGIN_EXEMPT_URLS": ["api/", "public/","admin/",""],
+    "LOGIN_EXEMPT_URLS": [""],
 }
 
 # Configure django to redirect users to the right URL for login

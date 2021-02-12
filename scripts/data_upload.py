@@ -72,11 +72,11 @@ def csv_to_contestants():
 	reader = csv.reader(csvfile, quoting=csv.QUOTE_ALL)
 	for i, row in enumerate(reader):
 		print("contestant ",i+1)
-		contestant=Contestant(name=row[0],email = row[2], post = row[1], agenda1 = row[3], agenda2 = row[4], agenda3 = row[5], agenda4 = row[6], pic = "contestants/" + row[7],  random_suppling = 0)
+		contestant=Contestant(name=row[0],email = row[1], post = row[2], rollNumber = row[3], video=row[4], tagline = row[5],agenda1 = row[6], agenda2 = row[7], agenda3 = row[8], agenda4 = row[9], pic = "contestants/" + row[3]+".jpg", agendaPDF= "agenda/" + row[3]+".pdf", random_suppling = 0)
 		contestant.save()
 
 def run():
-	Voter.objects.all().delete()
+	# Voter.objects.all().delete()
 	Contestant.objects.all().delete()
-	csv_to_voter()
+	# csv_to_voter()
 	csv_to_contestants()	
