@@ -161,15 +161,24 @@
     </header>
 
     <hr />
+    <style>
+        .cropped {
+          width: 100 wh; /* width of container */
+          height: 512px; /* height of container */
+          object-fit: cover;
+          object-position: 20% 10%;
+          /* border: 5px solid black; */
+        }
+    </style>
 <!-- Python code -->
+    
     <div class="fade" style="margin-top: 10vh">
-      <div >
+      <!-- <div class=" " >
         <img
-          src="{% static 'images/image_c.jpg' %}"
+          src="https://i.ibb.co/b7SSkkh/image-a.png"
           alt=""
-          class="w-full h-100 sm:h-full object-fit object-center"
         />
-      </div>
+      </div> -->
       <div>
         <img
           src="{% static 'images/image_c.jpg' %}"
@@ -368,7 +377,7 @@
         <svg width="61" height="44" viewBox="0 0 61 44" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12.8373 0.778076H27.8262L15.6389 21.8435L19.1794 28.6417L35.4194 0.778076H48.2604L60.5586 22.1268L48.119 43.8197H33.1062L45.5225 22.3391L41.7692 16.0131L25.4816 43.8197H12.853L0.558594 21.8416L12.8373 0.778076Z" fill="white"/>
           </svg>          
-        <span class="ml-3 text-xl">Gymkhana Elections</span>
+        <span class="ml-3 text-xl">IITG Gymkhana Elections</span>
       </a>
       <p class="text-sm text-gray-400 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0 mt-4">© 2021
         <a href="https://www.facebook.com/swciitg/" class="text-gray-500 ml-1" target="_blank" rel="noopener noreferrer">@students-web-commitee</a>
