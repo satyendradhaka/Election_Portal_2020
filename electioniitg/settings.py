@@ -32,7 +32,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7*627ja$7))_#l2f3rv^^#y+^f87o14t#do2yl9!(x$1$vc1wo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -103,13 +103,13 @@ DATABASES = {
    'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         # 'NAME': 'postgres',
-        'NAME': 'postg',
-        'USER': 'postgres',
+        'NAME': 'election',
+        'USER': 'election',
         # 'PASSWORD': '1saket@postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
         # 'PORT': '5432',
-        'PORT': '5433',
+        'PORT': '5432',
     }
 }
 
@@ -149,13 +149,15 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-STATIC_URL = 'election/static/'
+
+STATIC_URL = '/election/static/'
 # STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 # MEDIA_ROOT = '/home/dhaka/projects/swc/Election_Portal_2020/media'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
-MEDIA_URL = 'election/images/'
+
+MEDIA_URL = '/election/images/'
 
 #recaptcha secrets
 RECAPTCHA_PUBLIC_KEY = '6Ld6GA4aAAAAAOqs7W7tVW4DayvPyCzHzbBZNGiB'
