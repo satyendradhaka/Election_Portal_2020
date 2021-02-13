@@ -26,46 +26,44 @@ deptList =[
     'Linguistics',
 ]
 
-
-def voteData(request):
+def deptFetchData():
     deptCount = {}
-    jagruk = 0
+    jagrukDept = 0
     data = {}
     for i in deptList:
         total = Voter.objects.filter(dept = i).count()
         count = Voter.objects.filter(Q(dept=i) & Q(final_submit=True)).count()
         deptCount[i] = {'count':count,'total':total,'percent':(count*100)/total}
-        if deptCount[i]['percent'] > jagruk:
-            jagruk = deptCount[i]['percent']  
-            data['jagruk']=i
-    defaultCoords=25
+        if deptCount[i]['percent'] > jagrukDept:
+            jagrukDept = deptCount[i]['percent']  
+            data['jagrukDept']=i
     data['deptCount'] = deptCount
-    data['totalVoted'] = Voter.objects.filter(final_submit = True).count()
-    data['totalVoters'] = Voter.objects.all().count()
-    if data['totalVoted'] <=25:
-        defaultCoords=data['totalVoted']
+    return data
+
+def totalVotersData():
+    data = {}
+    defaultCoords=25
+    totalVoted = Voter.objects.filter(final_submit = True).count()
+    data['totalVoted'] = [ i for i in f'{totalVoted:04}']
+    totalVoters = Voter.objects.all().count()
+    if totalVoted <=25:
+        defaultCoords=totalVoted
+    percent = (totalVoted*100)//totalVoters
+    data['votePercent'] = [ i for i in f'{percent:02}']
     data['coords'] = random.sample([[coords[0].x,coords[0].y] for coords in Voter.objects.filter(final_submit=True).values_list('voter_location')], defaultCoords)
-    print(data['coords'])
+    return data    
+
+
+def voteData(request):
+    data = {}
+    data.update(totalVotersData())
+    data.update(deptFetchData())
+    # print(data['coords'])
     return JsonResponse(data)
 
 
 def stats(request):
     return render(request,'stats.html',{})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
