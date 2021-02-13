@@ -65,3 +65,9 @@
 .custom-li {
   min-width: 50%;
 }
+
+@media (max-width: 1024px) {
+  .h-screen-60 {
+    height: 75vh;
+  }
+}

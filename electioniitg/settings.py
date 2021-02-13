@@ -102,9 +102,12 @@ WSGI_APPLICATION = 'electioniitg.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'election',
-        'USER': 'election',
-        'PASSWORD': 'postgres',
+        # 'NAME': 'election',
+        'NAME': 'postgres',
+        # 'USER': 'election',
+        'USER': 'postgres',
+        # 'PASSWORD': 'postgres',
+        'PASSWORD': '1saket@postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
