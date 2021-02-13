@@ -58,6 +58,23 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
+HOSTELS = (
+        ('0','HOSTEL NOT ALLOTED'),
+        ('1','BRAHMAPUTRA'),
+        ('2','DHANSIRI'),
+        ('3','DIBANG'),
+        ('4','DIHING'),
+        ('5','DISANG'),
+        ('6','KAMENG'),
+        ('7','KAPILI'),
+        ('8','LOHIT'),
+        ('9','MANAS'),
+        ('10','MARRIED SCHOLARS HOSTEL'),
+        ('11','SIANG'),
+        ('12','SUBHANSIRI'),
+        ('13','UMIAM'),
+        ('14','BARAK'),
+)
 @login_required
 @is_valid
 def verification(request):
@@ -82,13 +99,20 @@ def verification(request):
         return redirect('captcha')
     if not request.method=='POST':
         form = FormWithCaptcha()
-        return render(request, 'verification.html', {'form': form,'rollNumber':rollNumber,'dept':dept,'year':y,'voter_id':uid[0].upper()})
+        return render(request, 'verification.html', {'form': form,'rollNumber':rollNumber,'dept':dept,'year':y,'voter_id':uid[0].upper(),'hostel':HOSTELS})
         
     form = FormWithCaptcha(request.POST)
+    voter.hostel = request.POST.get('hostel_data','0')
+    voter.save()
+    print(voter.get_hostel_display())
     if form.is_valid():
         print('u are not a robot')
         request.session['human']= True
         return redirect('vote')
     else:
         return redirect('captcha')
-    return render(request, 'verification.html', {'form': form,'rollNumber':rollNumber,'dept':dept,'year':y,'voter_id':uid[0].upper()})
+    
+    
+    return render(request, 'verification.html', {'form': form,'rollNumber':rollNumber,'dept':dept,'year':y,'voter_id':uid[0].upper(),'hostel':HOSTELS})
+
+

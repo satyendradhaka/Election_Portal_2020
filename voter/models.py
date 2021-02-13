@@ -10,10 +10,28 @@ class Voter(models.Model):
                 ('1','UG-Girl'),
                 ('2','PG-Boy'),
                 ('3','PG-Girl'),)
+    HOSTELS = (
+        ('0','HOSTEL NOT ALLOTED'),
+        ('1','BRAHMAPUTRA'),
+        ('2','DHANSIRI'),
+        ('3','DIBANG'),
+        ('4','DIHING'),
+        ('5','DISANG'),
+        ('6','KAMENG'),
+        ('7','KAPILI'),
+        ('8','LOHIT'),
+        ('9','MANAS'),
+        ('10','MARRIED SCHOLARS HOSTEL'),
+        ('11','SIANG'),
+        ('12','SUBHANSIRI'),
+        ('13','UMIAM'),
+        ('14','BARAK'),
+    )
     category = models.CharField(max_length=1,choices=CATEGORY)
     final_submit = models.BooleanField(default=False) #0 if false 1 if true
     rollNumber = models.IntegerField(default=0)
     dept = models.CharField(max_length=50, default='CSE')
+    hostel = models.CharField(max_length=2,default='0',choices=HOSTELS)
     vote_string1 = models.CharField(max_length=5000, default='')
     vote_string2 = models.CharField(max_length=5000, default='') 
     vote_time = models.CharField(max_length=100, default='')
@@ -47,6 +65,7 @@ class Contestant(models.Model):
     agenda3 = models.CharField(max_length=1000)
     agenda4 = models.CharField(max_length=1000)
     vote_count = models.IntegerField(default=0)
+    rollNumber = models.IntegerField(default=0)
     pic = models.CharField(max_length=1000)
     random_suppling = models.IntegerField(default=0)
     tagline = models.CharField(max_length=1000, blank=True, default="Technology is my Middle Name!")

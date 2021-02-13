@@ -44,8 +44,26 @@
             transform: rotate(360deg);
         }
         }
-    </style>
 
+        .select-wrapper input.select-dropdown:focus {
+            border-bottom: 1px solid #2E2F2F !important;
+            }
+        .dropdown-content li>a, .dropdown-content li>span {
+            font-size: 16px;
+            color: #2E2F2F !important;
+            display: block;
+            line-height: 22px;
+            padding: 14px 16px;
+            }
+    </style>
+        <script>
+            
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+        </script>
+
+       
        
       <div
         class=" container w-full mx-auto  flex flex-wrap p-5 md:flex-row items-center relative justify-between"
@@ -77,15 +95,25 @@
                 </div>
             </div>
             <!-- <div class="flex text-align-center"> -->
-                <div class="details font-ah -mt-36 sm:-mt-12 md:-mt-2 xl:mt-16 ml-0 pt-0 2xl:-pt-5 space-y-2 text-gray-600 justify-center">
+                <div class="details font-ah -mt-36 sm:-mt-8 md:-mt-2 xl:mt-8 ml-0 pt-0 2xl:-pt-5 space-y-2 text-gray-600 justify-center">
                     <p class=" text-4xl text-black-50 font-bold">{{request.user.first_name}}</p>
                     <p class=" text-2xl">Roll Number : {{rollNumber}} </p>
                     <p class=" text-xl lg:text-lg" id="status"></p>
                     <p class="text-xl lg:text-lg">IP address: {{request.session.ip}}</p>
                     <p class=" text-xl lg:text-lg">Voter Token ID: {{voter_id}}</p>
+                    
                     <form action="" method="post" class=""> 
                         {% csrf_token %}
-                            <div class="pt-3">
+                        <div class="input-field col s12">
+                            <select name = "hostel_data">
+                            <option value="" disabled selected>Select your hostel</option>
+                            {% for q in hostel %}
+                                <option value="{{q.0}}">{{q.1}}</option>
+                            {% endfor %}
+                            </select>
+                            <!-- <label>Hostel</label> -->
+                        </div>
+                        <div class="pt-3">
                                 {{ form }}
                             </div>
                             <div class="sm:flex sm:flex-wrap space-y-5 sm:space-y-0 sm:space-x-5 pt-5 sm:pt-10 md:pt-3 sm:ml-0">
