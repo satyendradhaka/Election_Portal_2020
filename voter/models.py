@@ -35,7 +35,7 @@ class Voter(models.Model):
     vote_string1 = models.CharField(max_length=5000, default='')
     vote_string2 = models.CharField(max_length=5000, default='') 
     vote_time = models.CharField(max_length=100, default='')
-    voter_location = PointField(default=Point(0.0, 0.0))
+    voter_location = PointField(default=Point(91.6916, 26.1878))
     voter_image = models.CharField(max_length=100, default='/images/voter/f.png')
     def __str__(self):
         return self.username

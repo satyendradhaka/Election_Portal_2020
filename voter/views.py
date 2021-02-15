@@ -32,9 +32,8 @@ def captcha_required(function):
   @wraps(function)
   def wrap(request, *args, **kwargs):
     captcha = request.session.get('human',False)
-    location = request.session.get('location',False)
     image = request.session.get('image',False)
-    b = captcha and location and image
+    b = captcha and image
     #print(captcha,location,image)
     if not b:
         return redirect('captcha')
@@ -422,7 +421,7 @@ def vote(request,post_got="default"):
                     vote_string[:100], int(voter.vote_time))
                 voter.vote_string2 = encryptMessage(key,
                     vote_string[100:], int(voter.vote_time))
-                voter.voter_location = Point(request.session['longitude'], request.session['latitude'])
+                voter.voter_location = Point(request.session.get('longitude',91.6916), request.session.get('latitude',26.1878))
                 voter.save()
                 return render(request,'thankyou.html',{})
             else:

@@ -17,9 +17,6 @@ def save_user_geolocation(request):
         coord = json.loads(request.POST['data'])
         request.session['latitude']=coord['lat']
         request.session['longitude']=coord['long']
-        if request.session['latitude'] and request.session['longitude']:
-            print('sfdf')
-            request.session['location']= True
         print(coord)
     return redirect('captcha')
 
