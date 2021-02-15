@@ -32,7 +32,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7*627ja$7))_#l2f3rv^^#y+^f87o14t#do2yl9!(x$1$vc1wo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -102,14 +102,14 @@ WSGI_APPLICATION = 'electioniitg.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'postg',
-        # 'NAME': 'election',
-        'USER': 'postgres',
+        # 'NAME': 'postg',
+        'NAME': 'election',
+        'USER': 'election',
         # 'PASSWORD': '1saket@postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
         # 'PORT': '5433',
-        'PORT': '5433',
+        'PORT': '5432',
     }
 }
 

@@ -7,5 +7,4 @@ migrations/
 #oauth secerts
 voter.csv
 contestant.csv
-settings.py
 *.pyc
