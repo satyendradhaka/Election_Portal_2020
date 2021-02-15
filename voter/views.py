@@ -347,6 +347,8 @@ def vote(request,post_got="default"):
     else:
         request.session['total_no'] = 10
         request.session['girls'] = True
+    if voter.category == '2' or voter.category == '3':
+        post_dictionary['bsen'] = 'PGS'
     post= None
     if dicti['vp'] is None:
         post = 'vp'
@@ -435,11 +437,10 @@ def vote(request,post_got="default"):
         if not posts_done[post_dictionary[post]].startswith("Current"):
             posts_done[post_dictionary[post]] = "Current "+posts_done[post_dictionary[post]]
         max_len = 7
-        cont_post = 'UGS'
         if voter.category == '0' or voter.category == '1':
+            cont_post = 'UGS'
             contestantList = Contestant.objects.all().filter(post='UGS').order_by('?')
         else:
-            post_dictionary['bsen'] = 'PGS'
             contestantList = Contestant.objects.all().filter(post='PGS').order_by('?')
             cont_post = 'PGS'
         pks = []
