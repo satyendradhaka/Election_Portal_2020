@@ -38,12 +38,25 @@
       .ripple {
         /* margin: auto; */
         /* margin-top: 10rem; */
-        background-color: #ff84dc;
+        background-color: #F71873;
         /* width: 1rem; */
         /* height: 1rem; */
         border-radius: 50%;
         animation: ripple 2s linear infinite;
       }
+      .ripple_anime {
+        /* margin: auto; */
+        /* margin-top: 10rem; */
+        background-color: #F71873;
+        /* width: 1rem; */
+        /* height: 1rem; */
+        border-radius: 50%;
+        animation: ripple_anime 2s linear infinite;
+      }
+      @keyframes ripple_anime {
+       0% {box-shadow: 0 0 0px 0px rgba(240, 25, 222, 0.5);}
+       100% {box-shadow: 0 0 0px 15px rgba(216, 91, 199, 0.349);}
+}
       /* @keyframes ripple {
         0% {
           box-shadow: 0 0 0 0rem rgba(#2b00ff85, 0.2),
@@ -95,6 +108,9 @@
           <div class="hidden branch z-50 bg-black">
             <canvas id="myChart" width="40" height="40"></canvas>
           </div>
+          <div class="hidden hostel z-50 bg-black">
+            <canvas id="myChart1" width="40" height="40"></canvas>
+          </div>
           <div class="space-y-3">
           <div class="count border-pink w-5/6 z-10 font-bold sm:py-4 py-2 mx-auto">
             <div class="text-white text-lg sm:text-2xl z-10 font-bold text-center">Total Votes Count</div>
@@ -108,7 +124,7 @@
           <div class="count z-10  w-5/6 z-10 py-2 flex mx-auto space-x-2">
             <div class=" w-1/2 border-pink p-2">
             <div class="text-gray-300  opacity-30 text-sm z-10 font-ah text-center">Leading Hostel</div>
-             <div class="text-white text-lg sm:text-2xl z-10  font-bold text-center">Umiam</div>
+             <div id="jagruk-hostel" class="text-white text-lg sm:text-2xl z-10  font-bold text-center"></div>
             </div>
             <div class=" w-1/2  border-pink p-2">
             <div class="text-white text-gray-300 opacity-30 text-sm z-10 font-ah text-center">Leading Department</div>
@@ -145,10 +161,10 @@
       });
 
       // San Francisco
-      var origin = [85.1414, 25.61];
+      var destination = [8.1414, 25.61];
 
       // Washington DC
-      var destination = [91.6916, 26.1878];
+      var origin = [91.6916, 26.1878];
 
       // A simple line from origin to destination.
       var route = {
@@ -180,111 +196,68 @@
         ],
       };
       var origin_coords = [
-        // [77.23, 28.66],
-        // [72.8333, 18.9667],
-        // [88.3378, 22.5411],
-        // [80.275, 13.0825],
-        // [80.947, 26.847],
-        // [79.0831, 21.1539],
-        // [77.4167, 28.6667],
-        // [85.1414, 25.61],
-        // [75.8486, 30.9083],
       ];
       var geojson = {
         type: "FeatureCollection",
         features: [],
       };
+      
+      function changeCoords() { 
+            origin_coords.forEach((coords) => {
+              var temp = {
+                type: "Feature",
+                properties: {
+                  message: "Bar",
+                  iconSize: [100, 100],
+                },
+                geometry: {
+                  type: "Point",
+                  coordinates: coords,
+                },
+              };
+              geojson.features.push(temp);
+            });
+          
+          geojson.features.forEach((marker) => {
+            // create a DOM element for the marker
+            var el = document.createElement("div");
+           
+            if( Math.random() <= 0.4 ){
+              el.className = "marker ripple ripple_anime z-0 ";
+              el.style.width = "12px";
+              el.style.height = "12px";
+            }
+            else{
+              el.className = "marker ripple z-0";
+              el.style.width = "10px";
+              el.style.height = "10px";
+            }
+           
 
-      origin_coords.forEach((coords) => {
-        var temp = {
-          type: "Feature",
-          properties: {
-            message: "Bar",
-            iconSize: [50, 50],
-          },
-          geometry: {
-            type: "Point",
-            coordinates: coords,
-          },
-        };
-        geojson.features.push(temp);
-      });
-      // console.log(geojson);
-      //points on map
-      geojson.features.forEach((marker) => {
-        // create a DOM element for the marker
-        var el = document.createElement("div");
-        el.className = "marker ripple ";
-        // el.innerHTML = "<span class = 'ripple'></span>";
-        // "<svg width='10' height='10' viewBox='0 0 50 50' fill='none' xmlns='http://www.w3.org/2000/svg'><ellipse cx='25' cy='25' rx='25' ry='25' fill='#FF84DC'/></svg>";
-        // el.style.backgroundImage = "url(https://i.ibb.co/0Z7F6q6/DoT.png)";
-        // el.style.backgroundPosition = "center";
-        el.style.width = "6px";
-        el.style.height = "6px";
-
-        // el.addEventListener("click", function () {
-        //   window.alert(marker.properties.message);
-        // });
-
-        // add marker to map
-        new mapboxgl.Marker(el)
-          .setLngLat(marker.geometry.coordinates)
-          .addTo(map);
-      });
-
-      // // Calculate the distance in kilometers between route start/end point.
-      // var lineDistance = turf.length(route.features[0]);
-
-      // var arc = [];
-
-      // // Number of steps to use in the arc and animation, more steps means
-      // // a smoother arc and animation, but too many steps will result in a
-      // // low frame rate
-      // var steps = 300;
-
-      // // Draw an arc between the `origin` & `destination` of the two points
-      // for (var i = 0; i < lineDistance; i += lineDistance / steps) {
-      //   var segment = turf.along(route.features[0], i);
-      //   arc.push(segment.geometry.coordinates);
-      // }
-
-      // // Update the route with calculated arc coordinates
-      // route.features[0].geometry.coordinates = arc;
-
-      // Used to increment the value of the point measurement against the route.
+            new mapboxgl.Marker(el)
+              .setLngLat(marker.geometry.coordinates)
+              .addTo(map);
+          });
+    }
+   
+     
       var counter = 0;
-      map.on("load", function () {
-        // Add a source and layer displaying a point which will be animated in a circle.
-        //<a href="https://imgbb.com/"><img src="https://i.ibb.co/0Z7F6q6/DoT.png" alt="DoT" border="0"></a>
+      function loadMap() {
+      
         map.loadImage(
-          "https://i.ibb.co/0Z7F6q6/DoT.png",
+          "https://i.ibb.co/DLDBhF8/Origin.png",  
           function (error, image) {
             if (error) throw error;
             map.addImage("cat", image);
           }
         );
-        map.addSource("Dot", {
-          type: "geojson",
-          data: {
-            type: "FeatureCollection",
-            features: [
-              {
-                type: "Feature",
-                geometry: {
-                  type: "Point",
-                  coordinates: [0, 0],
-                },
-              },
-            ],
-          },
-        });
         map.addLayer({
           id: "Dot_img",
           type: "symbol",
           source: "Dot",
           layout: {
             "icon-image": "cat",
-            "icon-size": 0.05,
+            "icon-size": 1,
           },
         });
         map.addSource("route", {
@@ -297,15 +270,7 @@
           data: point,
         });
 
-          // map.addLayer({
-          //   id: "route",
-          //   source: "route",
-          //   type: "line",
-          //   paint: {
-          //     "line-width": 2,
-          //     "line-color": "#2B00FF",
-          //   },
-          // });
+  
 
         map.addLayer({
           id: "point",
@@ -313,64 +278,11 @@
           type: "symbol",
           layout: {
             "icon-image": "cat",
-            "icon-size": 0.05,
+            "icon-size": 0.06,
           },
         });
-
-        // function animate() {
-        //   var start =
-        //     route.features[0].geometry.coordinates[
-        //       counter >= steps ? counter - 1 : counter
-        //     ];
-        //   var end =
-        //     route.features[0].geometry.coordinates[
-        //       counter >= steps ? counter : counter + 1
-        //     ];
-        //   if (!start || !end) return;
-
-        //   // Update point geometry to a new position based on counter denoting
-        //   // the index to access the arc
-        //   point.features[0].geometry.coordinates =
-        //     route.features[0].geometry.coordinates[counter];
-
-        //   // Calculate the bearing to ensure the icon is rotated to match the route arc
-        //   // The bearing is calculated between the current point and the next point, except
-        //   // at the end of the arc, which uses the previous point and the current point
-        //   point.features[0].properties.bearing = turf.bearing(
-        //     turf.point(start),
-        //     turf.point(end)
-        //   );
-
-        //   // Update the source with this new data
-        //   map.getSource("point").setData(point);
-
-        //   // Request the next frame of animation as long as the end has not been reached
-        //   if (counter < steps) {
-        //     requestAnimationFrame(animate);
-        //   }
-
-        //   counter = counter + 1;
-        // }
-
-        document
-          .getElementById("replay")
-          .addEventListener("click", function () {
-            // Set the coordinates of the original point back to origin
-            point.features[0].geometry.coordinates = origin;
-
-            // Update the source layer
-            map.getSource("point").setData(point);
-
-            // Reset the counter
-            counter = 0;
-
-            // Restart the animation
-            animate(counter);
-          });
-
-        // Start the animation
-        animate(counter);
-      });
+      };
+      map.on("load", loadMap);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
@@ -388,12 +300,13 @@
           }
         ).always(
           function(){
-            setInterval(function(){ajaxCall();}, 90000);
+            setTimeout(function(){ajaxCall();}, 90000);
           }
         );
       };
       $(document).ready(function () {
         ajaxCall();
+
         $("#branch").click(function (e) {
           e.preventDefault();
           $("#branch").addClass("underline");
@@ -401,19 +314,42 @@
           $("#count").removeClass("underline");
           $('.count').each(function(i, obj) {
               $(this).addClass("hidden");
-              $(this).addClass("hidden");
+          });
+          $('.hostel').each(function(i, obj) {
+            $(this).addClass("hidden");
           });
           $('.branch').each(function(i, obj) {
             $(this).removeClass("hidden");
           });
           $("html, body").animate({ scrollTop: $(document).height() }, 1000);
         });
+
+        $("#hostel").click(function (e) {
+          e.preventDefault();
+          $("#hostel").addClass("underline");
+          $("#branch").removeClass("underline");
+          $("#count").removeClass("underline");
+          $('.count').each(function(i, obj) {
+              $(this).addClass("hidden");
+          });
+          $('.branch').each(function(i, obj) {
+            $(this).addClass("hidden");
+          });
+          $('.hostel').each(function(i, obj) {
+            $(this).removeClass("hidden");
+          });
+          $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        });
+
         $("#count").click(function (e) { 
           e.preventDefault();
           $("#branch").removeClass("underline");
           $("#hostel").removeClass("underline");
           $("#count").addClass("underline");
           $('.branch').each(function(i, obj) {
+              $(this).addClass("hidden");
+          });
+          $('.hostel').each(function(i, obj) {
               $(this).addClass("hidden");
           });
           $('.count').each(function(i, obj) {
@@ -425,10 +361,14 @@
       
       let vote_percent = [];
       let graph_labels = [];
-      let tots = [];
+      let vote_percent_hostel = [];
+      let graph_labels_hostel = [];
       function setDeptCount(dicti) {
-        console.log(dicti);
         origin_coords = dicti["coords"];
+        console.log(origin_coords);
+        changeCoords();
+        // loadMap();
+        // map.on("load",loadMap());
         document.getElementById("vote-1").innerHTML = dicti["totalVoted"][0];
         document.getElementById("vote-2").innerHTML = dicti["totalVoted"][1];
         document.getElementById("vote-3").innerHTML = dicti["totalVoted"][2];
@@ -436,16 +376,27 @@
         document.getElementById("percent-1").innerHTML = dicti["votePercent"][0];
         document.getElementById("percent-2").innerHTML = dicti["votePercent"][1];
         document.getElementById("jagruk-dept").innerHTML = dicti["jagrukDept"];
+        document.getElementById("jagruk-hostel").innerHTML = dicti["jagrukHostel"];
         vote_percent = [];
         graph_labels = [];
-        tots = [];
+        vote_percent_hostel = [];
+        graph_labels_hostel = [];
+        // tots = [];
         for (var key in dicti["deptCount"]) {
             // check if the property/key is defined in the object itself, not in parent
             if (dicti["deptCount"].hasOwnProperty(key)) {           
                 // console.log(key, dicti["deptCount"][key]);
-                vote_percent.push(dicti["deptCount"][key]["count"]);
+                vote_percent.push(dicti["deptCount"][key]["percent"]);
                 graph_labels.push(key);
-                tots.push(dicti["deptCount"][key]["total"]);
+                // tots.push(dicti["deptCount"][key]["total"]);
+            }
+        }
+        for (var key in dicti["hostelCount"]) {
+            if (dicti["hostelCount"].hasOwnProperty(key)) {           
+                // console.log(key, dicti["deptCount"][key]);
+                vote_percent_hostel.push(dicti["hostelCount"][key]["count"]);
+                graph_labels_hostel.push(key);
+                // tots.push(dicti["deptCount"][key]["total"]);
             }
         }
         // console.log(tots);
@@ -525,9 +476,9 @@
                             fontSize: 0,
                             min: 0,
                             max: 100,
-                            callback: function (value, index, values) {
-                              return (value / tots[index] * 100).toFixed(0) + '%';
-                            },
+                            // callback: function (value, index, values) {                                      
+                            //   return (value / dicti["deptCount"][graph_labels[index]]["total"] * 100).toFixed(0) + '%';
+                            // },
                           },
                         scaleLabel: {
                           display: false,
@@ -545,13 +496,13 @@
                     
                     ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
                     ctx.textAlign = 'left';
-                    ctx.textBaseline = 'default';
+                    ctx.textBaseline = 'middle';
 
                     this.data.datasets.forEach(function (dataset, i) {
                       var meta = chartInstance.controller.getDatasetMeta(i);
                       meta.data.forEach(function (bar, index) {
                         var data = dataset.data[index];
-                        ctx.fillText(data, bar._model.x, bar._model.y - 1);
+                        ctx.fillText(data, bar._model.x + 15, bar._model.y);
                       });
                     });
                   }
@@ -564,7 +515,130 @@
                 },
                 title: {
                     display: true,
-                    text: 'Department Vise Statistics',
+                    text: 'Department Wise Statistics',
+                    fontFamily: 'Atkinson Hyperlegible Bold',
+                    fontSize: 25,
+                    fontColor: '#FFFFFF',
+                    fontStyle: 'normal',
+                    fontWeight: 'bold',
+                }
+            },
+        });
+
+        // Hostel chart
+        var ctx1 = document.getElementById('myChart1');
+        var myChart1 = new Chart(ctx1, {
+          type: 'horizontalBar',
+            data: {
+                labels: graph_labels_hostel,
+                datasets: [{
+                    label: 'Hostel Wise Statistics',
+                    data: vote_percent_hostel,
+                    // data: [40, 90, 90, 90, 90, 9, 1, 72, 80, 65, 62, 10, 50, 21, 23, 95, 40],
+                    backgroundColor: [
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                    ],
+                    borderColor: [
+                    'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                        'rgba(247, 24, 115, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 14,
+                            fontFamily: 'Atkinson Hyperlegible',
+                            fontColor: '#FFFFFF',
+                            fontStyle: 'normal',
+                            fontWeight: 'bold',
+                        },
+                        gridLines: {
+                          display: false
+                        },
+                        barPercentage: 0.4,
+                        categoryPercentage: 1.0
+                    }],
+                    xAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            fontSize: 0,
+                            min: 0, 
+                            max: 1000 ,
+                            // callback: function (value, index, values) {
+                            //   return (value / dicti["totalVotedCount"] * 100).toFixed(0) + '%';
+                            // },
+                          },
+                        scaleLabel: {
+                          display: false,
+                        },
+                        gridLines: {
+                          display: false
+                        }
+                    }]
+                },
+                "animation": {
+                "duration": 1,
+                  "onComplete": function () {
+                    var chartInstance = this.chart,
+                      ctx = chartInstance.ctx;
+                    
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                      var meta = chartInstance.controller.getDatasetMeta(i);
+                      meta.data.forEach(function (bar, index) {
+                        var data = dataset.data[index];
+                        ctx.fillText(data, bar._model.x + 15, bar._model.y);
+                      });
+                    });
+                  }
+              },
+                legend: {
+                  display: false,
+                },
+                tooltips: {
+                  enabled: false,
+                },
+                title: {
+                    display: true,
+                    text: 'Hostel Wise Statistics',
                     fontFamily: 'Atkinson Hyperlegible Bold',
                     fontSize: 25,
                     fontColor: '#FFFFFF',

@@ -349,6 +349,8 @@ def vote(request,post_got="default"):
         request.session['girls'] = True
     if voter.category == '2' or voter.category == '3':
         post_dictionary['bsen'] = 'PGS'
+    else:
+        post_dictionary['bsen'] = 'UGS'
     post= None
     if dicti['vp'] is None:
         post = 'vp'

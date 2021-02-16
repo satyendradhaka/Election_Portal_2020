@@ -78,9 +78,10 @@ $(document).ready(function () {
         );
         document.getElementById("hidden"+selected_id).checked = false;
         selected_ids.delete(selected_id);
+        M.toast({html: 'You can vote for ' + (7 - selected_ids.size) + ' more candidates'});
       }
       else if(selected_ids.size>=l){
-        alert("you can select maximum of "+l);
+        alert("You can select maximum of "+l + " candidates");
       }
       else{
         console.log(selected_id);
@@ -90,6 +91,7 @@ $(document).ready(function () {
         $("#action_box_container_" + ids[index]).html("<span class='flex'><svg class = 'm-0.5 ml-0 mt-1'width='17' height='17' viewBox='0 0 17 17' fill='none' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' clip-rule='evenodd' d='M14.6409 4.48403C14.7901 4.63344 14.874 4.83598 14.874 5.04715C14.874 5.25832 14.7901 5.46086 14.6409 5.61028L6.93778 13.3134C6.78836 13.4626 6.58583 13.5464 6.37465 13.5464C6.16348 13.5464 5.96094 13.4626 5.81153 13.3134L2.3584 9.86028C2.21764 9.70921 2.14101 9.50942 2.14466 9.30297C2.1483 9.09653 2.23193 8.89955 2.37793 8.75355C2.52393 8.60755 2.7209 8.52392 2.92735 8.52028C3.13379 8.51663 3.33359 8.59327 3.48465 8.73403L6.37465 11.624L13.5147 4.48403C13.6641 4.3348 13.8666 4.25098 14.0778 4.25098C14.289 4.25098 14.4915 4.3348 14.6409 4.48403Z' fill='white'/></svg>Voted</span>");
         selected_ids.add(selected_id);
         document.getElementById("hidden"+selected_id).checked = true;
+        M.toast({html: 'You can vote for ' + (7 - selected_ids.size) + ' more candidates'});
       }
       if (selected_ids.size == 0) {
         nextBtn.attr("disabled", true);
@@ -105,6 +107,7 @@ $(document).ready(function () {
         nextBtn.removeClass("opacity-10 cursor-not-allowed");
       }
     });
+
   });
 
   $("#nota").click(function () {
@@ -129,6 +132,7 @@ $(document).ready(function () {
     $(".nota-effect").css("opacity", 0.5);
     $(".bg-custom").css("background", "#E7690F");
     $(".text-custom").css("color", "rgb(236, 232, 229)");
+    M.toast({html: 'You have selected None Of The Above, Click Save to Continue.'});
   });
 
   $("#info-btn").hover(
