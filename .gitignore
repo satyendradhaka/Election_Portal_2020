@@ -1,3 +1,4 @@
+
 # database
 mydatabase
 
@@ -8,3 +9,5 @@ migrations/
 voter.csv
 contestant.csv
 *.pyc
+images/
+static/
