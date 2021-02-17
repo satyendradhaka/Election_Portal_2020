@@ -10,5 +10,6 @@ voter.csv
 contestant.csv
 *.pyc
 images/
-static/
+static/agenda
+static/contestants*
 electioniitg/settings.py
