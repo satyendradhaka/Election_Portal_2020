@@ -46,6 +46,10 @@
 
 {% block content %}
 {{ pks|json_script:"pks-data" }}
+<script>
+  const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+  observer.observe();
+</script>
 <style>
   .lds-dual-ring {
   display: inline-block;
@@ -84,9 +88,10 @@
           </span>
           <span class="py-6">
             <span><img
-                class="rounded-sm"
+                class="rounded-sm lozad"
                 width="130"
-                src="{% static i.pic %}" />
+                src="{% static i.pic %}"
+                data-src="{% static i.pic %}" />
             </span>
           </span>
           <span class="py-6"
@@ -94,10 +99,6 @@
             <ul
               class="font-medium max-w-md space-y-1 text-1xl pt-2 text-gray-600 pr-2"
             >
-              <!-- <li>{{i.agenda1}} </li>
-              <li>{{i.agenda2}}</li>
-              <li>{{i.agenda3}}</li>
-              <li>{{i.agenda4}}</li> -->
               <li>1. {{i.agenda1}} </li>
               <li>2. {{i.agenda2}} </li>
               <li>3. {{i.agenda3}} </li>
@@ -140,7 +141,6 @@
 
 {% block vote_js %}  
   <script>
-    
     $(document).ready(function () {
       var ids = JSON.parse(document.getElementById('pks-data').textContent);
       getIds(ids);

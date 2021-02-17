@@ -26,6 +26,24 @@ deptList =[
     'Linguistics',
 ]
 
+hostelDicti = {
+    '0':'HOSTEL NOT ALLOTED',
+    '1':'BRAHMAPUTRA',
+    '2':'DHANSIRI',
+    '3':'DIBANG',
+    '4':'DIHING',
+    '5':'DISANG',
+    '6':'KAMENG',
+    '7':'KAPILI',
+    '8':'LOHIT',
+    '9':'MANAS',
+    '10':'MARRIED SCHOLARS HOSTEL',
+    '11':'SIANG',
+    '12':'SUBHANSIRI',
+    '13':'UMIAM',
+    '14':'BARAK',
+}
+
 def deptFetchData():
     deptCount = {}
     jagrukDept = 0
@@ -33,24 +51,40 @@ def deptFetchData():
     for i in deptList:
         total = Voter.objects.filter(dept = i).count()
         count = Voter.objects.filter(Q(dept=i) & Q(final_submit=True)).count()
-        deptCount[i] = {'count':count,'total':total,'percent':(count*100)/total}
+        deptCount[i] = {'count':count,'total':total,'percent':round((count*100)/total,2)}
         if deptCount[i]['percent'] > jagrukDept:
             jagrukDept = deptCount[i]['percent']  
             data['jagrukDept']=i
     data['deptCount'] = deptCount
     return data
 
+def hostelFetchData():
+    hostelCount = {}
+    jagrukHostel = 0
+    data = {}
+    for i in range(15):
+        total = Voter.objects.filter(hostel = str(i)).count()
+        count = Voter.objects.filter(Q(hostel = str(i)) & Q(final_submit=True)).count()
+        hostelCount[hostelDicti[str(i)]] = {'count':count}
+        if hostelCount[hostelDicti[str(i)]]['count'] > jagrukHostel:
+            jagrukHostel = hostelCount[hostelDicti[str(i)]]['count']
+            data['jagrukHostel']=hostelDicti[str(i)]
+    data['hostelCount'] = hostelCount
+    return data
+
 def totalVotersData():
     data = {}
-    defaultCoords=25
+    # defaultCoords=25
     totalVoted = Voter.objects.filter(final_submit = True).count()
     data['totalVoted'] = [ i for i in f'{totalVoted:04}']
     totalVoters = Voter.objects.all().count()
-    if totalVoted <=25:
-        defaultCoords=totalVoted
+    data['totalVotedCount'] = totalVoted
+    # if totalVoted <=25:
+    #     defaultCoords=totalVoted
+    # data['coords'] = random.sample([[coords[0].x,coords[0].y] for coords in Voter.objects.filter(final_submit=True).values_list('voter_location')], defaultCoords)
     percent = (totalVoted*100)//totalVoters
     data['votePercent'] = [ i for i in f'{percent:02}']
-    data['coords'] = random.sample([[coords[0].x,coords[0].y] for coords in Voter.objects.filter(final_submit=True).values_list('voter_location')], defaultCoords)
+    data['coords'] = [[coords[0].x,coords[0].y] for coords in Voter.objects.filter(final_submit=True).values_list('voter_location')]
     return data    
 
 
@@ -58,6 +92,7 @@ def voteData(request):
     data = {}
     data.update(totalVotersData())
     data.update(deptFetchData())
+    data.update(hostelFetchData())
     # print(data['coords'])
     return JsonResponse(data)
 
