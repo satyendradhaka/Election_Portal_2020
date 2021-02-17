@@ -218,20 +218,29 @@
               geojson.features.push(temp);
             });
           
-          geojson.features.forEach((marker) => {
+          geojson.features.forEach((marker,i,arr) => {
             // create a DOM element for the marker
             var el = document.createElement("div");
-           
-            if( Math.random() <= 0.4 ){
-              el.className = "marker ripple ripple_anime z-0 ";
-              el.style.width = "12px";
-              el.style.height = "12px";
+            // if(i==0){
+            //   el.className = "marker ripple ripple_anime z-0 ";
+            //   el.style.width = "12px";
+            //   el.style.height = "12px";
+            // }
+            // else{
+            var pointSize; 
+            var counter = 0;
+            for(var q=0;q<arr.length;q+=150){
+              pointSize = (10-counter).toString()+"px";
+              if (10-counter == 4){
+                break;   
+              }
+              counter++;
             }
-            else{
-              el.className = "marker ripple z-0";
-              el.style.width = "10px";
-              el.style.height = "10px";
-            }
+            console.log(pointSize);
+            el.className = "marker ripple z-0";
+            el.style.width = pointSize;
+            el.style.height = pointSize;
+            // }
            
 
             new mapboxgl.Marker(el)
@@ -365,7 +374,7 @@
       let graph_labels_hostel = [];
       function setDeptCount(dicti) {
         origin_coords = dicti["coords"];
-        console.log(origin_coords);
+        // console.log(origin_coords);
         changeCoords();
         // loadMap();
         // map.on("load",loadMap());
@@ -501,7 +510,7 @@
                     this.data.datasets.forEach(function (dataset, i) {
                       var meta = chartInstance.controller.getDatasetMeta(i);
                       meta.data.forEach(function (bar, index) {
-                        var data = dataset.data[index];
+                        var data = dataset.data[index].toString()+'%';
                         ctx.fillText(data, bar._model.x + 15, bar._model.y);
                       });
                     });
