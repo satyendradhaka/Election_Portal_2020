@@ -11,3 +11,4 @@ contestant.csv
 *.pyc
 images/
 static/
+electioniitg/settings.py
