@@ -13,6 +13,7 @@ from results.models import keys
 import json as js
 from django.contrib.auth.models import User
 
+
 post_dictionary = {
     'vp':'VP',
     'hab':'HAB',
@@ -41,10 +42,15 @@ def captcha_required(function):
         return function(request, *args, **kwargs)    
   return wrap
 
-
 def is_valid(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
+        q=datetime(2021,2,21,22,0,0,0)
+        # q=datetime(2021,2,18,20,22,45,0)
+        # print(q)
+        # print("now",datetime.now())
+        if q<datetime.now():
+            return render(request,'error.html',{'message': 'Voting Time is over.See you next year'})
         username = request.user.username
         try:
             rollNumber = int(request.user.last_name)
