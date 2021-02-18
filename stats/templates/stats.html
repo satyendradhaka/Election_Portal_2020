@@ -93,10 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
     
     <div class="flex z-10 flex-wrap">
-      <div class="z-50 lg:w-1/2 w-full h-screen h-screen-60 relative">
-        <div z-50 id="map"></div>
-      </div>
-      <div class="z-10 block px-12 sm:pr-0 w-full lg:h-screen h-full  lg:w-1/2 bg-black space-y-8 mt-0 pt-16 lg:overflow-scroll">
+      <div class="content_div z-10 block px-12 sm:pr-0 w-full lg:h-screen h-full lg:w-1/2 bg-black space-y-8 mt-0 pt-16 lg:overflow-scroll">
         <!-- <div class="z-10 block px-12 sm:pr-0 h-screen lg:w-1/2 bg-black sm:pl-4 lg:px-6 xl:px-12 space-y-8 mt-0 pt-16"> -->
           <h3 class="text-3xl sm:text-6xl place-self-center w-full text-center text-white font-bold">Gymkhana <br> Elections 2021</h3>
           <!-- <h3 class="text-7xl place-self-center w-full text-center text-white font-bold"></h3> -->
@@ -131,15 +128,24 @@
               <div id="jagruk-dept" class="text-white text-lg sm:text-2xl z-10 font-bold text-center"></div>
             </div>
           </div>
-          <div class="count z-10 border-pink w-5/6 z-10 font-bold py-4 mx-auto">
-            <div class="text-white text-lg sm:text-2xl z-10 font-bold text-center">Voting Percentage</div>
-            <div class="flex z-10 justify-center space-x-2 py-5">
-              <div id="percent-1" class="bg-white text-black sm:p-6 p-3 sm:text-3xl text-lg rounded-md"></div>
-              <div id="percent-2" class="bg-white text-black sm:p-6 p-3 sm:text-3xl text-lg rounded-md"></div>
-              <div class="bg-white text-black sm:p-6 p-3 sm:text-3xl text-lg rounded-md">%</div>
+          <!-- <div class="mb-10"> -->
+            <div class="count z-10 border-pink w-5/6 z-10 font-bold py-4 mx-auto">
+              <div class="text-white text-lg sm:text-2xl z-10 font-bold text-center">Voting Percentage</div>
+              <div class="flex z-10 justify-center space-x-2 py-5">
+                <div id="percent-1" class="bg-white text-black sm:p-6 p-3 sm:text-3xl text-lg rounded-md"></div>
+                <div id="percent-2" class="bg-white text-black sm:p-6 p-3 sm:text-3xl text-lg rounded-md"></div>
+                <div class="bg-white text-black sm:p-6 p-3 sm:text-3xl text-lg rounded-md">%</div>
+              </div>
             </div>
-          </div>
+            <div class="h-10 lg:hidden">
+
+            </div>
+          <!-- </div> -->
+
         </div>
+      </div>
+      <div class="map_div z-50 lg:w-1/2 w-full h-screen h-screen-60 relative">
+        <div z-50 id="map"></div>
       </div>
     </div>
 
@@ -153,12 +159,24 @@
       // https://account.mapbox.com
       mapboxgl.accessToken =
         "pk.eyJ1Ijoic2h1YmhhbWdhbmRoaTY1IiwiYSI6ImNranN3bnpxNTQzdTIycmxvZ3g2MjB5bzcifQ.r157xCeh45aMVGSIum6iHw";
-      var map = new mapboxgl.Map({
-        container: "map",
-        style: "mapbox://styles/shubhamgandhi65/ckjsx5kgw73wx19oa741og6yy",
-        center: [ 78.9629, 20.5937],
-        zoom: 4,
-      });
+      var map;
+
+      if ($(window).width() < 1024) {
+        map = new mapboxgl.Map({
+          container: "map",
+          style: "mapbox://styles/shubhamgandhi65/ckjsx5kgw73wx19oa741og6yy",
+          center: [ 78.9629, 20.5937],
+          zoom: 3,
+        });
+      } else {
+        map = new mapboxgl.Map({
+          container: "map",
+          style: "mapbox://styles/shubhamgandhi65/ckjsx5kgw73wx19oa741og6yy",
+          center: [ 78.9629, 20.5937],
+          zoom: 4,
+        });
+        $(".map_div").insertBefore($(".content_div"));
+      }
 
       // San Francisco
       var destination = [8.1414, 25.61];
