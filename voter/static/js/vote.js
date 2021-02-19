@@ -20,7 +20,6 @@ function getIds(contList) {
     let element = contList[index];
     ids.push(element);
   }
-  console.log(ids);
 }
 
 function setProgress(designation, total) {
@@ -39,7 +38,6 @@ function setProgress(designation, total) {
 }
 
 $(document).ready(function () {
-  console.log();
   $.each(ids, function(index, value) {
     $("#" + ids[index]).hover(
       function () {
@@ -172,7 +170,6 @@ document.onkeyup = function (e) {
   else{
     input_id = ids[e.which-65];
     $("#" + input_id).trigger("click");
-    console.log(input_id);
   }
 }
 });
