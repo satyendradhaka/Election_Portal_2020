@@ -176,7 +176,7 @@
 				response.arrayBuffer().then(function(buffer) {
 					var bytes = new Int8Array(buffer);
 					facefinder_classify_region = pico.unpack_cascade(bytes);
-					console.log('* facefinder loaded');
+					// console.log('* facefinder loaded');
 				})
 			})
 			/*
@@ -188,7 +188,7 @@
 				response.arrayBuffer().then(function(buffer) {
 					var bytes = new Int8Array(buffer);
 					do_puploc = lploc.unpack_localizer(bytes);
-					console.log('* puploc loaded');
+					// console.log('* puploc loaded');
 				})
 			})
 			/*
@@ -321,7 +321,7 @@
         } else {
             img_indicator = 0;
         }
-          console.log("clicked");
+        //   console.log("clicked");
           var canvas = document.getElementById('canvas');  
           var context = canvas.getContext('2d');  
     
@@ -332,7 +332,7 @@
             // document.getElementById("btnCapture").innerHTML = "Click";
             // $("#camera").toggleClass("hidden");
             // $("#video_camera").toggleClass("hidden");
-            console.log("camera clicked!");
+            // console.log("camera clicked!");
             pic=false;
         }
         else{

@@ -253,9 +253,9 @@
         return new Promise((resolve) => setTimeout(resolve, ms));
       }
       async function waitforit(video) {
-        console.log("Taking a break...");
+        // console.log("Taking a break...");
         await sleep(100);
-        console.log("Two seconds later, showing sleep in a loop...");
+        // console.log("Two seconds later, showing sleep in a loop...");
         video.pause();
       }
       function videoPlayer(video_id) {
@@ -271,7 +271,7 @@
         });
         $("#" + video_id).hover(
           function () {
-            console.log("hover");
+            // console.log("hover");
             $(this).css("transform", "scale(1.2,1.2)");
             $(this).css("opacity", "0.75");
             $(this).css("background", "none");

@@ -227,14 +227,14 @@
       
     });
     function hamClick(idstr,poststr){
-        console.log(idstr);
+        // console.log(idstr);
         var id = parseInt(idstr.substr(4,idstr.length-1));
         if (id<9){
           var post_value = poststr.toLowerCase();
-          console.log(post_value);
+          // console.log(post_value);
           
           var temp = "{% url 'vote' %}";
-          console.log(temp);
+          // console.log(temp);
           var post = temp+post_value;
         } 
         else if(id==11){

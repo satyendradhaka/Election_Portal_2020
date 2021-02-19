@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-	path('election_portaldhaka/', include('geolocation.urls')),
+	path('election_portal/', include('geolocation.urls')),
 	path('election_portal/', include('voter.urls')),
 	path('election_portal/admin/', admin.site.urls),
     path('election_portal/oauth2/', include('django_auth_adfs.urls')),

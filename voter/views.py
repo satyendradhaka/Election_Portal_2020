@@ -1,7 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Voter,Contestant
-# from .forms import CaptchaTestForm
 from functools import wraps
 from datetime import datetime
 import time
@@ -35,7 +34,6 @@ def captcha_required(function):
     captcha = request.session.get('human',False)
     image = request.session.get('image',False)
     b = captcha and image
-    #print(captcha,location,image)
     if not b:
         return redirect('captcha')
     else:
@@ -46,9 +44,6 @@ def is_valid(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
         q=datetime(2021,2,21,22,0,0,0)
-        # q=datetime(2021,2,18,20,22,45,0)
-        # print(q)
-        # print("now",datetime.now())
         if q<datetime.now():
             return render(request,'error.html',{'message': 'Voting Time is over.See you next year'})
         username = request.user.username
@@ -57,42 +52,25 @@ def is_valid(function):
         except:
             return render(request,'error.html',{'message': 'You are not a recognized voter! Please login with your student id.'})
         keys_bool = request.session.get('ready',True)
-        # #print(Voter.objects.all().filter(rollNumber=int(rollNumber)))
         if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys_bool:
             try:
                 voter = Voter.objects.get(username=username)
-                #print('kya bc')
             except:
                 voter = Voter.objects.get(rollNumber=rollNumber)
                 voter.username = username
                 voter.save()
-            # if voter.final_submit:
-            #     # return HttpResponse('u have already voted')
-            #     return render(request,'error.html',{'message':'You Have already voted, hope we meet next year.'})
-            # else:
-            # IMP:this is for testing uncomment and add a tab in below line
-            return function(request, *args, **kwargs)  
+            if voter.final_submit:
+                return render(request,'error.html',{'message':'You Have already voted, hope we meet next year.'})
+            else:
+                return function(request, *args, **kwargs)  
         else:
             if not keys_bool:
                 message = 'You are a bit early. Kindly volunteer in setting up the polling booth.'
             else:
                 message = "Sorry, we searched a lot! Couldn't find any matching entry with your name."
             return render(request,'error.html',{'message': message})
-            # return HttpResponse('get out of here')
 
     return wrap
-
-# @login_required    
-# def verify(request):
-#     if request.method=="POST":
-#         form = CaptchaTestForm(request.POST)
-#         if form.is_valid():
-#             request.session['human'] = True
-#             return redirect('vote')
-#     else:
-#         form = CaptchaTestForm()
-
-#     return render(request, 'captchaVerify.html', {'form': form})
 
 @login_required
 @captcha_required
@@ -237,9 +215,6 @@ def vote_for(request,post):
             'nota':False,
         },
     })
-    # 1-8 => {% url "named_vote" 'vp' %}
-    # 9 or 10 => 'bsen'
-    # >10 => 'gsen'
     posts_done = request.session.get('posts_done',
         {
             'VP': '-1',
@@ -293,7 +268,7 @@ def vote(request,post_got="default"):
     # global key = []
     key =[]
     try:
-        # #print(users[0]    )
+        #print(users[0]    )
         key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))
         key.append(keys.objects.get(user=User.objects.get(username='alan@iitg.ac.in')))
         key.append(keys.objects.get(user=User.objects.get(username='satyendr@iitg.ac.in')))
@@ -306,7 +281,7 @@ def vote(request,post_got="default"):
             return redirect('captcha')
     except Exception as e:
         #print(e)
-        # #print(users[0])
+        #print(users[0])
         request.session['ready'] = False
         #print("damn")
         return redirect('captcha')
@@ -339,14 +314,14 @@ def vote(request,post_got="default"):
         },
 
     })
-    print(dicti)
+    #print(dicti)
     try:
         voter = Voter.objects.get(username=request.user.username)
     except:
         voter = Voter.objects.get(username=request.user.last_name)
     if voter.category == '0' or voter.category == '2':
         request.session['total_no'] = 9
-        # print(voter.category)
+        #print(voter.category)
         dicti['gsen']['done'] = True
         request.session['girls'] = False
         request.session['option']=dicti
@@ -406,7 +381,7 @@ def vote(request,post_got="default"):
         posts_done['UGS'] = '-2'
 
     request.session['posts_done'] = posts_done
-    print(posts_done)
+    #print(posts_done)
 
     if post_got != "default" and post_got in dicti.keys():
         post = post_got
