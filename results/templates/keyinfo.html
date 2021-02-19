@@ -85,7 +85,7 @@
             </table>
         </div>
     </div>
-    {% if request.user.first_name in public %}
+    {% if request.user.first_name in private %}
         <div class="w-full text-center mb-10">
             <button type="button" class="bg-black text-white h-20 w-60 text-3xl text-center font-bold rounded-sm next-btn"><a href="{% url 'privateKey' %}">Update Key</a></button>
         </div>
