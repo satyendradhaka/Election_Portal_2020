@@ -11,7 +11,7 @@ from .forms import publicKeyUploadForm
 import random
 from django.contrib.auth.models import User
 from .tasks import do_work
-from .models import notaCount
+from .models import notaCount,taskid
 from celery.result import AsyncResult
 
 post_dictionary ={
@@ -96,7 +96,6 @@ def privateKey(request):
         return redirect('keyUpload')
     return render(request, 'pubKeyupload.html', {'keyType':'Private'})
 
-running =None
 
 
 @login_required
@@ -104,12 +103,14 @@ running =None
 def results(request):
     if request.method == 'POST':
         return redirect('results_view','VP')
-    global running
-    if running is not None:
-        res = AsyncResult(running)
+    tasks = taskid.objects.all()
+    if len(tasks) == 0:
+        task = do_work.delay()
+        taskid.objects.create(task_id=task.task_id)
+        running = task.task_id
     else:
-      task = do_work.delay()
-      running = task.task_id
+        running = tasks[0].task_id
+        res = AsyncResult(running)
     try:
         key = keys.objects.get(user = request.user)
     except:
