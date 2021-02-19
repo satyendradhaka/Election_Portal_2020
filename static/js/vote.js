@@ -73,6 +73,7 @@ $(document).ready(function () {
         $(".info-block").removeClass("hidden");
         nextBtn.removeAttr("disabled");
         nextBtn.removeClass("opacity-10 cursor-not-allowed");
+        M.toast({html: 'Click Save to Continue! You can review your votes later'});
         voteClick(selected_id);
       } else if (ids[index] == selected_id) {
         var cha = String.fromCharCode(65+ids.indexOf(selected_id));
@@ -108,6 +109,7 @@ $(document).ready(function () {
         $(".opted-for").html("You have Voted for " + $(".name_" + selected_id).html());
         nextBtn.removeAttr("disabled");
         nextBtn.removeClass("opacity-10 cursor-not-allowed");
+        M.toast({html: 'Click Save to Continue! You can review your votes later'});
         voteClick(selected_id);
       }
     });
@@ -134,6 +136,7 @@ $(document).ready(function () {
     $(".info-block").removeClass("hidden");
     nextBtn.removeAttr("disabled");
     nextBtn.removeClass("opacity-10 cursor-not-allowed");
+    M.toast({html: 'You have selected None Of The Above, Click Save to Continue.'});
   });
 
   $("#info-btn").hover(
