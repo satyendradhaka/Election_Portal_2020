@@ -111,10 +111,6 @@ def results(request):
     else:
         running = tasks[0].task_id
         res = AsyncResult(running)
-    try:
-        key = keys.objects.get(user = request.user)
-    except:
-        key = None
     return render(request, 'results.html', {'task_id':running})   
 
 
