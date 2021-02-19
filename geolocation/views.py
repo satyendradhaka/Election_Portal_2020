@@ -17,7 +17,7 @@ def save_user_geolocation(request):
         coord = json.loads(request.POST['data'])
         request.session['latitude']=coord['lat']
         request.session['longitude']=coord['long']
-        print(coord)
+        #print(coord)
     return redirect('captcha')
 
 @login_required
@@ -38,7 +38,7 @@ def save_user_image(request):
             voter.save()
             request.session['image'] = True
         except Exception:
-            print('i fucked up')
+            #print('i fucked up')
             return HttpResponse('something went wrong')
         return redirect('captcha')
     else:
@@ -101,9 +101,9 @@ def verification(request):
     form = FormWithCaptcha(request.POST)
     voter.hostel = request.POST.get('hostel_data','0')
     voter.save()
-    print(voter.get_hostel_display())
+    #print(voter.get_hostel_display())
     if form.is_valid():
-        print('u are not a robot')
+        #print('u are not a robot')
         request.session['human']= True
         return redirect('vote')
     else:

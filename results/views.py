@@ -107,10 +107,6 @@ def results(request):
     global running
     if running is not None:
         res = AsyncResult(running)
-        # if res.ready():
-        # #   print('kya',res.result)
-        #   task = do_work.delay()
-        #   running = task.task_id
     else:
       task = do_work.delay()
       running = task.task_id
@@ -136,5 +132,4 @@ def results_view(request,post):
     contList = []
     for i in cont:
         contList.append((i[0],i[1],i[1]*100/sum))
-    print(contList)
     return render(request,'results_view.html',{'contestants':contList,'post_display':post_dictionary[post],'sum':sum,'post_list':post_dictionary.keys()})

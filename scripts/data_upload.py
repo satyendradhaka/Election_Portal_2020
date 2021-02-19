@@ -77,6 +77,6 @@ def csv_to_contestants():
 
 def run():
 	Voter.objects.all().delete()
-	Contestant.objects.all().delete()
+	# Contestant.objects.all().delete()
 	csv_to_voter()
-	csv_to_contestants()	
+	# csv_to_contestants()	
