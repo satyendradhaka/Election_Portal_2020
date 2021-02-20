@@ -5,7 +5,7 @@ from django.contrib.gis.geos import Point
 from django.db.models.fields import CharField
 
 class Voter(models.Model):
-    username = models.CharField(max_length=100) 
+    username = models.CharField(max_length=100,unique=True) 
     CATEGORY = (('0','UG-Boy'),
                 ('1','UG-Girl'),
                 ('2','PG-Boy'),
@@ -29,7 +29,7 @@ class Voter(models.Model):
     )
     category = models.CharField(max_length=1,choices=CATEGORY)
     final_submit = models.BooleanField(default=False) #0 if false 1 if true
-    rollNumber = models.IntegerField(default=0)
+    rollNumber = models.IntegerField(default=0, unique=True)
     dept = models.CharField(max_length=50, default='CSE')
     hostel = models.CharField(max_length=2,default='0',choices=HOSTELS)
     vote_string1 = models.CharField(max_length=5000, default='')
