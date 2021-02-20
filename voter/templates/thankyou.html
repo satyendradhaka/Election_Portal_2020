@@ -19,7 +19,7 @@
         <div class="h-10"></div>
         <span>Thank You</span>
         <div class="h-5"></div>
-        <p class="text-2xl">Add this to your story and tag your friends to go and vote</p>
+        <p class="text-2xl">Add <span class="text-or">this</span> to your story and tag your friends to go and vote</p>
         <div class="h-7"></div>
         <button
           class="bg-orange transition text-lg font-ah text-white border-0 rounded-3xl py-1 px-8 focus:outline-none hover:bg-blue-600 rounded md:mt-0"
@@ -38,7 +38,6 @@
                 "https://iitgoffice-my.sharepoint.com/personal/varma170205042_iitg_ac_in/Documents/Elections%202021%20Story/Yellow.jpg?csf=1&web=1&e=0KGjaB&cid=49906e51-10ab-454f-8153-a81e6bd82224"
             ];
             let random_num  = Math.floor(Math.random() * 4);
-            console.log(random_num);
             $("#share").attr("href", links[random_num]);
         });
     </script>
