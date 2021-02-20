@@ -270,8 +270,8 @@ def vote(request,post_got="default"):
     try:
         #print(users[0]    )
         key.append(keys.objects.get(user= User.objects.get(username='swc@iitg.ac.in')))
-        key.append(keys.objects.get(user=User.objects.get(username='alan@iitg.ac.in')))
-        key.append(keys.objects.get(user=User.objects.get(username='satyendr@iitg.ac.in')))
+        key.append(keys.objects.get(user=User.objects.get(username='elections@iitg.ac.in')))
+        key.append(keys.objects.get(user=User.objects.get(username='dos@iitg.ac.in')))
         #print(keys.objects.filter(pubkey=True))
         if len(keys.objects.filter(pubkey=True)) == 3:
             request.session['ready'] = True
