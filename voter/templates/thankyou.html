@@ -32,10 +32,10 @@
     <script>
         $(document).ready(function () {
             let links = [
-                "https://iitgoffice-my.sharepoint.com/personal/varma170205042_iitg_ac_in/Documents/Elections%202021%20Story/Blue.jpg?csf=1&web=1&e=DztWrc&cid=cb00b677-05da-4129-9b6a-b043af3ef553",
-                "https://iitgoffice-my.sharepoint.com/personal/varma170205042_iitg_ac_in/Documents/Elections%202021%20Story/Green.jpg?csf=1&web=1&e=5WckVK&cid=e032329d-afeb-4ed1-815c-803e25881bc6",
-                "https://iitgoffice-my.sharepoint.com/personal/varma170205042_iitg_ac_in/Documents/Elections%202021%20Story/Pink.jpg?csf=1&web=1&e=F7Sa6S&cid=67e1f04e-37ec-4bcb-b867-13c76c0526d1",
-                "https://iitgoffice-my.sharepoint.com/personal/varma170205042_iitg_ac_in/Documents/Elections%202021%20Story/Yellow.jpg?csf=1&web=1&e=0KGjaB&cid=49906e51-10ab-454f-8153-a81e6bd82224"
+                "{% static 'Blue.jpg' %}",
+                "{% static 'Yellow.jpg' %}",
+                "{% static 'Green.jpg' %}", 
+                "{% static 'Pink.jpg' %}"
             ];
             let random_num  = Math.floor(Math.random() * 4);
             $("#share").attr("href", links[random_num]);
