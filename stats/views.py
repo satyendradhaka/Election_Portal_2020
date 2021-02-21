@@ -48,11 +48,11 @@ def deptFetchData():
     deptCount = {}
     jagrukDept = 0
     data = {}
-    for i in deptList:
+    for j,i in enumerate(deptList):
         total = Voter.objects.filter(dept = i).count()
         count = Voter.objects.filter(Q(dept=i) & Q(final_submit=True)).count()
         deptCount[i] = {'count':count,'total':total,'percent':round((count*100)/total,2)}
-        if deptCount[i]['percent'] > jagrukDept:
+        if deptCount[i]['percent'] > jagrukDept and j<12:
             jagrukDept = deptCount[i]['percent']  
             data['jagrukDept']=i
     data['deptCount'] = deptCount
@@ -66,7 +66,7 @@ def hostelFetchData():
         total = Voter.objects.filter(hostel = str(i)).count()
         count = Voter.objects.filter(Q(hostel = str(i)) & Q(final_submit=True)).count()
         hostelCount[hostelDicti[str(i)]] = {'count':count}
-        if hostelCount[hostelDicti[str(i)]]['count'] > jagrukHostel:
+        if hostelCount[hostelDicti[str(i)]]['count'] > jagrukHostel and i!=0:
             jagrukHostel = hostelCount[hostelDicti[str(i)]]['count']
             data['jagrukHostel']=hostelDicti[str(i)]
     data['hostelCount'] = hostelCount
