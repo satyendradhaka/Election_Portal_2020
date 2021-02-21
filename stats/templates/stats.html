@@ -419,7 +419,13 @@
             if (dicti["hostelCount"].hasOwnProperty(key)) {           
                 // console.log(key, dicti["deptCount"][key]);
                 vote_percent_hostel.push(dicti["hostelCount"][key]["count"]);
-                graph_labels_hostel.push(key);
+                if (key == "HOSTEL NOT ALLOTED") {
+                  graph_labels_hostel.push("HNA");
+                } else if(key == "MARRIED SCHOLARS HOSTEL"){
+                  graph_labels_hostel.push("MSH");
+                } else {
+                  graph_labels_hostel.push(key);
+                }
                 // tots.push(dicti["deptCount"][key]["total"]);
             }
         }
