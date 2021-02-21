@@ -83,7 +83,7 @@ def verification(request):
         voter = Voter.objects.get(username = request.user.username)
         rollNumber = voter.rollNumber
         dept = voter.dept
-        year = 21-int(request.user.last_name[:2])
+        year = 21-int(str(voter.rollNumber)[:2])
         if year == 1:
             y = "1st Year"
         elif year == 2:
