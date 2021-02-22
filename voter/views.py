@@ -43,7 +43,7 @@ def captcha_required(function):
 def is_valid(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
-        q=datetime(2021,2,21,22,0,0,0)
+        q=datetime(2021,2,21,23,59,0,0)
         if q<datetime.now():
             return render(request,'error.html',{'message': 'Voting Time is over.See you next year'})
         username = request.user.username
