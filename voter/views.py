@@ -43,14 +43,15 @@ def captcha_required(function):
 def is_valid(function):
     @wraps(function)
     def wrap(request, *args, **kwargs):
-        q=datetime(2021,2,21,22,0,0,0)
+        q=datetime(2021,2,21,23,59,0,0)
         if q<datetime.now():
             return render(request,'error.html',{'message': 'Voting Time is over.See you next year'})
         username = request.user.username
         try:
             rollNumber = int(request.user.last_name)
         except:
-            return render(request,'error.html',{'message': 'You are not a recognized voter! Please login with your student id.'})
+            rollNumber = 1
+            # return render(request,'error.html',{'message': 'You are not a recognized voter! Please login with your student id.'})
         keys_bool = request.session.get('ready',True)
         if (Voter.objects.all().filter(username=username).exists() or Voter.objects.all().filter(rollNumber=int(rollNumber)).exists()) and keys_bool:
             try:
