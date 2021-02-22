@@ -129,4 +129,6 @@ def results_view(request,post):
     contList = []
     for i in cont:
         contList.append((i[0],i[1],i[1]*100/sum))
+    contList.sort(key = lambda x: x[1])
+    contList.reverse()
     return render(request,'results_view.html',{'contestants':contList,'post_display':post_dictionary[post],'sum':sum,'post_list':post_dictionary.keys()})
