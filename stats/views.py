@@ -87,12 +87,38 @@ def totalVotersData():
     data['coords'] = [[coords[0].x,coords[0].y] for coords in Voter.objects.filter(final_submit=True).values_list('voter_location')]
     return data    
 
-
+def percent():
+    data ={}
+    totalUg = Voter.objects.filter(Q(category=0) or Q(category=1)).count()
+    #  & Q(final_submit=True)
+    ugVoted = Voter.objects.filter(Q(category=0) or Q(category=1)  & Q(final_submit=True)).count()
+    ugPercent = (ugVoted/totalUg)*100
+    totalPg = Voter.objects.filter(Q(category=2) or Q(category=3)).count()
+    PgVoted = Voter.objects.filter(Q(category=2) or Q(category=3) & Q(final_submit=True)).count()
+    pgPercent = (PgVoted/totalPg)*100
+    totalBoys = Voter.objects.filter(Q(category=2) or Q(category=0)).count()
+    totalGirls = Voter.objects.filter(Q(category=1) or Q(category=3)).count()
+    BoysVoted = Voter.objects.filter(Q(category=0) or Q(category=2)  & Q(final_submit=True)).count()
+    GirlsVoted = Voter.objects.filter(Q(category=1) or Q(category=3)  & Q(final_submit=True)).count()
+    data['completeStats'] = {
+        'totalUg': totalUg,
+        'totalPg': totalPg,
+        'totalBoys': totalBoys,
+        'totalGirls': totalGirls,
+        'ugVoted': ugVoted,
+        'PgVoted':PgVoted,
+        'BoysVoted':BoysVoted,
+        'GirlsVoted': GirlsVoted,
+        'ugPercent': ugPercent,
+        'pgPercent': pgPercent
+    }
+    return data
 def voteData(request):
     data = {}
     data.update(totalVotersData())
     data.update(deptFetchData())
     data.update(hostelFetchData())
+    data.update(percent())
     # print(data['coords'])
     return JsonResponse(data)
 
