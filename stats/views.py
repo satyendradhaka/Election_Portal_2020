@@ -89,17 +89,17 @@ def totalVotersData():
 
 def percent():
     data ={}
-    totalUg = Voter.objects.filter(Q(category=0) or Q(category=1)).count()
+    totalUg = Voter.objects.filter(Q(category=0) | Q(category=1)).count()
     #  & Q(final_submit=True)
-    ugVoted = Voter.objects.filter(Q(category=0) or Q(category=1)).filter(final_submit=True).count()
+    ugVoted = Voter.objects.filter(Q(category=0) | Q(category=1)).filter(final_submit=True).count()
     ugPercent = (ugVoted/totalUg)*100
-    totalPg = Voter.objects.filter(Q(category=2) or Q(category=3)).count()
-    PgVoted = Voter.objects.filter(Q(category=2) or Q(category=3)).filter(final_submit=True).count()
+    totalPg = Voter.objects.filter(Q(category=2) | Q(category=3)).count()
+    PgVoted = Voter.objects.filter(Q(category=2) | Q(category=3)).filter(final_submit=True).count()
     pgPercent = (PgVoted/totalPg)*100
-    totalBoys = Voter.objects.filter(Q(category=2) or Q(category=0)).count()
-    totalGirls = Voter.objects.filter(Q(category=1) or Q(category=3)).count()
-    BoysVoted = Voter.objects.filter(Q(category=0) or Q(category=2)).filter(final_submit=True).count()
-    GirlsVoted = Voter.objects.filter(Q(category=1) or Q(category=3)).filter(final_submit=True).count()
+    totalBoys = Voter.objects.filter(Q(category=2) | Q(category=0)).count()
+    totalGirls = Voter.objects.filter(Q(category=1) | Q(category=3)).count()
+    BoysVoted = Voter.objects.filter(Q(category=0) | Q(category=2)).filter(final_submit=True).count()
+    GirlsVoted = Voter.objects.filter(Q(category=1) | Q(category=3)).filter(final_submit=True).count()
     data['completeStats'] = {
         'totalUg': totalUg,
         'totalPg': totalPg,
