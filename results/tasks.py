@@ -18,27 +18,27 @@ post_dictionary = {
     'swc':'SWC',
     'gsen':'GS',      
 }
-def vote_count(vote,cat,dicti):
+def vote_count(vote,dicti):
   k=vote.split(',')
   for i in range (10):
-    if i>=8:
-      x=k[i].split(':')[1].strip()
-      if x == 'NOTA':
-        if i==8:
-          nota = cat
-        else:
-          nota = ' NOTA'
-        if nota in dicti[positions[i]]:
-          dicti[positions[i]][nota] += 1
-        else:
-          dicti[positions[i]][nota] = 1
-      else:  
-        y=x[1:-1].split()
-        for j in y:
-          if (j in dicti[positions[i]]):
-            dicti[positions[i]][j]=dicti[positions[i]][j]+1
-          else: dicti[positions[i]][j]=1  
-    else:  
+    # if i>=8:
+    #   x=k[i].split(':')[1].strip()
+    #   if x == 'NOTA':
+    #     if i==8:
+    #       nota = cat
+    #     else:
+    #       nota = ' NOTA'
+    #     if nota in dicti[positions[i]]:
+    #       dicti[positions[i]][nota] += 1
+    #     else:
+    #       dicti[positions[i]][nota] = 1
+    #   else:  
+    #     y=x[1:-1].split()
+    #     for j in y:
+    #       if (j in dicti[positions[i]]):
+    #         dicti[positions[i]][j]=dicti[positions[i]][j]+1
+    #       else: dicti[positions[i]][j]=1  
+    # else:  
       x=k[i].split(':')
       # print(x[1])
       if (x[1] in dicti[positions[i]]):
@@ -59,11 +59,11 @@ def do_work(self):
         # backup_votes(voters[i].vote_string1, voters[i].vote_string2, voters[i].vote_time)
         vote_string = decryptCipherText(voters[i].vote_string1,voters[i].vote_time)+decryptCipherText(voters[i].vote_string2,voters[i].vote_time)
         # print(vote_string)
-        if voters[i].category == '0' or voters[i].category == '1':
-          cat= 'UGS'
-        else:
-          cat = 'PGS'
-        vote_count(vote_string,cat,dicti)
+        # if voters[i].category == '0' or voters[i].category == '1':
+        #   cat= 'UGS'
+        # else:
+        #   cat = 'PGS'
+        vote_count(vote_string,dicti)
         progress_recorder.set_progress(i+1,len(voters),description="Decrypting... ")
     for post in dicti:
         for key in dicti[post]:

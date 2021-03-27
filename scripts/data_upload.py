@@ -48,15 +48,14 @@ def csv_to_voter():
 	for i, row in enumerate(reader):
 		print("voter", i+1)
 		username = smart_str(row[0]).lower()
-		category = smart_str(row[1])
-		rollNumber = smart_str(row[2])
-		dept = deptIdentify(smart_str(row[2]))  
+		# category = smart_str(row[1])
+		rollNumber = smart_str(row[1])
+		dept = deptIdentify(smart_str(row[1]))  
 		vote_string1=""
 		vote_string2=""
 		vote_time = ""
 		voter_loc = Point(0.0,0.0)
 		voter = Voter(username=username,
-			category=category,
 			rollNumber=int(rollNumber),
 			dept=dept,
 			vote_string1 = vote_string1,
@@ -72,11 +71,11 @@ def csv_to_contestants():
 	reader = csv.reader(csvfile, quoting=csv.QUOTE_ALL)
 	for i, row in enumerate(reader):
 		print("contestant ",i+1)
-		contestant=Contestant(name=row[0],email = row[1], post = row[2], rollNumber = row[3], video=row[4], tagline = row[5],agenda1 = row[6], agenda2 = row[7], agenda3 = row[8], agenda4 = row[9], pic = "contestants/" + row[3]+".jpg", agendaPDF= "agenda/" + row[3]+".pdf", random_suppling = 0)
+		contestant=Contestant(name=row[0],email = row[1], post = row[2], rollNumber = row[3], tagline = row[4],agenda1 = row[5], agenda2 = row[6], agenda3 = row[7], agenda4 = row[8], pic = "contestants/" + row[3]+".jpg", agendaPDF= "agenda/" + row[3]+".pdf", random_suppling = 0)
 		contestant.save()
 
 def run():
 	Voter.objects.all().delete()
-	# Contestant.objects.all().delete()
+	Contestant.objects.all().delete()
 	csv_to_voter()
-	# csv_to_contestants()	
+	csv_to_contestants()	

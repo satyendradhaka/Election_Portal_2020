@@ -7,9 +7,9 @@ migrations/
 
 #oauth secerts
 voter.csv
-contestant.csv
+# contestant.csv
 *.pyc
-images/
-static/agenda
-static/contestants*
+# images/
+# static/agenda
+# static/contestants*
 electioniitg/settings.py

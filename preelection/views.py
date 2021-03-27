@@ -10,9 +10,9 @@ def candidatesHomePage(request):
     contestants = [
         ('VP', 'VP',Contestant.objects.filter(post='VP').order_by('?')),
         ('HAB', 'HAB',Contestant.objects.filter(post='HAB').order_by('?')),
-        ('UGS', 'UG_Senator',Contestant.objects.filter(post='UGS').order_by('?')),
-        ('PGS','PG_Senator',Contestant.objects.filter(post='PGS').order_by('?')),
-        ('GS','G_Senator',Contestant.objects.filter(post='GS').order_by('?')),
+        # ('UGS', 'UG_Senator',Contestant.objects.filter(post='UGS').order_by('?')),
+        # ('PGS','PG_Senator',Contestant.objects.filter(post='PGS').order_by('?')),
+        # ('GS','G_Senator',Contestant.objects.filter(post='GS').order_by('?')),
         ('Tech','Technical',Contestant.objects.filter(post='Tech').order_by('?')),
         ('Cult','Cultural',Contestant.objects.filter(post='Cult').order_by('?')),
         ('Welfare','Welfare',Contestant.objects.filter(post='Welfare').order_by('?')),

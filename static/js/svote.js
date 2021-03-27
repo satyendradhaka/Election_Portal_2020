@@ -1,17 +1,17 @@
 var selected_ids = new Set();
 let ids = [];
 let designations = {
-  'Vice President': 1,
-  'General Secretary of Hostel Affairs Board': 2,
-  'General Secretary of Technical Board': 3,
-  'General Secretary of Cultural Board': 4,
-  'General Secretary of Students&#x27; Welfare Board': 5,
-  'General Secretary of Sports Board': 6,
-  'General Seceratry of SAIL': 7,
-  'General Seceratry of SWC': 8,
-  'Under Graduate Senator': 9,
-  'Post Graduate Senator': 9,
-  'Girl Senator': 10
+  'General Secretary': 1,
+  'Mess Convener': 2,
+  'Technical Secretary': 3,
+  'Cultural Secretary': 4,
+  'Welfare Secretary': 5,
+  'Sports Secretary': 6,
+  'Maintenance Secretary': 7,
+  'Library Secretary': 8,
+  // 'Under Graduate Senator': 9,
+  // 'Post Graduate Senator': 9,
+  // 'Girl Senator': 10
 }
 let currDesignation = 0;
 

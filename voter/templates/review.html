@@ -23,9 +23,9 @@
     {% csrf_token %}
     {% for candidate in selectedCandidates %}
         
-        {% if candidate.0 == "VP" %}
+        {% if candidate.0 == "Gen Sec" %}
             <br>
-            <p class="ml-5 font-bold sm:ml-10 text-2xl sm:text-3xl">Vice President</p>
+            <p class="ml-5 font-bold sm:ml-10 text-2xl sm:text-3xl">General Secretary</p>
             <ul class="sm:flex sm:flex-wrap space-x-7 sm:space-x-10">
                 <button class="mt-3 mb-3 ml-5 sm:mt-5 sm:mb-5 sm:ml-10" type="submit" name="choice" value={{candidate.2}}>
                     <li id="{{candidate.0}}"
@@ -105,11 +105,11 @@
             </button>
         {% endif %}
 
-        {% if forloop.counter == 8 %}
+        <!-- {% if forloop.counter == 8 %}
             <br>
             </ul>
             <p class="ml-5 sm:ml-10 font-bold text-2xl sm:text-3xl">Senate</p>
-        {% endif %}
+        {% endif %} -->
         
         {% if forloop.counter >= 9 %}
             {% if candidate.0 == "GS" %}

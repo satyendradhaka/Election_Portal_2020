@@ -37,8 +37,8 @@ def save_user_image(request):
             voter.voter_image= "images/voters/"+image_name
             voter.save()
             request.session['image'] = True
-        except Exception:
-            #print('i fucked up')
+        except Exception as e:
+            print(e)
             return HttpResponse('something went wrong')
         return redirect('captcha')
     else:

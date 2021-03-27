@@ -15,17 +15,17 @@ from .models import notaCount,taskid
 from celery.result import AsyncResult
 
 post_dictionary ={
-    'VP':'Vice President',
-    'HAB' : 'General Secretary of Hostel Affairs Board',
-    'UGS': 'Under Graduate Senator',
-    'PGS':'Post Graduate Senator',
-    'GS':'Girl Senator',
-    'Tech':'General Secretary of Technical Board',
-    'Cult':'General Secretary of Cultural Board',
-    'Welfare':'General Secretary of Students\' Welfare Board',
-    'Sports':'General Secretary of Sports Board',
-    'SAIL':'General Seceratry of SAIL',
-    'SWC':'General Seceratry of SWC',    
+    'VP':'General Secretary',
+    'HAB' : 'Mess Convener',
+    # 'UGS': 'Under Graduate Senator',
+    # 'PGS':'Post Graduate Senator',
+    # 'GS':'Girl Senator',
+    'Tech':'Technical Secretary',
+    'Cult':'Cultural Secretary',
+    'Welfare':'Welfare Secretary',
+    'Sports':'Sports Secretary',
+    'SAIL':'Maintenance Secretary',
+    'SWC':'library Secretary',    
 }
 users = []
 
