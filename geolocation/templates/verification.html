@@ -112,15 +112,15 @@
                     
                     <form action="" method="post" class=""> 
                         {% csrf_token %}
-                        <div class="input-field col s12">
+                        <!-- <div class="input-field col s12">
                             <select name = "hostel_data">
                             <option value="" disabled selected>Select your hostel</option>
                             {% for q in hostel %}
                                 <option value="{{q.0}}">{{q.1}}</option>
                             {% endfor %}
                             </select>
-                            <!-- <label>Hostel</label> -->
-                        </div>
+                             <label>Hostel</label>
+                        </div> -->
                         <div class="pt-3">
                                 {{ form }}
                             </div>

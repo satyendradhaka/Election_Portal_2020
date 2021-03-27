@@ -115,10 +115,10 @@ def percent():
     return data
 def voteData(request):
     data = {}
-    data.update(percent())
+    # data.update(percent())
     data.update(totalVotersData())
-    data.update(deptFetchData())
-    data.update(hostelFetchData())
+    # data.update(deptFetchData())
+    # data.update(hostelFetchData())
     
     # print(data['coords'])
     return JsonResponse(data)

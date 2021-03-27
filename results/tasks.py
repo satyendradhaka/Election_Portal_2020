@@ -20,7 +20,7 @@ post_dictionary = {
 }
 def vote_count(vote,dicti):
   k=vote.split(',')
-  for i in range (10):
+  for i in range (8):
     # if i>=8:
     #   x=k[i].split(':')[1].strip()
     #   if x == 'NOTA':

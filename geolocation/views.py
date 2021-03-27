@@ -99,8 +99,8 @@ def verification(request):
         return render(request, 'verification.html', {'form': form,'rollNumber':rollNumber,'dept':dept,'year':y,'voter_id':uid[0].upper(),'hostel':HOSTELS})
         
     form = FormWithCaptcha(request.POST)
-    voter.hostel = request.POST.get('hostel_data','0')
-    voter.save()
+    # voter.hostel = request.POST.get('hostel_data','0')
+    # voter.save()
     #print(voter.get_hostel_display())
     if form.is_valid():
         #print('u are not a robot')

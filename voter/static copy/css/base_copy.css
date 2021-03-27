@@ -1,0 +1,127 @@
+img {
+  max-width: none;
+}
+
+/* button:focus {
+  /* outline: none; */
+  /* background-color: rgba(46, 47, 47, 0) !important; */
+} */
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('../fonts/regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible Bold';
+  src: url('../fonts/bold.ttf') format('truetype');
+}
+
+.font-ah {
+  font-family: Atkinson Hyperlegible;
+}
+
+.font-bold {
+  font-family: Atkinson Hyperlegible Bold;
+}
+
+@media (min-width: 1024px) {
+  .voter_list {
+      margin-left: 7%;
+      margin-right: 7%;
+  }
+}
+
+.adjust-right {
+  margin-right: 7%;
+}
+
+.bg-gray-50{
+  background-color: #f9f9f969;
+}
+.text-gray-800{
+  color: #4C4D4D;
+}
+.text-gray-600{
+  color: #4C4D4D;
+}
+.bg-black{
+  background-color: #2E2F2F;
+}
+.border-black{
+  border-color: #2E2F2F;
+}
+
+.bg-gray-50:hover{
+  background-color: #EAEAEA;
+}
+.bg-gray-200{
+  background-color: #EAEAEA;
+}
+
+
+#title {
+  font-family: Atkinson Hyperlegible;
+  font-weight: bold;
+  
+}
+
+#list_index{
+  transition: opacity .5s ease-in-out;
+}
+.gradient-black{
+  /* background-color: #2d3436; */
+  /* background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%); */
+}
+li { cursor: pointer; }
+
+.shadow{
+  --tw-shadow: 0 1px 4px 0 rgba(58, 58, 58, 0.034), 0 1px 4px 0 rgba(88, 88, 88, 0.021);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.next-btn {
+  font-family: Atkinson Hyperlegible;
+  /* text-align: center; */
+}
+
+.bg-custom {
+  background: rgba(231, 105, 15, 0.1);
+  border: 2px solid #E7690F;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+.bg-orange {
+  background:#E7690F;
+}
+.bg-blue-500{
+  background:#2B00FF;
+}
+
+.bg-custom:hover {
+  background: #E7690F;
+  box-sizing: border-box;
+  border-radius: 2px;
+}
+
+.text-custom {
+  font-family: Atkinson Hyperlegible;
+  color: #E7690F;
+}
+
+.text-custom:hover {
+  font-family: Atkinson Hyperlegible;
+  color: rgb(236, 232, 229);
+}
+
+.custom-li {
+  min-width: 50%;
+}
+
+.info-block {
+  margin-top: 50px !important;
+}
+
+element.style {
+  margin-left: 0 !important;
+}

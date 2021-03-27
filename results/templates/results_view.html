@@ -24,7 +24,7 @@
                    <hr class="bg-white">
                    {% for i in post_list %}
                    <li class="relative text-3xl left-28 mt-4 mb-4">
-                      <a href="{% url 'results_view' i %}">{{i}}</a>
+                      <a href="{% url 'results_view' i.0 %}">{{i.1}}</a>
                    </li>
                    {% endfor %}
                </ul>

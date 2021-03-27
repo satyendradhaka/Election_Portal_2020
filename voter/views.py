@@ -234,6 +234,20 @@ def vote_for(request,post):
 
         }
     )
+    mapper = {
+                'VP': 'GS',
+                'HAB': 'Mess',
+                'Tech':'Tech',
+                'Cult':'Cult',
+                'Welfare':'Welfare',
+                'Sports':'Sports',
+                'SAIL':'Maint',
+                'SWC':'Library',
+                # 'UGS': '-1',
+                # 'PGS':'-1',
+                # 'Girls':'-1',
+            }
+    
     if not posts_done[post_dictionary[post]].startswith("Current"):
         posts_done[post_dictionary[post]] = "Current " + str(posts_done[post_dictionary[post]])
     contestantList = Contestant.objects.all().filter(post=post_dictionary[post]).order_by('?')
@@ -261,7 +275,7 @@ def vote_for(request,post):
         request.session['posts_done']=posts_done
         return redirect('vote')
     #print(posts_done)
-    return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display(),'ham':[(k, v) for k, v in posts_done.items()],'selected':posts_done[post_dictionary[post]]})
+    return render(request,'vote.html',{'contestantList':contestantList,'pks':pks,'post':contestantList[0].get_post_display(),'ham':[(mapper[k], v) for k, v in posts_done.items()],'selected':posts_done[post_dictionary[post]]})
 
 
 @login_required

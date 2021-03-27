@@ -25,7 +25,7 @@ post_dictionary ={
     'Welfare':'Welfare Secretary',
     'Sports':'Sports Secretary',
     'SAIL':'Maintenance Secretary',
-    'SWC':'library Secretary',    
+    'SWC':'Library Secretary',    
 }
 users = []
 
@@ -117,6 +117,19 @@ def results(request):
 @login_required
 @user_passes_test(is_authorized,redirect_field_name="home")
 def results_view(request,post):
+    mapper = {
+                'VP': 'Gen Sec',
+                'HAB': 'Mess',
+                'Tech':'Tech',
+                'Cult':'Cult',
+                'Welfare':'Welfare',
+                'Sports':'Sports',
+                'SAIL':'Maintenance',
+                'SWC':'Library',
+                # 'UGS': '-1',
+                # 'PGS':'-1',
+                # 'Girls':'-1',
+    }
     cont = list(Contestant.objects.filter(post=post).values_list('name','vote_count'))
     try:
         nota = notaCount.objects.get(post=post)
@@ -131,4 +144,4 @@ def results_view(request,post):
         contList.append((i[0],i[1],i[1]*100/sum))
     contList.sort(key = lambda x: x[1])
     contList.reverse()
-    return render(request,'results_view.html',{'contestants':contList,'post_display':post_dictionary[post],'sum':sum,'post_list':post_dictionary.keys()})
+    return render(request,'results_view.html',{'contestants':contList,'post_display':post_dictionary[post],'sum':sum,'post_list':[(k,v) for k,v in mapper.items()]})
