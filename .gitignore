@@ -7,7 +7,7 @@ migrations/
 
 #oauth secerts
 voter.csv
-# contestant.csv
+contestant.csv
 *.pyc
 images/
 static/agenda
@@ -15,7 +15,3 @@ static/contestants*
 electioniitg/settings.py
 f.csv
 Dhansiri.csv
-contestant.csv
-contestnt.csv
-contestant.csv
-contestant.csv
