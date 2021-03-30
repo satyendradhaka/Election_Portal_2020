@@ -29,7 +29,7 @@ class Voter(models.Model):
     # )
     # category = models.CharField(max_length=1,choices=CATEGORY)
     final_submit = models.BooleanField(default=False) #0 if false 1 if true
-    rollNumber = models.IntegerField(default=0, unique=True)
+    rollNumber = models.IntegerField(default=0,unique=True)
     dept = models.CharField(max_length=50, default='CSE')
     hostel = models.CharField(max_length=20,default='Lohit')
     vote_string1 = models.CharField(max_length=5000, default='')

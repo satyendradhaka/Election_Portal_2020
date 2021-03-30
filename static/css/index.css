@@ -17,12 +17,12 @@
 }
 
 .partition {
-    position: absolute;
+    position: fixed;
     left: 45.06%;
     top: 0%;
     bottom: 0%;
     width: 8px;
-    height: 100%;
+    /* height: 100%; */
 
     background-color: #2E2F2F;
 }

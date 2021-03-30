@@ -1,7 +1,7 @@
 backup_votes.csv
 # database
 mydatabase
-
+*.py.save
 # migrations
 migrations/
 
@@ -9,7 +9,8 @@ migrations/
 voter.csv
 # contestant.csv
 *.pyc
-# images/
-# static/agenda
-# static/contestants*
+images/
+static/agenda
+static/contestants*
 electioniitg/settings.py
+f.csv

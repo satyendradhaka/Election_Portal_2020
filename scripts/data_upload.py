@@ -47,17 +47,23 @@ def csv_to_voter():
 	reader = csv.reader(csvfile, quoting=csv.QUOTE_ALL)
 	for i, row in enumerate(reader):
 		print("voter", i+1)
-		username = smart_str(row[0]).lower()
+		username = smart_str(row[1]).lower()
 		# category = smart_str(row[1])
-		rollNumber = smart_str(row[1])
-		dept = deptIdentify(smart_str(row[1]))  
+		rollNumber = smart_str(row[0])
+		try:
+			rollNumber = int(rollNumber)
+		except:
+			rollNumber = i+1
+		#dept = deptIdentify(smart_str(row[0]))  
 		vote_string1=""
 		vote_string2=""
 		vote_time = ""
 		voter_loc = Point(0.0,0.0)
+		if Voter.objects.filter(username=username).exists():
+			username = 'A' + str(i)
 		voter = Voter(username=username,
 			rollNumber=int(rollNumber),
-			dept=dept,
+			dept="",
 			vote_string1 = vote_string1,
 			vote_string2 = vote_string2,
 			vote_time= vote_time,
@@ -76,6 +82,6 @@ def csv_to_contestants():
 
 def run():
 	Voter.objects.all().delete()
-	Contestant.objects.all().delete()
+	#Contestant.objects.all().delete()
 	csv_to_voter()
-	csv_to_contestants()	
+	#csv_to_contestants()	

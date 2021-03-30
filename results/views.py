@@ -37,11 +37,11 @@ def is_authorized(user):
     except:
         print("error in results/views.py")
     try:    
-        users.append(User.objects.get(username='elections@iitg.ac.in'))
+        users.append(User.objects.get(username='gensec_hostel@iitg.ac.in'))
     except:
         print("error in results/views.py")
     try:    
-        users.append(User.objects.get(username='dos@iitg.ac.in'))  
+        users.append(User.objects.get(username='warden.dhansiri@iitg.ac.in'))  
     except:
         print("error 3")
     if user in users:
