@@ -1,0 +1,24 @@
+backup_votes.csv
+# database
+mydatabase
+*.py.save
+# migrations
+migrations/
+
+#oauth secerts
+voter.csv
+contestant.csv
+*.pyc
+*.save
+images/
+static/
+static/contestants*
+electioniitg/settings.py
+f.csv
+Dhansiri.csv
+voter copy.csv
+.vscode/
+
+voter/static/
+preelection/static/
+voter/build/
