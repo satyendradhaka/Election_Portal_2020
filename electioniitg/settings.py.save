@@ -102,9 +102,9 @@ WSGI_APPLICATION = 'electioniitg.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'election',
-        'USER': 'election',
-        'PASSWORD': 'postgres',
+        'NAME': DB_NAME,
+        'USER': USERNAME,
+        'PASSWORD': PASSWORD,
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -155,12 +155,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 MEDIA_URL = '/images/'
 
 #recaptcha secrets
-RECAPTCHA_PUBLIC_KEY = '6Ld6GA4aAAAAAOqs7W7tVW4DayvPyCzHzbBZNGiB'
-RECAPTCHA_PRIVATE_KEY = '6Ld6GA4aAAAAANjcqKHCw3_YgqcuF6wMRTgZR1-v'
+RECAPTCHA_PUBLIC_KEY = PUBLIC_KEY
+RECAPTCHA_PRIVATE_KEY = PRIVATE_KEY
 
 AUTH_ADFS = {
-    "TENANT_ID": "850aa78d-94e1-4bc6-9cf3-8c11b530701c",
-    "CLIENT_ID": "28024e5d-ba48-4a7a-bf64-b026271cce73",
+    "TENANT_ID": TENET_ID,
+    "CLIENT_ID": CLIENT_ID,
     "RELYING_PARTY_ID": "api://85ad6626-12c9-4c0d-a730-c07f81cd09c9",
     "AUDIENCE": "api://85ad6626-12c9-4c0d-a730-c07f81cd09c9",
     "LOGIN_EXEMPT_URLS": [""],
