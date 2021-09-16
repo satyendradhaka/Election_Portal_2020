@@ -1,4 +1,4 @@
-aiohttp==3.7.3
+aiohttp==3.7.4
 altgraph==0.17
 amqp==5.0.2
 asgiref==3.3.1
